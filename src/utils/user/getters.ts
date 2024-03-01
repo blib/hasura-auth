@@ -43,6 +43,7 @@ export const getUser = async ({
     emailVerified,
     phoneNumber,
     phoneNumberVerified,
+    telegramId,
     activeMfaType,
   } = user;
   return {
@@ -58,6 +59,7 @@ export const getUser = async ({
     emailVerified,
     phoneNumber,
     phoneNumberVerified,
+    telegramId,
     activeMfaType,
     roles: user.roles.map((role) => role.role),
   };
@@ -68,6 +70,31 @@ export const getUserByEmail = async (email: string) => {
     where: {
       email: {
         _eq: email,
+      },
+    },
+  });
+
+  if (users.length !== 1) {
+    return null;
+  }
+
+  return users[0];
+};
+
+export const getTelegramBotToken = async (id: string) => {
+  const { authTelegramBotToken } = await gqlSdk.authTelegramBotToken({ id: id });
+
+  if (!authTelegramBotToken) {
+    return null;
+  }
+  return authTelegramBotToken.token;
+};
+
+export const getUserByTelegramId = async (id: string) => {
+  const { users } = await gqlSdk.users({
+    where: {
+      telegramId: {
+        _eq: id.toString(),
       },
     },
   });

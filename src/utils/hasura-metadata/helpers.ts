@@ -135,7 +135,7 @@ export const patchTableObject = (
       ...delete_permissions,
       ...(existingTable.delete_permissions ?? []),
     ];
-    
+
     existingTable.delete_permissions = [
       ...new Map(
         mergedDeletePermissions.map((permission) => [

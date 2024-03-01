@@ -1053,6 +1053,164 @@ export type AuthRoles_Updates = {
   where: AuthRoles_Bool_Exp;
 };
 
+/** columns and relationships of "auth.telegram_bot_tokens" */
+export type AuthTelegramBotTokens = {
+  __typename?: 'authTelegramBotTokens';
+  createdAt: Scalars['timestamptz'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  token: Scalars['String'];
+};
+
+/** aggregated selection of "auth.telegram_bot_tokens" */
+export type AuthTelegramBotTokens_Aggregate = {
+  __typename?: 'authTelegramBotTokens_aggregate';
+  aggregate?: Maybe<AuthTelegramBotTokens_Aggregate_Fields>;
+  nodes: Array<AuthTelegramBotTokens>;
+};
+
+/** aggregate fields of "auth.telegram_bot_tokens" */
+export type AuthTelegramBotTokens_Aggregate_Fields = {
+  __typename?: 'authTelegramBotTokens_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<AuthTelegramBotTokens_Max_Fields>;
+  min?: Maybe<AuthTelegramBotTokens_Min_Fields>;
+};
+
+
+/** aggregate fields of "auth.telegram_bot_tokens" */
+export type AuthTelegramBotTokens_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<AuthTelegramBotTokens_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "auth.telegram_bot_tokens". All fields are combined with a logical 'AND'. */
+export type AuthTelegramBotTokens_Bool_Exp = {
+  _and?: InputMaybe<Array<AuthTelegramBotTokens_Bool_Exp>>;
+  _not?: InputMaybe<AuthTelegramBotTokens_Bool_Exp>;
+  _or?: InputMaybe<Array<AuthTelegramBotTokens_Bool_Exp>>;
+  createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  token?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "auth.telegram_bot_tokens" */
+export enum AuthTelegramBotTokens_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  TelegramBotTokensPkey = 'telegram_bot_tokens_pkey'
+}
+
+/** input type for inserting data into table "auth.telegram_bot_tokens" */
+export type AuthTelegramBotTokens_Insert_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  token?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type AuthTelegramBotTokens_Max_Fields = {
+  __typename?: 'authTelegramBotTokens_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type AuthTelegramBotTokens_Min_Fields = {
+  __typename?: 'authTelegramBotTokens_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "auth.telegram_bot_tokens" */
+export type AuthTelegramBotTokens_Mutation_Response = {
+  __typename?: 'authTelegramBotTokens_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<AuthTelegramBotTokens>;
+};
+
+/** on_conflict condition type for table "auth.telegram_bot_tokens" */
+export type AuthTelegramBotTokens_On_Conflict = {
+  constraint: AuthTelegramBotTokens_Constraint;
+  update_columns?: Array<AuthTelegramBotTokens_Update_Column>;
+  where?: InputMaybe<AuthTelegramBotTokens_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "auth.telegram_bot_tokens". */
+export type AuthTelegramBotTokens_Order_By = {
+  createdAt?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  token?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: auth.telegram_bot_tokens */
+export type AuthTelegramBotTokens_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "auth.telegram_bot_tokens" */
+export enum AuthTelegramBotTokens_Select_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  Token = 'token'
+}
+
+/** input type for updating data in table "auth.telegram_bot_tokens" */
+export type AuthTelegramBotTokens_Set_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  token?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "authTelegramBotTokens" */
+export type AuthTelegramBotTokens_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: AuthTelegramBotTokens_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type AuthTelegramBotTokens_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  token?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "auth.telegram_bot_tokens" */
+export enum AuthTelegramBotTokens_Update_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  Token = 'token'
+}
+
+export type AuthTelegramBotTokens_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<AuthTelegramBotTokens_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: AuthTelegramBotTokens_Bool_Exp;
+};
+
 /** Active providers for a given user. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthUserProviders = {
   __typename?: 'authUserProviders';
@@ -1901,6 +2059,326 @@ export type Bigint_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['bigint']>>;
 };
 
+/** columns and relationships of "storage.buckets" */
+export type Buckets = {
+  __typename?: 'buckets';
+  cacheControl?: Maybe<Scalars['String']>;
+  createdAt: Scalars['timestamptz'];
+  downloadExpiration: Scalars['Int'];
+  /** An array relationship */
+  files: Array<Files>;
+  /** An aggregate relationship */
+  files_aggregate: Files_Aggregate;
+  id: Scalars['String'];
+  maxUploadFileSize: Scalars['Int'];
+  minUploadFileSize: Scalars['Int'];
+  presignedUrlsEnabled: Scalars['Boolean'];
+  updatedAt: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "storage.buckets" */
+export type BucketsFilesArgs = {
+  distinct_on?: InputMaybe<Array<Files_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Files_Order_By>>;
+  where?: InputMaybe<Files_Bool_Exp>;
+};
+
+
+/** columns and relationships of "storage.buckets" */
+export type BucketsFiles_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Files_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Files_Order_By>>;
+  where?: InputMaybe<Files_Bool_Exp>;
+};
+
+/** aggregated selection of "storage.buckets" */
+export type Buckets_Aggregate = {
+  __typename?: 'buckets_aggregate';
+  aggregate?: Maybe<Buckets_Aggregate_Fields>;
+  nodes: Array<Buckets>;
+};
+
+/** aggregate fields of "storage.buckets" */
+export type Buckets_Aggregate_Fields = {
+  __typename?: 'buckets_aggregate_fields';
+  avg?: Maybe<Buckets_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Buckets_Max_Fields>;
+  min?: Maybe<Buckets_Min_Fields>;
+  stddev?: Maybe<Buckets_Stddev_Fields>;
+  stddev_pop?: Maybe<Buckets_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Buckets_Stddev_Samp_Fields>;
+  sum?: Maybe<Buckets_Sum_Fields>;
+  var_pop?: Maybe<Buckets_Var_Pop_Fields>;
+  var_samp?: Maybe<Buckets_Var_Samp_Fields>;
+  variance?: Maybe<Buckets_Variance_Fields>;
+};
+
+
+/** aggregate fields of "storage.buckets" */
+export type Buckets_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Buckets_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type Buckets_Avg_Fields = {
+  __typename?: 'buckets_avg_fields';
+  downloadExpiration?: Maybe<Scalars['Float']>;
+  maxUploadFileSize?: Maybe<Scalars['Float']>;
+  minUploadFileSize?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "storage.buckets". All fields are combined with a logical 'AND'. */
+export type Buckets_Bool_Exp = {
+  _and?: InputMaybe<Array<Buckets_Bool_Exp>>;
+  _not?: InputMaybe<Buckets_Bool_Exp>;
+  _or?: InputMaybe<Array<Buckets_Bool_Exp>>;
+  cacheControl?: InputMaybe<String_Comparison_Exp>;
+  createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  downloadExpiration?: InputMaybe<Int_Comparison_Exp>;
+  files?: InputMaybe<Files_Bool_Exp>;
+  files_aggregate?: InputMaybe<Files_Aggregate_Bool_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  maxUploadFileSize?: InputMaybe<Int_Comparison_Exp>;
+  minUploadFileSize?: InputMaybe<Int_Comparison_Exp>;
+  presignedUrlsEnabled?: InputMaybe<Boolean_Comparison_Exp>;
+  updatedAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "storage.buckets" */
+export enum Buckets_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  BucketsPkey = 'buckets_pkey'
+}
+
+/** input type for incrementing numeric columns in table "storage.buckets" */
+export type Buckets_Inc_Input = {
+  downloadExpiration?: InputMaybe<Scalars['Int']>;
+  maxUploadFileSize?: InputMaybe<Scalars['Int']>;
+  minUploadFileSize?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "storage.buckets" */
+export type Buckets_Insert_Input = {
+  cacheControl?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  downloadExpiration?: InputMaybe<Scalars['Int']>;
+  files?: InputMaybe<Files_Arr_Rel_Insert_Input>;
+  id?: InputMaybe<Scalars['String']>;
+  maxUploadFileSize?: InputMaybe<Scalars['Int']>;
+  minUploadFileSize?: InputMaybe<Scalars['Int']>;
+  presignedUrlsEnabled?: InputMaybe<Scalars['Boolean']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Buckets_Max_Fields = {
+  __typename?: 'buckets_max_fields';
+  cacheControl?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  downloadExpiration?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+  maxUploadFileSize?: Maybe<Scalars['Int']>;
+  minUploadFileSize?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate min on columns */
+export type Buckets_Min_Fields = {
+  __typename?: 'buckets_min_fields';
+  cacheControl?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  downloadExpiration?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+  maxUploadFileSize?: Maybe<Scalars['Int']>;
+  minUploadFileSize?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** response of any mutation on the table "storage.buckets" */
+export type Buckets_Mutation_Response = {
+  __typename?: 'buckets_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Buckets>;
+};
+
+/** input type for inserting object relation for remote table "storage.buckets" */
+export type Buckets_Obj_Rel_Insert_Input = {
+  data: Buckets_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Buckets_On_Conflict>;
+};
+
+/** on_conflict condition type for table "storage.buckets" */
+export type Buckets_On_Conflict = {
+  constraint: Buckets_Constraint;
+  update_columns?: Array<Buckets_Update_Column>;
+  where?: InputMaybe<Buckets_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "storage.buckets". */
+export type Buckets_Order_By = {
+  cacheControl?: InputMaybe<Order_By>;
+  createdAt?: InputMaybe<Order_By>;
+  downloadExpiration?: InputMaybe<Order_By>;
+  files_aggregate?: InputMaybe<Files_Aggregate_Order_By>;
+  id?: InputMaybe<Order_By>;
+  maxUploadFileSize?: InputMaybe<Order_By>;
+  minUploadFileSize?: InputMaybe<Order_By>;
+  presignedUrlsEnabled?: InputMaybe<Order_By>;
+  updatedAt?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: storage.buckets */
+export type Buckets_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "storage.buckets" */
+export enum Buckets_Select_Column {
+  /** column name */
+  CacheControl = 'cacheControl',
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  DownloadExpiration = 'downloadExpiration',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MaxUploadFileSize = 'maxUploadFileSize',
+  /** column name */
+  MinUploadFileSize = 'minUploadFileSize',
+  /** column name */
+  PresignedUrlsEnabled = 'presignedUrlsEnabled',
+  /** column name */
+  UpdatedAt = 'updatedAt'
+}
+
+/** input type for updating data in table "storage.buckets" */
+export type Buckets_Set_Input = {
+  cacheControl?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  downloadExpiration?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
+  maxUploadFileSize?: InputMaybe<Scalars['Int']>;
+  minUploadFileSize?: InputMaybe<Scalars['Int']>;
+  presignedUrlsEnabled?: InputMaybe<Scalars['Boolean']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Buckets_Stddev_Fields = {
+  __typename?: 'buckets_stddev_fields';
+  downloadExpiration?: Maybe<Scalars['Float']>;
+  maxUploadFileSize?: Maybe<Scalars['Float']>;
+  minUploadFileSize?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Buckets_Stddev_Pop_Fields = {
+  __typename?: 'buckets_stddev_pop_fields';
+  downloadExpiration?: Maybe<Scalars['Float']>;
+  maxUploadFileSize?: Maybe<Scalars['Float']>;
+  minUploadFileSize?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Buckets_Stddev_Samp_Fields = {
+  __typename?: 'buckets_stddev_samp_fields';
+  downloadExpiration?: Maybe<Scalars['Float']>;
+  maxUploadFileSize?: Maybe<Scalars['Float']>;
+  minUploadFileSize?: Maybe<Scalars['Float']>;
+};
+
+/** Streaming cursor of the table "buckets" */
+export type Buckets_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Buckets_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Buckets_Stream_Cursor_Value_Input = {
+  cacheControl?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  downloadExpiration?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
+  maxUploadFileSize?: InputMaybe<Scalars['Int']>;
+  minUploadFileSize?: InputMaybe<Scalars['Int']>;
+  presignedUrlsEnabled?: InputMaybe<Scalars['Boolean']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate sum on columns */
+export type Buckets_Sum_Fields = {
+  __typename?: 'buckets_sum_fields';
+  downloadExpiration?: Maybe<Scalars['Int']>;
+  maxUploadFileSize?: Maybe<Scalars['Int']>;
+  minUploadFileSize?: Maybe<Scalars['Int']>;
+};
+
+/** update columns of table "storage.buckets" */
+export enum Buckets_Update_Column {
+  /** column name */
+  CacheControl = 'cacheControl',
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  DownloadExpiration = 'downloadExpiration',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MaxUploadFileSize = 'maxUploadFileSize',
+  /** column name */
+  MinUploadFileSize = 'minUploadFileSize',
+  /** column name */
+  PresignedUrlsEnabled = 'presignedUrlsEnabled',
+  /** column name */
+  UpdatedAt = 'updatedAt'
+}
+
+export type Buckets_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Buckets_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Buckets_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Buckets_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Buckets_Var_Pop_Fields = {
+  __typename?: 'buckets_var_pop_fields';
+  downloadExpiration?: Maybe<Scalars['Float']>;
+  maxUploadFileSize?: Maybe<Scalars['Float']>;
+  minUploadFileSize?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Buckets_Var_Samp_Fields = {
+  __typename?: 'buckets_var_samp_fields';
+  downloadExpiration?: Maybe<Scalars['Float']>;
+  maxUploadFileSize?: Maybe<Scalars['Float']>;
+  minUploadFileSize?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Buckets_Variance_Fields = {
+  __typename?: 'buckets_variance_fields';
+  downloadExpiration?: Maybe<Scalars['Float']>;
+  maxUploadFileSize?: Maybe<Scalars['Float']>;
+  minUploadFileSize?: Maybe<Scalars['Float']>;
+};
+
 /** Boolean expression to compare columns of type "bytea". All fields are combined with logical 'AND'. */
 export type Bytea_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['bytea']>;
@@ -1955,6 +2433,487 @@ export enum Cursor_Ordering {
   Desc = 'DESC'
 }
 
+/** columns and relationships of "storage.files" */
+export type Files = {
+  __typename?: 'files';
+  /** An object relationship */
+  bucket: Buckets;
+  bucketId: Scalars['String'];
+  createdAt: Scalars['timestamptz'];
+  etag?: Maybe<Scalars['String']>;
+  id: Scalars['uuid'];
+  isUploaded?: Maybe<Scalars['Boolean']>;
+  metadata?: Maybe<Scalars['jsonb']>;
+  mimeType?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  updatedAt: Scalars['timestamptz'];
+  uploadedByUserId?: Maybe<Scalars['uuid']>;
+};
+
+
+/** columns and relationships of "storage.files" */
+export type FilesMetadataArgs = {
+  path?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregated selection of "storage.files" */
+export type Files_Aggregate = {
+  __typename?: 'files_aggregate';
+  aggregate?: Maybe<Files_Aggregate_Fields>;
+  nodes: Array<Files>;
+};
+
+export type Files_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Files_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Files_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<Files_Aggregate_Bool_Exp_Count>;
+};
+
+export type Files_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Files_Select_Column_Files_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Files_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Files_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Files_Select_Column_Files_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Files_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Files_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Files_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Files_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "storage.files" */
+export type Files_Aggregate_Fields = {
+  __typename?: 'files_aggregate_fields';
+  avg?: Maybe<Files_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Files_Max_Fields>;
+  min?: Maybe<Files_Min_Fields>;
+  stddev?: Maybe<Files_Stddev_Fields>;
+  stddev_pop?: Maybe<Files_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Files_Stddev_Samp_Fields>;
+  sum?: Maybe<Files_Sum_Fields>;
+  var_pop?: Maybe<Files_Var_Pop_Fields>;
+  var_samp?: Maybe<Files_Var_Samp_Fields>;
+  variance?: Maybe<Files_Variance_Fields>;
+};
+
+
+/** aggregate fields of "storage.files" */
+export type Files_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Files_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "storage.files" */
+export type Files_Aggregate_Order_By = {
+  avg?: InputMaybe<Files_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Files_Max_Order_By>;
+  min?: InputMaybe<Files_Min_Order_By>;
+  stddev?: InputMaybe<Files_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Files_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Files_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Files_Sum_Order_By>;
+  var_pop?: InputMaybe<Files_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Files_Var_Samp_Order_By>;
+  variance?: InputMaybe<Files_Variance_Order_By>;
+};
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Files_Append_Input = {
+  metadata?: InputMaybe<Scalars['jsonb']>;
+};
+
+/** input type for inserting array relation for remote table "storage.files" */
+export type Files_Arr_Rel_Insert_Input = {
+  data: Array<Files_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Files_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Files_Avg_Fields = {
+  __typename?: 'files_avg_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "storage.files" */
+export type Files_Avg_Order_By = {
+  size?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "storage.files". All fields are combined with a logical 'AND'. */
+export type Files_Bool_Exp = {
+  _and?: InputMaybe<Array<Files_Bool_Exp>>;
+  _not?: InputMaybe<Files_Bool_Exp>;
+  _or?: InputMaybe<Array<Files_Bool_Exp>>;
+  bucket?: InputMaybe<Buckets_Bool_Exp>;
+  bucketId?: InputMaybe<String_Comparison_Exp>;
+  createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  etag?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  isUploaded?: InputMaybe<Boolean_Comparison_Exp>;
+  metadata?: InputMaybe<Jsonb_Comparison_Exp>;
+  mimeType?: InputMaybe<String_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  size?: InputMaybe<Int_Comparison_Exp>;
+  updatedAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  uploadedByUserId?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "storage.files" */
+export enum Files_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  FilesPkey = 'files_pkey'
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Files_Delete_At_Path_Input = {
+  metadata?: InputMaybe<Array<Scalars['String']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Files_Delete_Elem_Input = {
+  metadata?: InputMaybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Files_Delete_Key_Input = {
+  metadata?: InputMaybe<Scalars['String']>;
+};
+
+/** input type for incrementing numeric columns in table "storage.files" */
+export type Files_Inc_Input = {
+  size?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "storage.files" */
+export type Files_Insert_Input = {
+  bucket?: InputMaybe<Buckets_Obj_Rel_Insert_Input>;
+  bucketId?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  etag?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  isUploaded?: InputMaybe<Scalars['Boolean']>;
+  metadata?: InputMaybe<Scalars['jsonb']>;
+  mimeType?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  size?: InputMaybe<Scalars['Int']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  uploadedByUserId?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Files_Max_Fields = {
+  __typename?: 'files_max_fields';
+  bucketId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  etag?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  mimeType?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  uploadedByUserId?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "storage.files" */
+export type Files_Max_Order_By = {
+  bucketId?: InputMaybe<Order_By>;
+  createdAt?: InputMaybe<Order_By>;
+  etag?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  mimeType?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  size?: InputMaybe<Order_By>;
+  updatedAt?: InputMaybe<Order_By>;
+  uploadedByUserId?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Files_Min_Fields = {
+  __typename?: 'files_min_fields';
+  bucketId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  etag?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  mimeType?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  uploadedByUserId?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "storage.files" */
+export type Files_Min_Order_By = {
+  bucketId?: InputMaybe<Order_By>;
+  createdAt?: InputMaybe<Order_By>;
+  etag?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  mimeType?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  size?: InputMaybe<Order_By>;
+  updatedAt?: InputMaybe<Order_By>;
+  uploadedByUserId?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "storage.files" */
+export type Files_Mutation_Response = {
+  __typename?: 'files_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Files>;
+};
+
+/** input type for inserting object relation for remote table "storage.files" */
+export type Files_Obj_Rel_Insert_Input = {
+  data: Files_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Files_On_Conflict>;
+};
+
+/** on_conflict condition type for table "storage.files" */
+export type Files_On_Conflict = {
+  constraint: Files_Constraint;
+  update_columns?: Array<Files_Update_Column>;
+  where?: InputMaybe<Files_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "storage.files". */
+export type Files_Order_By = {
+  bucket?: InputMaybe<Buckets_Order_By>;
+  bucketId?: InputMaybe<Order_By>;
+  createdAt?: InputMaybe<Order_By>;
+  etag?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  isUploaded?: InputMaybe<Order_By>;
+  metadata?: InputMaybe<Order_By>;
+  mimeType?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  size?: InputMaybe<Order_By>;
+  updatedAt?: InputMaybe<Order_By>;
+  uploadedByUserId?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: storage.files */
+export type Files_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Files_Prepend_Input = {
+  metadata?: InputMaybe<Scalars['jsonb']>;
+};
+
+/** select columns of table "storage.files" */
+export enum Files_Select_Column {
+  /** column name */
+  BucketId = 'bucketId',
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  Etag = 'etag',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsUploaded = 'isUploaded',
+  /** column name */
+  Metadata = 'metadata',
+  /** column name */
+  MimeType = 'mimeType',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  Size = 'size',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  UploadedByUserId = 'uploadedByUserId'
+}
+
+/** select "files_aggregate_bool_exp_bool_and_arguments_columns" columns of table "storage.files" */
+export enum Files_Select_Column_Files_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsUploaded = 'isUploaded'
+}
+
+/** select "files_aggregate_bool_exp_bool_or_arguments_columns" columns of table "storage.files" */
+export enum Files_Select_Column_Files_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsUploaded = 'isUploaded'
+}
+
+/** input type for updating data in table "storage.files" */
+export type Files_Set_Input = {
+  bucketId?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  etag?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  isUploaded?: InputMaybe<Scalars['Boolean']>;
+  metadata?: InputMaybe<Scalars['jsonb']>;
+  mimeType?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  size?: InputMaybe<Scalars['Int']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  uploadedByUserId?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate stddev on columns */
+export type Files_Stddev_Fields = {
+  __typename?: 'files_stddev_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "storage.files" */
+export type Files_Stddev_Order_By = {
+  size?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Files_Stddev_Pop_Fields = {
+  __typename?: 'files_stddev_pop_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "storage.files" */
+export type Files_Stddev_Pop_Order_By = {
+  size?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Files_Stddev_Samp_Fields = {
+  __typename?: 'files_stddev_samp_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "storage.files" */
+export type Files_Stddev_Samp_Order_By = {
+  size?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "files" */
+export type Files_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Files_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Files_Stream_Cursor_Value_Input = {
+  bucketId?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  etag?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  isUploaded?: InputMaybe<Scalars['Boolean']>;
+  metadata?: InputMaybe<Scalars['jsonb']>;
+  mimeType?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  size?: InputMaybe<Scalars['Int']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  uploadedByUserId?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate sum on columns */
+export type Files_Sum_Fields = {
+  __typename?: 'files_sum_fields';
+  size?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "storage.files" */
+export type Files_Sum_Order_By = {
+  size?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "storage.files" */
+export enum Files_Update_Column {
+  /** column name */
+  BucketId = 'bucketId',
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  Etag = 'etag',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsUploaded = 'isUploaded',
+  /** column name */
+  Metadata = 'metadata',
+  /** column name */
+  MimeType = 'mimeType',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  Size = 'size',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  UploadedByUserId = 'uploadedByUserId'
+}
+
+export type Files_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<Files_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<Files_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<Files_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<Files_Delete_Key_Input>;
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Files_Inc_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<Files_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Files_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Files_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Files_Var_Pop_Fields = {
+  __typename?: 'files_var_pop_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "storage.files" */
+export type Files_Var_Pop_Order_By = {
+  size?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Files_Var_Samp_Fields = {
+  __typename?: 'files_var_samp_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "storage.files" */
+export type Files_Var_Samp_Order_By = {
+  size?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Files_Variance_Fields = {
+  __typename?: 'files_variance_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "storage.files" */
+export type Files_Variance_Order_By = {
+  size?: InputMaybe<Order_By>;
+};
+
 export type Jsonb_Cast_Exp = {
   String?: InputMaybe<String_Comparison_Exp>;
 };
@@ -2006,6 +2965,10 @@ export type Mutation_Root = {
   deleteAuthRole?: Maybe<AuthRoles>;
   /** delete data from the table: "auth.roles" */
   deleteAuthRoles?: Maybe<AuthRoles_Mutation_Response>;
+  /** delete single row from the table: "auth.telegram_bot_tokens" */
+  deleteAuthTelegramBotToken?: Maybe<AuthTelegramBotTokens>;
+  /** delete data from the table: "auth.telegram_bot_tokens" */
+  deleteAuthTelegramBotTokens?: Maybe<AuthTelegramBotTokens_Mutation_Response>;
   /** delete single row from the table: "auth.user_providers" */
   deleteAuthUserProvider?: Maybe<AuthUserProviders>;
   /** delete data from the table: "auth.user_providers" */
@@ -2018,10 +2981,30 @@ export type Mutation_Root = {
   deleteAuthUserSecurityKey?: Maybe<AuthUserSecurityKeys>;
   /** delete data from the table: "auth.user_security_keys" */
   deleteAuthUserSecurityKeys?: Maybe<AuthUserSecurityKeys_Mutation_Response>;
+  /** delete single row from the table: "storage.buckets" */
+  deleteBucket?: Maybe<Buckets>;
+  /** delete data from the table: "storage.buckets" */
+  deleteBuckets?: Maybe<Buckets_Mutation_Response>;
+  /** delete single row from the table: "storage.files" */
+  deleteFile?: Maybe<Files>;
+  /** delete data from the table: "storage.files" */
+  deleteFiles?: Maybe<Files_Mutation_Response>;
   /** delete single row from the table: "auth.users" */
   deleteUser?: Maybe<Users>;
   /** delete data from the table: "auth.users" */
   deleteUsers?: Maybe<Users_Mutation_Response>;
+  /** delete single row from the table: "storage.virus" */
+  deleteVirus?: Maybe<Virus>;
+  /** delete data from the table: "storage.virus" */
+  deleteViruses?: Maybe<Virus_Mutation_Response>;
+  /** delete data from the table: "otp_code" */
+  delete_otp_code?: Maybe<Otp_Code_Mutation_Response>;
+  /** delete single row from the table: "otp_code" */
+  delete_otp_code_by_pk?: Maybe<Otp_Code>;
+  /** delete data from the table: "part" */
+  delete_part?: Maybe<Part_Mutation_Response>;
+  /** delete single row from the table: "part" */
+  delete_part_by_pk?: Maybe<Part>;
   /** insert a single row into the table: "auth.providers" */
   insertAuthProvider?: Maybe<AuthProviders>;
   /** insert a single row into the table: "auth.provider_requests" */
@@ -2042,6 +3025,10 @@ export type Mutation_Root = {
   insertAuthRole?: Maybe<AuthRoles>;
   /** insert data into the table: "auth.roles" */
   insertAuthRoles?: Maybe<AuthRoles_Mutation_Response>;
+  /** insert a single row into the table: "auth.telegram_bot_tokens" */
+  insertAuthTelegramBotToken?: Maybe<AuthTelegramBotTokens>;
+  /** insert data into the table: "auth.telegram_bot_tokens" */
+  insertAuthTelegramBotTokens?: Maybe<AuthTelegramBotTokens_Mutation_Response>;
   /** insert a single row into the table: "auth.user_providers" */
   insertAuthUserProvider?: Maybe<AuthUserProviders>;
   /** insert data into the table: "auth.user_providers" */
@@ -2054,10 +3041,30 @@ export type Mutation_Root = {
   insertAuthUserSecurityKey?: Maybe<AuthUserSecurityKeys>;
   /** insert data into the table: "auth.user_security_keys" */
   insertAuthUserSecurityKeys?: Maybe<AuthUserSecurityKeys_Mutation_Response>;
+  /** insert a single row into the table: "storage.buckets" */
+  insertBucket?: Maybe<Buckets>;
+  /** insert data into the table: "storage.buckets" */
+  insertBuckets?: Maybe<Buckets_Mutation_Response>;
+  /** insert a single row into the table: "storage.files" */
+  insertFile?: Maybe<Files>;
+  /** insert data into the table: "storage.files" */
+  insertFiles?: Maybe<Files_Mutation_Response>;
   /** insert a single row into the table: "auth.users" */
   insertUser?: Maybe<Users>;
   /** insert data into the table: "auth.users" */
   insertUsers?: Maybe<Users_Mutation_Response>;
+  /** insert a single row into the table: "storage.virus" */
+  insertVirus?: Maybe<Virus>;
+  /** insert data into the table: "storage.virus" */
+  insertViruses?: Maybe<Virus_Mutation_Response>;
+  /** insert data into the table: "otp_code" */
+  insert_otp_code?: Maybe<Otp_Code_Mutation_Response>;
+  /** insert a single row into the table: "otp_code" */
+  insert_otp_code_one?: Maybe<Otp_Code>;
+  /** insert data into the table: "part" */
+  insert_part?: Maybe<Part_Mutation_Response>;
+  /** insert a single row into the table: "part" */
+  insert_part_one?: Maybe<Part>;
   /** update single row of the table: "auth.providers" */
   updateAuthProvider?: Maybe<AuthProviders>;
   /** update single row of the table: "auth.provider_requests" */
@@ -2078,6 +3085,10 @@ export type Mutation_Root = {
   updateAuthRole?: Maybe<AuthRoles>;
   /** update data of the table: "auth.roles" */
   updateAuthRoles?: Maybe<AuthRoles_Mutation_Response>;
+  /** update single row of the table: "auth.telegram_bot_tokens" */
+  updateAuthTelegramBotToken?: Maybe<AuthTelegramBotTokens>;
+  /** update data of the table: "auth.telegram_bot_tokens" */
+  updateAuthTelegramBotTokens?: Maybe<AuthTelegramBotTokens_Mutation_Response>;
   /** update single row of the table: "auth.user_providers" */
   updateAuthUserProvider?: Maybe<AuthUserProviders>;
   /** update data of the table: "auth.user_providers" */
@@ -2090,10 +3101,22 @@ export type Mutation_Root = {
   updateAuthUserSecurityKey?: Maybe<AuthUserSecurityKeys>;
   /** update data of the table: "auth.user_security_keys" */
   updateAuthUserSecurityKeys?: Maybe<AuthUserSecurityKeys_Mutation_Response>;
+  /** update single row of the table: "storage.buckets" */
+  updateBucket?: Maybe<Buckets>;
+  /** update data of the table: "storage.buckets" */
+  updateBuckets?: Maybe<Buckets_Mutation_Response>;
+  /** update single row of the table: "storage.files" */
+  updateFile?: Maybe<Files>;
+  /** update data of the table: "storage.files" */
+  updateFiles?: Maybe<Files_Mutation_Response>;
   /** update single row of the table: "auth.users" */
   updateUser?: Maybe<Users>;
   /** update data of the table: "auth.users" */
   updateUsers?: Maybe<Users_Mutation_Response>;
+  /** update single row of the table: "storage.virus" */
+  updateVirus?: Maybe<Virus>;
+  /** update data of the table: "storage.virus" */
+  updateViruses?: Maybe<Virus_Mutation_Response>;
   /** update multiples rows of table: "auth.provider_requests" */
   update_authProviderRequests_many?: Maybe<Array<Maybe<AuthProviderRequests_Mutation_Response>>>;
   /** update multiples rows of table: "auth.providers" */
@@ -2104,14 +3127,34 @@ export type Mutation_Root = {
   update_authRefreshTokens_many?: Maybe<Array<Maybe<AuthRefreshTokens_Mutation_Response>>>;
   /** update multiples rows of table: "auth.roles" */
   update_authRoles_many?: Maybe<Array<Maybe<AuthRoles_Mutation_Response>>>;
+  /** update multiples rows of table: "auth.telegram_bot_tokens" */
+  update_authTelegramBotTokens_many?: Maybe<Array<Maybe<AuthTelegramBotTokens_Mutation_Response>>>;
   /** update multiples rows of table: "auth.user_providers" */
   update_authUserProviders_many?: Maybe<Array<Maybe<AuthUserProviders_Mutation_Response>>>;
   /** update multiples rows of table: "auth.user_roles" */
   update_authUserRoles_many?: Maybe<Array<Maybe<AuthUserRoles_Mutation_Response>>>;
   /** update multiples rows of table: "auth.user_security_keys" */
   update_authUserSecurityKeys_many?: Maybe<Array<Maybe<AuthUserSecurityKeys_Mutation_Response>>>;
+  /** update multiples rows of table: "storage.buckets" */
+  update_buckets_many?: Maybe<Array<Maybe<Buckets_Mutation_Response>>>;
+  /** update multiples rows of table: "storage.files" */
+  update_files_many?: Maybe<Array<Maybe<Files_Mutation_Response>>>;
+  /** update data of the table: "otp_code" */
+  update_otp_code?: Maybe<Otp_Code_Mutation_Response>;
+  /** update single row of the table: "otp_code" */
+  update_otp_code_by_pk?: Maybe<Otp_Code>;
+  /** update multiples rows of table: "otp_code" */
+  update_otp_code_many?: Maybe<Array<Maybe<Otp_Code_Mutation_Response>>>;
+  /** update data of the table: "part" */
+  update_part?: Maybe<Part_Mutation_Response>;
+  /** update single row of the table: "part" */
+  update_part_by_pk?: Maybe<Part>;
+  /** update multiples rows of table: "part" */
+  update_part_many?: Maybe<Array<Maybe<Part_Mutation_Response>>>;
   /** update multiples rows of table: "auth.users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+  /** update multiples rows of table: "storage.virus" */
+  update_virus_many?: Maybe<Array<Maybe<Virus_Mutation_Response>>>;
 };
 
 
@@ -2176,6 +3219,18 @@ export type Mutation_RootDeleteAuthRolesArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDeleteAuthTelegramBotTokenArgs = {
+  id: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteAuthTelegramBotTokensArgs = {
+  where: AuthTelegramBotTokens_Bool_Exp;
+};
+
+
+/** mutation root */
 export type Mutation_RootDeleteAuthUserProviderArgs = {
   id: Scalars['uuid'];
 };
@@ -2212,6 +3267,30 @@ export type Mutation_RootDeleteAuthUserSecurityKeysArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDeleteBucketArgs = {
+  id: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteBucketsArgs = {
+  where: Buckets_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteFileArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteFilesArgs = {
+  where: Files_Bool_Exp;
+};
+
+
+/** mutation root */
 export type Mutation_RootDeleteUserArgs = {
   id: Scalars['uuid'];
 };
@@ -2220,6 +3299,42 @@ export type Mutation_RootDeleteUserArgs = {
 /** mutation root */
 export type Mutation_RootDeleteUsersArgs = {
   where: Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteVirusArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteVirusesArgs = {
+  where: Virus_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Otp_CodeArgs = {
+  where: Otp_Code_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Otp_Code_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_PartArgs = {
+  where: Part_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Part_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -2294,6 +3409,20 @@ export type Mutation_RootInsertAuthRolesArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsertAuthTelegramBotTokenArgs = {
+  object: AuthTelegramBotTokens_Insert_Input;
+  on_conflict?: InputMaybe<AuthTelegramBotTokens_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertAuthTelegramBotTokensArgs = {
+  objects: Array<AuthTelegramBotTokens_Insert_Input>;
+  on_conflict?: InputMaybe<AuthTelegramBotTokens_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsertAuthUserProviderArgs = {
   object: AuthUserProviders_Insert_Input;
   on_conflict?: InputMaybe<AuthUserProviders_On_Conflict>;
@@ -2336,6 +3465,34 @@ export type Mutation_RootInsertAuthUserSecurityKeysArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsertBucketArgs = {
+  object: Buckets_Insert_Input;
+  on_conflict?: InputMaybe<Buckets_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertBucketsArgs = {
+  objects: Array<Buckets_Insert_Input>;
+  on_conflict?: InputMaybe<Buckets_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertFileArgs = {
+  object: Files_Insert_Input;
+  on_conflict?: InputMaybe<Files_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertFilesArgs = {
+  objects: Array<Files_Insert_Input>;
+  on_conflict?: InputMaybe<Files_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsertUserArgs = {
   object: Users_Insert_Input;
   on_conflict?: InputMaybe<Users_On_Conflict>;
@@ -2346,6 +3503,48 @@ export type Mutation_RootInsertUserArgs = {
 export type Mutation_RootInsertUsersArgs = {
   objects: Array<Users_Insert_Input>;
   on_conflict?: InputMaybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertVirusArgs = {
+  object: Virus_Insert_Input;
+  on_conflict?: InputMaybe<Virus_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertVirusesArgs = {
+  objects: Array<Virus_Insert_Input>;
+  on_conflict?: InputMaybe<Virus_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Otp_CodeArgs = {
+  objects: Array<Otp_Code_Insert_Input>;
+  on_conflict?: InputMaybe<Otp_Code_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Otp_Code_OneArgs = {
+  object: Otp_Code_Insert_Input;
+  on_conflict?: InputMaybe<Otp_Code_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_PartArgs = {
+  objects: Array<Part_Insert_Input>;
+  on_conflict?: InputMaybe<Part_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Part_OneArgs = {
+  object: Part_Insert_Input;
+  on_conflict?: InputMaybe<Part_On_Conflict>;
 };
 
 
@@ -2440,6 +3639,20 @@ export type Mutation_RootUpdateAuthRolesArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdateAuthTelegramBotTokenArgs = {
+  _set?: InputMaybe<AuthTelegramBotTokens_Set_Input>;
+  pk_columns: AuthTelegramBotTokens_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateAuthTelegramBotTokensArgs = {
+  _set?: InputMaybe<AuthTelegramBotTokens_Set_Input>;
+  where: AuthTelegramBotTokens_Bool_Exp;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdateAuthUserProviderArgs = {
   _set?: InputMaybe<AuthUserProviders_Set_Input>;
   pk_columns: AuthUserProviders_Pk_Columns_Input;
@@ -2484,6 +3697,48 @@ export type Mutation_RootUpdateAuthUserSecurityKeysArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdateBucketArgs = {
+  _inc?: InputMaybe<Buckets_Inc_Input>;
+  _set?: InputMaybe<Buckets_Set_Input>;
+  pk_columns: Buckets_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateBucketsArgs = {
+  _inc?: InputMaybe<Buckets_Inc_Input>;
+  _set?: InputMaybe<Buckets_Set_Input>;
+  where: Buckets_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateFileArgs = {
+  _append?: InputMaybe<Files_Append_Input>;
+  _delete_at_path?: InputMaybe<Files_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Files_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Files_Delete_Key_Input>;
+  _inc?: InputMaybe<Files_Inc_Input>;
+  _prepend?: InputMaybe<Files_Prepend_Input>;
+  _set?: InputMaybe<Files_Set_Input>;
+  pk_columns: Files_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateFilesArgs = {
+  _append?: InputMaybe<Files_Append_Input>;
+  _delete_at_path?: InputMaybe<Files_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Files_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Files_Delete_Key_Input>;
+  _inc?: InputMaybe<Files_Inc_Input>;
+  _prepend?: InputMaybe<Files_Prepend_Input>;
+  _set?: InputMaybe<Files_Set_Input>;
+  where: Files_Bool_Exp;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdateUserArgs = {
   _append?: InputMaybe<Users_Append_Input>;
   _delete_at_path?: InputMaybe<Users_Delete_At_Path_Input>;
@@ -2504,6 +3759,30 @@ export type Mutation_RootUpdateUsersArgs = {
   _prepend?: InputMaybe<Users_Prepend_Input>;
   _set?: InputMaybe<Users_Set_Input>;
   where: Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateVirusArgs = {
+  _append?: InputMaybe<Virus_Append_Input>;
+  _delete_at_path?: InputMaybe<Virus_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Virus_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Virus_Delete_Key_Input>;
+  _prepend?: InputMaybe<Virus_Prepend_Input>;
+  _set?: InputMaybe<Virus_Set_Input>;
+  pk_columns: Virus_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateVirusesArgs = {
+  _append?: InputMaybe<Virus_Append_Input>;
+  _delete_at_path?: InputMaybe<Virus_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Virus_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Virus_Delete_Key_Input>;
+  _prepend?: InputMaybe<Virus_Prepend_Input>;
+  _set?: InputMaybe<Virus_Set_Input>;
+  where: Virus_Bool_Exp;
 };
 
 
@@ -2538,6 +3817,12 @@ export type Mutation_RootUpdate_AuthRoles_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_AuthTelegramBotTokens_ManyArgs = {
+  updates: Array<AuthTelegramBotTokens_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_AuthUserProviders_ManyArgs = {
   updates: Array<AuthUserProviders_Updates>;
 };
@@ -2556,8 +3841,68 @@ export type Mutation_RootUpdate_AuthUserSecurityKeys_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Buckets_ManyArgs = {
+  updates: Array<Buckets_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Files_ManyArgs = {
+  updates: Array<Files_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Otp_CodeArgs = {
+  _set?: InputMaybe<Otp_Code_Set_Input>;
+  where: Otp_Code_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Otp_Code_By_PkArgs = {
+  _set?: InputMaybe<Otp_Code_Set_Input>;
+  pk_columns: Otp_Code_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Otp_Code_ManyArgs = {
+  updates: Array<Otp_Code_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_PartArgs = {
+  _inc?: InputMaybe<Part_Inc_Input>;
+  _set?: InputMaybe<Part_Set_Input>;
+  where: Part_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Part_By_PkArgs = {
+  _inc?: InputMaybe<Part_Inc_Input>;
+  _set?: InputMaybe<Part_Set_Input>;
+  pk_columns: Part_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Part_ManyArgs = {
+  updates: Array<Part_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Users_ManyArgs = {
   updates: Array<Users_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Virus_ManyArgs = {
+  updates: Array<Virus_Updates>;
 };
 
 /** column ordering options */
@@ -2575,6 +3920,385 @@ export enum Order_By {
   /** in descending order, nulls last */
   DescNullsLast = 'desc_nulls_last'
 }
+
+/** columns and relationships of "otp_code" */
+export type Otp_Code = {
+  __typename?: 'otp_code';
+  code: Scalars['String'];
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id: Scalars['uuid'];
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregated selection of "otp_code" */
+export type Otp_Code_Aggregate = {
+  __typename?: 'otp_code_aggregate';
+  aggregate?: Maybe<Otp_Code_Aggregate_Fields>;
+  nodes: Array<Otp_Code>;
+};
+
+/** aggregate fields of "otp_code" */
+export type Otp_Code_Aggregate_Fields = {
+  __typename?: 'otp_code_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Otp_Code_Max_Fields>;
+  min?: Maybe<Otp_Code_Min_Fields>;
+};
+
+
+/** aggregate fields of "otp_code" */
+export type Otp_Code_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Otp_Code_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "otp_code". All fields are combined with a logical 'AND'. */
+export type Otp_Code_Bool_Exp = {
+  _and?: InputMaybe<Array<Otp_Code_Bool_Exp>>;
+  _not?: InputMaybe<Otp_Code_Bool_Exp>;
+  _or?: InputMaybe<Array<Otp_Code_Bool_Exp>>;
+  code?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "otp_code" */
+export enum Otp_Code_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  OtpCodePkey = 'otp_code_pkey'
+}
+
+/** input type for inserting data into table "otp_code" */
+export type Otp_Code_Insert_Input = {
+  code?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Otp_Code_Max_Fields = {
+  __typename?: 'otp_code_max_fields';
+  code?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate min on columns */
+export type Otp_Code_Min_Fields = {
+  __typename?: 'otp_code_min_fields';
+  code?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** response of any mutation on the table "otp_code" */
+export type Otp_Code_Mutation_Response = {
+  __typename?: 'otp_code_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Otp_Code>;
+};
+
+/** on_conflict condition type for table "otp_code" */
+export type Otp_Code_On_Conflict = {
+  constraint: Otp_Code_Constraint;
+  update_columns?: Array<Otp_Code_Update_Column>;
+  where?: InputMaybe<Otp_Code_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "otp_code". */
+export type Otp_Code_Order_By = {
+  code?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: otp_code */
+export type Otp_Code_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "otp_code" */
+export enum Otp_Code_Select_Column {
+  /** column name */
+  Code = 'code',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "otp_code" */
+export type Otp_Code_Set_Input = {
+  code?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** Streaming cursor of the table "otp_code" */
+export type Otp_Code_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Otp_Code_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Otp_Code_Stream_Cursor_Value_Input = {
+  code?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "otp_code" */
+export enum Otp_Code_Update_Column {
+  /** column name */
+  Code = 'code',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Otp_Code_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Otp_Code_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Otp_Code_Bool_Exp;
+};
+
+/** columns and relationships of "part" */
+export type Part = {
+  __typename?: 'part';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "part" */
+export type Part_Aggregate = {
+  __typename?: 'part_aggregate';
+  aggregate?: Maybe<Part_Aggregate_Fields>;
+  nodes: Array<Part>;
+};
+
+/** aggregate fields of "part" */
+export type Part_Aggregate_Fields = {
+  __typename?: 'part_aggregate_fields';
+  avg?: Maybe<Part_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Part_Max_Fields>;
+  min?: Maybe<Part_Min_Fields>;
+  stddev?: Maybe<Part_Stddev_Fields>;
+  stddev_pop?: Maybe<Part_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Part_Stddev_Samp_Fields>;
+  sum?: Maybe<Part_Sum_Fields>;
+  var_pop?: Maybe<Part_Var_Pop_Fields>;
+  var_samp?: Maybe<Part_Var_Samp_Fields>;
+  variance?: Maybe<Part_Variance_Fields>;
+};
+
+
+/** aggregate fields of "part" */
+export type Part_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Part_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type Part_Avg_Fields = {
+  __typename?: 'part_avg_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "part". All fields are combined with a logical 'AND'. */
+export type Part_Bool_Exp = {
+  _and?: InputMaybe<Array<Part_Bool_Exp>>;
+  _not?: InputMaybe<Part_Bool_Exp>;
+  _or?: InputMaybe<Array<Part_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "part" */
+export enum Part_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  PartPkey = 'part_pkey'
+}
+
+/** input type for incrementing numeric columns in table "part" */
+export type Part_Inc_Input = {
+  id?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "part" */
+export type Part_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Part_Max_Fields = {
+  __typename?: 'part_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate min on columns */
+export type Part_Min_Fields = {
+  __typename?: 'part_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** response of any mutation on the table "part" */
+export type Part_Mutation_Response = {
+  __typename?: 'part_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Part>;
+};
+
+/** on_conflict condition type for table "part" */
+export type Part_On_Conflict = {
+  constraint: Part_Constraint;
+  update_columns?: Array<Part_Update_Column>;
+  where?: InputMaybe<Part_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "part". */
+export type Part_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: part */
+export type Part_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "part" */
+export enum Part_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "part" */
+export type Part_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Part_Stddev_Fields = {
+  __typename?: 'part_stddev_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Part_Stddev_Pop_Fields = {
+  __typename?: 'part_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Part_Stddev_Samp_Fields = {
+  __typename?: 'part_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** Streaming cursor of the table "part" */
+export type Part_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Part_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Part_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate sum on columns */
+export type Part_Sum_Fields = {
+  __typename?: 'part_sum_fields';
+  id?: Maybe<Scalars['Int']>;
+};
+
+/** update columns of table "part" */
+export enum Part_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Part_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Part_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Part_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Part_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Part_Var_Pop_Fields = {
+  __typename?: 'part_var_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Part_Var_Samp_Fields = {
+  __typename?: 'part_var_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Part_Variance_Fields = {
+  __typename?: 'part_variance_fields';
+  id?: Maybe<Scalars['Float']>;
+};
 
 export type Query_Root = {
   __typename?: 'query_root';
@@ -2608,6 +4332,12 @@ export type Query_Root = {
   authRoles: Array<AuthRoles>;
   /** fetch aggregated fields from the table: "auth.roles" */
   authRolesAggregate: AuthRoles_Aggregate;
+  /** fetch data from the table: "auth.telegram_bot_tokens" using primary key columns */
+  authTelegramBotToken?: Maybe<AuthTelegramBotTokens>;
+  /** fetch data from the table: "auth.telegram_bot_tokens" */
+  authTelegramBotTokens: Array<AuthTelegramBotTokens>;
+  /** fetch aggregated fields from the table: "auth.telegram_bot_tokens" */
+  authTelegramBotTokens_aggregate: AuthTelegramBotTokens_Aggregate;
   /** fetch data from the table: "auth.user_providers" using primary key columns */
   authUserProvider?: Maybe<AuthUserProviders>;
   /** fetch data from the table: "auth.user_providers" */
@@ -2626,12 +4356,42 @@ export type Query_Root = {
   authUserSecurityKeys: Array<AuthUserSecurityKeys>;
   /** fetch aggregated fields from the table: "auth.user_security_keys" */
   authUserSecurityKeysAggregate: AuthUserSecurityKeys_Aggregate;
+  /** fetch data from the table: "storage.buckets" using primary key columns */
+  bucket?: Maybe<Buckets>;
+  /** fetch data from the table: "storage.buckets" */
+  buckets: Array<Buckets>;
+  /** fetch aggregated fields from the table: "storage.buckets" */
+  bucketsAggregate: Buckets_Aggregate;
+  /** fetch data from the table: "storage.files" using primary key columns */
+  file?: Maybe<Files>;
+  /** An array relationship */
+  files: Array<Files>;
+  /** fetch aggregated fields from the table: "storage.files" */
+  filesAggregate: Files_Aggregate;
+  /** fetch data from the table: "otp_code" */
+  otp_code: Array<Otp_Code>;
+  /** fetch aggregated fields from the table: "otp_code" */
+  otp_code_aggregate: Otp_Code_Aggregate;
+  /** fetch data from the table: "otp_code" using primary key columns */
+  otp_code_by_pk?: Maybe<Otp_Code>;
+  /** fetch data from the table: "part" */
+  part: Array<Part>;
+  /** fetch aggregated fields from the table: "part" */
+  part_aggregate: Part_Aggregate;
+  /** fetch data from the table: "part" using primary key columns */
+  part_by_pk?: Maybe<Part>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "auth.users" */
   usersAggregate: Users_Aggregate;
+  /** fetch data from the table: "storage.virus" using primary key columns */
+  virus?: Maybe<Virus>;
+  /** fetch data from the table: "storage.virus" */
+  viruses: Array<Virus>;
+  /** fetch aggregated fields from the table: "storage.virus" */
+  virusesAggregate: Virus_Aggregate;
 };
 
 
@@ -2750,6 +4510,29 @@ export type Query_RootAuthRolesAggregateArgs = {
 };
 
 
+export type Query_RootAuthTelegramBotTokenArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Query_RootAuthTelegramBotTokensArgs = {
+  distinct_on?: InputMaybe<Array<AuthTelegramBotTokens_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<AuthTelegramBotTokens_Order_By>>;
+  where?: InputMaybe<AuthTelegramBotTokens_Bool_Exp>;
+};
+
+
+export type Query_RootAuthTelegramBotTokens_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<AuthTelegramBotTokens_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<AuthTelegramBotTokens_Order_By>>;
+  where?: InputMaybe<AuthTelegramBotTokens_Bool_Exp>;
+};
+
+
 export type Query_RootAuthUserProviderArgs = {
   id: Scalars['uuid'];
 };
@@ -2819,6 +4602,98 @@ export type Query_RootAuthUserSecurityKeysAggregateArgs = {
 };
 
 
+export type Query_RootBucketArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Query_RootBucketsArgs = {
+  distinct_on?: InputMaybe<Array<Buckets_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Buckets_Order_By>>;
+  where?: InputMaybe<Buckets_Bool_Exp>;
+};
+
+
+export type Query_RootBucketsAggregateArgs = {
+  distinct_on?: InputMaybe<Array<Buckets_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Buckets_Order_By>>;
+  where?: InputMaybe<Buckets_Bool_Exp>;
+};
+
+
+export type Query_RootFileArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootFilesArgs = {
+  distinct_on?: InputMaybe<Array<Files_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Files_Order_By>>;
+  where?: InputMaybe<Files_Bool_Exp>;
+};
+
+
+export type Query_RootFilesAggregateArgs = {
+  distinct_on?: InputMaybe<Array<Files_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Files_Order_By>>;
+  where?: InputMaybe<Files_Bool_Exp>;
+};
+
+
+export type Query_RootOtp_CodeArgs = {
+  distinct_on?: InputMaybe<Array<Otp_Code_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Otp_Code_Order_By>>;
+  where?: InputMaybe<Otp_Code_Bool_Exp>;
+};
+
+
+export type Query_RootOtp_Code_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Otp_Code_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Otp_Code_Order_By>>;
+  where?: InputMaybe<Otp_Code_Bool_Exp>;
+};
+
+
+export type Query_RootOtp_Code_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootPartArgs = {
+  distinct_on?: InputMaybe<Array<Part_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Part_Order_By>>;
+  where?: InputMaybe<Part_Bool_Exp>;
+};
+
+
+export type Query_RootPart_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Part_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Part_Order_By>>;
+  where?: InputMaybe<Part_Bool_Exp>;
+};
+
+
+export type Query_RootPart_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type Query_RootUserArgs = {
   id: Scalars['uuid'];
 };
@@ -2839,6 +4714,29 @@ export type Query_RootUsersAggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Users_Order_By>>;
   where?: InputMaybe<Users_Bool_Exp>;
+};
+
+
+export type Query_RootVirusArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootVirusesArgs = {
+  distinct_on?: InputMaybe<Array<Virus_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Virus_Order_By>>;
+  where?: InputMaybe<Virus_Bool_Exp>;
+};
+
+
+export type Query_RootVirusesAggregateArgs = {
+  distinct_on?: InputMaybe<Array<Virus_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Virus_Order_By>>;
+  where?: InputMaybe<Virus_Bool_Exp>;
 };
 
 export type Subscription_Root = {
@@ -2883,6 +4781,14 @@ export type Subscription_Root = {
   authRolesAggregate: AuthRoles_Aggregate;
   /** fetch data from the table in a streaming manner: "auth.roles" */
   authRoles_stream: Array<AuthRoles>;
+  /** fetch data from the table: "auth.telegram_bot_tokens" using primary key columns */
+  authTelegramBotToken?: Maybe<AuthTelegramBotTokens>;
+  /** fetch data from the table: "auth.telegram_bot_tokens" */
+  authTelegramBotTokens: Array<AuthTelegramBotTokens>;
+  /** fetch aggregated fields from the table: "auth.telegram_bot_tokens" */
+  authTelegramBotTokens_aggregate: AuthTelegramBotTokens_Aggregate;
+  /** fetch data from the table in a streaming manner: "auth.telegram_bot_tokens" */
+  authTelegramBotTokens_stream: Array<AuthTelegramBotTokens>;
   /** fetch data from the table: "auth.user_providers" using primary key columns */
   authUserProvider?: Maybe<AuthUserProviders>;
   /** fetch data from the table: "auth.user_providers" */
@@ -2907,6 +4813,38 @@ export type Subscription_Root = {
   authUserSecurityKeysAggregate: AuthUserSecurityKeys_Aggregate;
   /** fetch data from the table in a streaming manner: "auth.user_security_keys" */
   authUserSecurityKeys_stream: Array<AuthUserSecurityKeys>;
+  /** fetch data from the table: "storage.buckets" using primary key columns */
+  bucket?: Maybe<Buckets>;
+  /** fetch data from the table: "storage.buckets" */
+  buckets: Array<Buckets>;
+  /** fetch aggregated fields from the table: "storage.buckets" */
+  bucketsAggregate: Buckets_Aggregate;
+  /** fetch data from the table in a streaming manner: "storage.buckets" */
+  buckets_stream: Array<Buckets>;
+  /** fetch data from the table: "storage.files" using primary key columns */
+  file?: Maybe<Files>;
+  /** An array relationship */
+  files: Array<Files>;
+  /** fetch aggregated fields from the table: "storage.files" */
+  filesAggregate: Files_Aggregate;
+  /** fetch data from the table in a streaming manner: "storage.files" */
+  files_stream: Array<Files>;
+  /** fetch data from the table: "otp_code" */
+  otp_code: Array<Otp_Code>;
+  /** fetch aggregated fields from the table: "otp_code" */
+  otp_code_aggregate: Otp_Code_Aggregate;
+  /** fetch data from the table: "otp_code" using primary key columns */
+  otp_code_by_pk?: Maybe<Otp_Code>;
+  /** fetch data from the table in a streaming manner: "otp_code" */
+  otp_code_stream: Array<Otp_Code>;
+  /** fetch data from the table: "part" */
+  part: Array<Part>;
+  /** fetch aggregated fields from the table: "part" */
+  part_aggregate: Part_Aggregate;
+  /** fetch data from the table: "part" using primary key columns */
+  part_by_pk?: Maybe<Part>;
+  /** fetch data from the table in a streaming manner: "part" */
+  part_stream: Array<Part>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
   /** fetch data from the table: "auth.users" */
@@ -2915,6 +4853,14 @@ export type Subscription_Root = {
   usersAggregate: Users_Aggregate;
   /** fetch data from the table in a streaming manner: "auth.users" */
   users_stream: Array<Users>;
+  /** fetch data from the table: "storage.virus" using primary key columns */
+  virus?: Maybe<Virus>;
+  /** fetch data from the table in a streaming manner: "storage.virus" */
+  virus_stream: Array<Virus>;
+  /** fetch data from the table: "storage.virus" */
+  viruses: Array<Virus>;
+  /** fetch aggregated fields from the table: "storage.virus" */
+  virusesAggregate: Virus_Aggregate;
 };
 
 
@@ -3068,6 +5014,36 @@ export type Subscription_RootAuthRoles_StreamArgs = {
 };
 
 
+export type Subscription_RootAuthTelegramBotTokenArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Subscription_RootAuthTelegramBotTokensArgs = {
+  distinct_on?: InputMaybe<Array<AuthTelegramBotTokens_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<AuthTelegramBotTokens_Order_By>>;
+  where?: InputMaybe<AuthTelegramBotTokens_Bool_Exp>;
+};
+
+
+export type Subscription_RootAuthTelegramBotTokens_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<AuthTelegramBotTokens_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<AuthTelegramBotTokens_Order_By>>;
+  where?: InputMaybe<AuthTelegramBotTokens_Bool_Exp>;
+};
+
+
+export type Subscription_RootAuthTelegramBotTokens_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<AuthTelegramBotTokens_Stream_Cursor_Input>>;
+  where?: InputMaybe<AuthTelegramBotTokens_Bool_Exp>;
+};
+
+
 export type Subscription_RootAuthUserProviderArgs = {
   id: Scalars['uuid'];
 };
@@ -3158,6 +5134,126 @@ export type Subscription_RootAuthUserSecurityKeys_StreamArgs = {
 };
 
 
+export type Subscription_RootBucketArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Subscription_RootBucketsArgs = {
+  distinct_on?: InputMaybe<Array<Buckets_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Buckets_Order_By>>;
+  where?: InputMaybe<Buckets_Bool_Exp>;
+};
+
+
+export type Subscription_RootBucketsAggregateArgs = {
+  distinct_on?: InputMaybe<Array<Buckets_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Buckets_Order_By>>;
+  where?: InputMaybe<Buckets_Bool_Exp>;
+};
+
+
+export type Subscription_RootBuckets_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Buckets_Stream_Cursor_Input>>;
+  where?: InputMaybe<Buckets_Bool_Exp>;
+};
+
+
+export type Subscription_RootFileArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootFilesArgs = {
+  distinct_on?: InputMaybe<Array<Files_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Files_Order_By>>;
+  where?: InputMaybe<Files_Bool_Exp>;
+};
+
+
+export type Subscription_RootFilesAggregateArgs = {
+  distinct_on?: InputMaybe<Array<Files_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Files_Order_By>>;
+  where?: InputMaybe<Files_Bool_Exp>;
+};
+
+
+export type Subscription_RootFiles_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Files_Stream_Cursor_Input>>;
+  where?: InputMaybe<Files_Bool_Exp>;
+};
+
+
+export type Subscription_RootOtp_CodeArgs = {
+  distinct_on?: InputMaybe<Array<Otp_Code_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Otp_Code_Order_By>>;
+  where?: InputMaybe<Otp_Code_Bool_Exp>;
+};
+
+
+export type Subscription_RootOtp_Code_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Otp_Code_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Otp_Code_Order_By>>;
+  where?: InputMaybe<Otp_Code_Bool_Exp>;
+};
+
+
+export type Subscription_RootOtp_Code_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootOtp_Code_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Otp_Code_Stream_Cursor_Input>>;
+  where?: InputMaybe<Otp_Code_Bool_Exp>;
+};
+
+
+export type Subscription_RootPartArgs = {
+  distinct_on?: InputMaybe<Array<Part_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Part_Order_By>>;
+  where?: InputMaybe<Part_Bool_Exp>;
+};
+
+
+export type Subscription_RootPart_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Part_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Part_Order_By>>;
+  where?: InputMaybe<Part_Bool_Exp>;
+};
+
+
+export type Subscription_RootPart_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootPart_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Part_Stream_Cursor_Input>>;
+  where?: InputMaybe<Part_Bool_Exp>;
+};
+
+
 export type Subscription_RootUserArgs = {
   id: Scalars['uuid'];
 };
@@ -3185,6 +5281,36 @@ export type Subscription_RootUsers_StreamArgs = {
   batch_size: Scalars['Int'];
   cursor: Array<InputMaybe<Users_Stream_Cursor_Input>>;
   where?: InputMaybe<Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootVirusArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootVirus_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Virus_Stream_Cursor_Input>>;
+  where?: InputMaybe<Virus_Bool_Exp>;
+};
+
+
+export type Subscription_RootVirusesArgs = {
+  distinct_on?: InputMaybe<Array<Virus_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Virus_Order_By>>;
+  where?: InputMaybe<Virus_Bool_Exp>;
+};
+
+
+export type Subscription_RootVirusesAggregateArgs = {
+  distinct_on?: InputMaybe<Array<Virus_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Virus_Order_By>>;
+  where?: InputMaybe<Virus_Bool_Exp>;
 };
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -3238,6 +5364,7 @@ export type Users = {
   securityKeys: Array<AuthUserSecurityKeys>;
   /** An aggregate relationship */
   securityKeys_aggregate: AuthUserSecurityKeys_Aggregate;
+  telegramId?: Maybe<Scalars['String']>;
   ticket?: Maybe<Scalars['String']>;
   ticketExpiresAt: Scalars['timestamptz'];
   totpSecret?: Maybe<Scalars['String']>;
@@ -3435,6 +5562,7 @@ export type Users_Bool_Exp = {
   roles_aggregate?: InputMaybe<AuthUserRoles_Aggregate_Bool_Exp>;
   securityKeys?: InputMaybe<AuthUserSecurityKeys_Bool_Exp>;
   securityKeys_aggregate?: InputMaybe<AuthUserSecurityKeys_Aggregate_Bool_Exp>;
+  telegramId?: InputMaybe<String_Comparison_Exp>;
   ticket?: InputMaybe<String_Comparison_Exp>;
   ticketExpiresAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   totpSecret?: InputMaybe<String_Comparison_Exp>;
@@ -3450,7 +5578,9 @@ export enum Users_Constraint {
   /** unique or primary key constraint on columns "phone_number" */
   UsersPhoneNumberKey = 'users_phone_number_key',
   /** unique or primary key constraint on columns "id" */
-  UsersPkey = 'users_pkey'
+  UsersPkey = 'users_pkey',
+  /** unique or primary key constraint on columns "telegramId" */
+  UsersTelegramIdKey = 'users_telegram_id_key'
 }
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
@@ -3495,6 +5625,7 @@ export type Users_Insert_Input = {
   refreshTokens?: InputMaybe<AuthRefreshTokens_Arr_Rel_Insert_Input>;
   roles?: InputMaybe<AuthUserRoles_Arr_Rel_Insert_Input>;
   securityKeys?: InputMaybe<AuthUserSecurityKeys_Arr_Rel_Insert_Input>;
+  telegramId?: InputMaybe<Scalars['String']>;
   ticket?: InputMaybe<Scalars['String']>;
   ticketExpiresAt?: InputMaybe<Scalars['timestamptz']>;
   totpSecret?: InputMaybe<Scalars['String']>;
@@ -3521,6 +5652,7 @@ export type Users_Max_Fields = {
   otpMethodLastUsed?: Maybe<Scalars['String']>;
   passwordHash?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
+  telegramId?: Maybe<Scalars['String']>;
   ticket?: Maybe<Scalars['String']>;
   ticketExpiresAt?: Maybe<Scalars['timestamptz']>;
   totpSecret?: Maybe<Scalars['String']>;
@@ -3545,6 +5677,7 @@ export type Users_Max_Order_By = {
   otpMethodLastUsed?: InputMaybe<Order_By>;
   passwordHash?: InputMaybe<Order_By>;
   phoneNumber?: InputMaybe<Order_By>;
+  telegramId?: InputMaybe<Order_By>;
   ticket?: InputMaybe<Order_By>;
   ticketExpiresAt?: InputMaybe<Order_By>;
   totpSecret?: InputMaybe<Order_By>;
@@ -3570,6 +5703,7 @@ export type Users_Min_Fields = {
   otpMethodLastUsed?: Maybe<Scalars['String']>;
   passwordHash?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
+  telegramId?: Maybe<Scalars['String']>;
   ticket?: Maybe<Scalars['String']>;
   ticketExpiresAt?: Maybe<Scalars['timestamptz']>;
   totpSecret?: Maybe<Scalars['String']>;
@@ -3594,6 +5728,7 @@ export type Users_Min_Order_By = {
   otpMethodLastUsed?: InputMaybe<Order_By>;
   passwordHash?: InputMaybe<Order_By>;
   phoneNumber?: InputMaybe<Order_By>;
+  telegramId?: InputMaybe<Order_By>;
   ticket?: InputMaybe<Order_By>;
   ticketExpiresAt?: InputMaybe<Order_By>;
   totpSecret?: InputMaybe<Order_By>;
@@ -3650,6 +5785,7 @@ export type Users_Order_By = {
   refreshTokens_aggregate?: InputMaybe<AuthRefreshTokens_Aggregate_Order_By>;
   roles_aggregate?: InputMaybe<AuthUserRoles_Aggregate_Order_By>;
   securityKeys_aggregate?: InputMaybe<AuthUserSecurityKeys_Aggregate_Order_By>;
+  telegramId?: InputMaybe<Order_By>;
   ticket?: InputMaybe<Order_By>;
   ticketExpiresAt?: InputMaybe<Order_By>;
   totpSecret?: InputMaybe<Order_By>;
@@ -3712,6 +5848,8 @@ export enum Users_Select_Column {
   /** column name */
   PhoneNumberVerified = 'phoneNumberVerified',
   /** column name */
+  TelegramId = 'telegramId',
+  /** column name */
   Ticket = 'ticket',
   /** column name */
   TicketExpiresAt = 'ticketExpiresAt',
@@ -3768,6 +5906,7 @@ export type Users_Set_Input = {
   passwordHash?: InputMaybe<Scalars['String']>;
   phoneNumber?: InputMaybe<Scalars['String']>;
   phoneNumberVerified?: InputMaybe<Scalars['Boolean']>;
+  telegramId?: InputMaybe<Scalars['String']>;
   ticket?: InputMaybe<Scalars['String']>;
   ticketExpiresAt?: InputMaybe<Scalars['timestamptz']>;
   totpSecret?: InputMaybe<Scalars['String']>;
@@ -3805,6 +5944,7 @@ export type Users_Stream_Cursor_Value_Input = {
   passwordHash?: InputMaybe<Scalars['String']>;
   phoneNumber?: InputMaybe<Scalars['String']>;
   phoneNumberVerified?: InputMaybe<Scalars['Boolean']>;
+  telegramId?: InputMaybe<Scalars['String']>;
   ticket?: InputMaybe<Scalars['String']>;
   ticketExpiresAt?: InputMaybe<Scalars['timestamptz']>;
   totpSecret?: InputMaybe<Scalars['String']>;
@@ -3856,6 +5996,8 @@ export enum Users_Update_Column {
   /** column name */
   PhoneNumberVerified = 'phoneNumberVerified',
   /** column name */
+  TelegramId = 'telegramId',
+  /** column name */
   Ticket = 'ticket',
   /** column name */
   TicketExpiresAt = 'ticketExpiresAt',
@@ -3893,6 +6035,244 @@ export type Uuid_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['uuid']>;
   _neq?: InputMaybe<Scalars['uuid']>;
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
+};
+
+/** columns and relationships of "storage.virus" */
+export type Virus = {
+  __typename?: 'virus';
+  createdAt: Scalars['timestamptz'];
+  /** An object relationship */
+  file: Files;
+  fileId: Scalars['uuid'];
+  filename: Scalars['String'];
+  id: Scalars['uuid'];
+  updatedAt: Scalars['timestamptz'];
+  userSession: Scalars['jsonb'];
+  virus: Scalars['String'];
+};
+
+
+/** columns and relationships of "storage.virus" */
+export type VirusUserSessionArgs = {
+  path?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregated selection of "storage.virus" */
+export type Virus_Aggregate = {
+  __typename?: 'virus_aggregate';
+  aggregate?: Maybe<Virus_Aggregate_Fields>;
+  nodes: Array<Virus>;
+};
+
+/** aggregate fields of "storage.virus" */
+export type Virus_Aggregate_Fields = {
+  __typename?: 'virus_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Virus_Max_Fields>;
+  min?: Maybe<Virus_Min_Fields>;
+};
+
+
+/** aggregate fields of "storage.virus" */
+export type Virus_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Virus_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Virus_Append_Input = {
+  userSession?: InputMaybe<Scalars['jsonb']>;
+};
+
+/** Boolean expression to filter rows from the table "storage.virus". All fields are combined with a logical 'AND'. */
+export type Virus_Bool_Exp = {
+  _and?: InputMaybe<Array<Virus_Bool_Exp>>;
+  _not?: InputMaybe<Virus_Bool_Exp>;
+  _or?: InputMaybe<Array<Virus_Bool_Exp>>;
+  createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  file?: InputMaybe<Files_Bool_Exp>;
+  fileId?: InputMaybe<Uuid_Comparison_Exp>;
+  filename?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  updatedAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  userSession?: InputMaybe<Jsonb_Comparison_Exp>;
+  virus?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "storage.virus" */
+export enum Virus_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  VirusPkey = 'virus_pkey'
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Virus_Delete_At_Path_Input = {
+  userSession?: InputMaybe<Array<Scalars['String']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Virus_Delete_Elem_Input = {
+  userSession?: InputMaybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Virus_Delete_Key_Input = {
+  userSession?: InputMaybe<Scalars['String']>;
+};
+
+/** input type for inserting data into table "storage.virus" */
+export type Virus_Insert_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  file?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  fileId?: InputMaybe<Scalars['uuid']>;
+  filename?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  userSession?: InputMaybe<Scalars['jsonb']>;
+  virus?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Virus_Max_Fields = {
+  __typename?: 'virus_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  fileId?: Maybe<Scalars['uuid']>;
+  filename?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  virus?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Virus_Min_Fields = {
+  __typename?: 'virus_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  fileId?: Maybe<Scalars['uuid']>;
+  filename?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  virus?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "storage.virus" */
+export type Virus_Mutation_Response = {
+  __typename?: 'virus_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Virus>;
+};
+
+/** on_conflict condition type for table "storage.virus" */
+export type Virus_On_Conflict = {
+  constraint: Virus_Constraint;
+  update_columns?: Array<Virus_Update_Column>;
+  where?: InputMaybe<Virus_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "storage.virus". */
+export type Virus_Order_By = {
+  createdAt?: InputMaybe<Order_By>;
+  file?: InputMaybe<Files_Order_By>;
+  fileId?: InputMaybe<Order_By>;
+  filename?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  updatedAt?: InputMaybe<Order_By>;
+  userSession?: InputMaybe<Order_By>;
+  virus?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: storage.virus */
+export type Virus_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Virus_Prepend_Input = {
+  userSession?: InputMaybe<Scalars['jsonb']>;
+};
+
+/** select columns of table "storage.virus" */
+export enum Virus_Select_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  FileId = 'fileId',
+  /** column name */
+  Filename = 'filename',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  UserSession = 'userSession',
+  /** column name */
+  Virus = 'virus'
+}
+
+/** input type for updating data in table "storage.virus" */
+export type Virus_Set_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  fileId?: InputMaybe<Scalars['uuid']>;
+  filename?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  userSession?: InputMaybe<Scalars['jsonb']>;
+  virus?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "virus" */
+export type Virus_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Virus_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Virus_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  fileId?: InputMaybe<Scalars['uuid']>;
+  filename?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  userSession?: InputMaybe<Scalars['jsonb']>;
+  virus?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "storage.virus" */
+export enum Virus_Update_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  FileId = 'fileId',
+  /** column name */
+  Filename = 'filename',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  UserSession = 'userSession',
+  /** column name */
+  Virus = 'virus'
+}
+
+export type Virus_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<Virus_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<Virus_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<Virus_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<Virus_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<Virus_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Virus_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Virus_Bool_Exp;
 };
 
 export type InsertProviderRequestMutationVariables = Exact<{
@@ -3941,6 +6321,15 @@ export type DeleteExpiredRefreshTokensMutationVariables = Exact<{ [key: string]:
 
 
 export type DeleteExpiredRefreshTokensMutation = { __typename?: 'mutation_root', deleteAuthRefreshTokens?: { __typename?: 'authRefreshTokens_mutation_response', affected_rows: number } | null };
+
+export type TelegramBotTokenFieldsFragment = { __typename?: 'authTelegramBotTokens', id: string, createdAt: any, name: string, token: string };
+
+export type AuthTelegramBotTokenQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type AuthTelegramBotTokenQuery = { __typename?: 'query_root', authTelegramBotToken?: { __typename?: 'authTelegramBotTokens', id: string, createdAt: any, name: string, token: string } | null };
 
 export type UpsertRolesMutationVariables = Exact<{
   roles: Array<AuthRoles_Insert_Input> | AuthRoles_Insert_Input;
@@ -3992,7 +6381,7 @@ export type AuthUserProvidersQueryVariables = Exact<{
 }>;
 
 
-export type AuthUserProvidersQuery = { __typename?: 'query_root', authUserProviders: Array<{ __typename?: 'authUserProviders', id: any, user: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } }> };
+export type AuthUserProvidersQuery = { __typename?: 'query_root', authUserProviders: Array<{ __typename?: 'authUserProviders', id: any, user: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, telegramId?: string | null, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } }> };
 
 export type UserProviderQueryVariables = Exact<{
   userId: Scalars['uuid'];
@@ -4024,21 +6413,21 @@ export type DeleteUserRolesByUserIdMutationVariables = Exact<{
 
 export type DeleteUserRolesByUserIdMutation = { __typename?: 'mutation_root', deleteAuthUserRoles?: { __typename?: 'authUserRoles_mutation_response', affected_rows: number } | null };
 
-export type UserFieldsFragment = { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> };
+export type UserFieldsFragment = { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, telegramId?: string | null, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> };
 
 export type UserQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type UserQuery = { __typename?: 'query_root', user?: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } | null };
+export type UserQuery = { __typename?: 'query_root', user?: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, telegramId?: string | null, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } | null };
 
 export type UsersQueryVariables = Exact<{
   where: Users_Bool_Exp;
 }>;
 
 
-export type UsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> }> };
+export type UsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, telegramId?: string | null, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> }> };
 
 export type GetUsersByRefreshTokenAndUpdateRefreshTokenExpiresAtMutationVariables = Exact<{
   refreshTokenHash: Scalars['String'];
@@ -4053,14 +6442,14 @@ export type GetUsersByRefreshTokenQueryVariables = Exact<{
 }>;
 
 
-export type GetUsersByRefreshTokenQuery = { __typename?: 'query_root', authRefreshTokens: Array<{ __typename?: 'authRefreshTokens', id: any, user: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } }> };
+export type GetUsersByRefreshTokenQuery = { __typename?: 'query_root', authRefreshTokens: Array<{ __typename?: 'authRefreshTokens', id: any, user: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, telegramId?: string | null, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } }> };
 
 export type GetUsersByPatQueryVariables = Exact<{
   patHash: Scalars['String'];
 }>;
 
 
-export type GetUsersByPatQuery = { __typename?: 'query_root', authRefreshTokens: Array<{ __typename?: 'authRefreshTokens', id: any, user: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } }> };
+export type GetUsersByPatQuery = { __typename?: 'query_root', authRefreshTokens: Array<{ __typename?: 'authRefreshTokens', id: any, user: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, telegramId?: string | null, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } }> };
 
 export type UpdateUserMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -4068,7 +6457,7 @@ export type UpdateUserMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'mutation_root', updateUser?: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } | null };
+export type UpdateUserMutation = { __typename?: 'mutation_root', updateUser?: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, telegramId?: string | null, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } | null };
 
 export type UpdateUserWhereMutationVariables = Exact<{
   where: Users_Bool_Exp;
@@ -4095,21 +6484,21 @@ export type ChangeEmailsByTicketMutationVariables = Exact<{
 }>;
 
 
-export type ChangeEmailsByTicketMutation = { __typename?: 'mutation_root', updateUsers?: { __typename?: 'users_mutation_response', returning: Array<{ __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> }> } | null };
+export type ChangeEmailsByTicketMutation = { __typename?: 'mutation_root', updateUsers?: { __typename?: 'users_mutation_response', returning: Array<{ __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, telegramId?: string | null, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> }> } | null };
 
 export type InsertUserMutationVariables = Exact<{
   user: Users_Insert_Input;
 }>;
 
 
-export type InsertUserMutation = { __typename?: 'mutation_root', insertUser?: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } | null };
+export type InsertUserMutation = { __typename?: 'mutation_root', insertUser?: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, telegramId?: string | null, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } | null };
 
 export type DeleteUserMutationVariables = Exact<{
   userId: Scalars['uuid'];
 }>;
 
 
-export type DeleteUserMutation = { __typename?: 'mutation_root', deleteAuthUserRoles?: { __typename?: 'authUserRoles_mutation_response', affected_rows: number } | null, deleteUser?: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } | null };
+export type DeleteUserMutation = { __typename?: 'mutation_root', deleteAuthUserRoles?: { __typename?: 'authUserRoles_mutation_response', affected_rows: number } | null, deleteUser?: { __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, telegramId?: string | null, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> } | null };
 
 export type DeanonymizeUserMutationVariables = Exact<{
   userId: Scalars['uuid'];
@@ -4132,7 +6521,7 @@ export type GetUserByTicketQueryVariables = Exact<{
 }>;
 
 
-export type GetUserByTicketQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> }> };
+export type GetUserByTicketQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, telegramId?: string | null, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> }> };
 
 export type UpdateUsersByTicketMutationVariables = Exact<{
   ticket: Scalars['String'];
@@ -4140,8 +6529,16 @@ export type UpdateUsersByTicketMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUsersByTicketMutation = { __typename?: 'mutation_root', updateUsers?: { __typename?: 'users_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> }> } | null };
+export type UpdateUsersByTicketMutation = { __typename?: 'mutation_root', updateUsers?: { __typename?: 'users_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'users', id: any, createdAt: any, disabled: boolean, displayName: string, avatarUrl: string, email?: any | null, passwordHash?: string | null, emailVerified: boolean, telegramId?: string | null, phoneNumber?: string | null, phoneNumberVerified: boolean, defaultRole: string, isAnonymous: boolean, ticket?: string | null, otpHash?: string | null, totpSecret?: string | null, activeMfaType?: string | null, newEmail?: any | null, locale: string, metadata?: any | null, roles: Array<{ __typename?: 'authUserRoles', role: string }> }> } | null };
 
+export const TelegramBotTokenFieldsFragmentDoc = gql`
+    fragment telegramBotTokenFields on authTelegramBotTokens {
+  id
+  createdAt
+  name
+  token
+}
+    `;
 export const UserFieldsFragmentDoc = gql`
     fragment userFields on users {
   id
@@ -4152,6 +6549,7 @@ export const UserFieldsFragmentDoc = gql`
   email
   passwordHash
   emailVerified
+  telegramId
   phoneNumber
   phoneNumberVerified
   defaultRole
@@ -4223,6 +6621,13 @@ export const DeleteExpiredRefreshTokensDocument = gql`
   }
 }
     `;
+export const AuthTelegramBotTokenDocument = gql`
+    query authTelegramBotToken($id: String!) {
+  authTelegramBotToken(id: $id) {
+    ...telegramBotTokenFields
+  }
+}
+    ${TelegramBotTokenFieldsFragmentDoc}`;
 export const UpsertRolesDocument = gql`
     mutation upsertRoles($roles: [authRoles_insert_input!]!) {
   insertAuthRoles(
@@ -4496,6 +6901,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     deleteExpiredRefreshTokens(variables?: DeleteExpiredRefreshTokensMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DeleteExpiredRefreshTokensMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<DeleteExpiredRefreshTokensMutation>(DeleteExpiredRefreshTokensDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteExpiredRefreshTokens', 'mutation');
+    },
+    authTelegramBotToken(variables: AuthTelegramBotTokenQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AuthTelegramBotTokenQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AuthTelegramBotTokenQuery>(AuthTelegramBotTokenDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'authTelegramBotToken', 'query');
     },
     upsertRoles(variables: UpsertRolesMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpsertRolesMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpsertRolesMutation>(UpsertRolesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'upsertRoles', 'mutation');

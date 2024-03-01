@@ -4,6 +4,7 @@ import { asyncWrapper as aw } from '@/utils';
 import { bodyValidator } from '@/validation';
 
 import { signInAnonymousHandler, signInAnonymousSchema } from './anonymous';
+import { signInTelegramHandler, signInTelegramSchema } from './telegram';
 import {
   signInEmailPasswordHandler,
   signInEmailPasswordSchema,
@@ -120,6 +121,23 @@ router.post(
   aw(signInVerifyWebauthnHandler)
 );
 
+/**
+ * POST /signin/telegram
+ * @summary Anonymous authentication
+ * @param {SignInTelegramSchema} request.body.required
+ * @return {SessionPayload} 200 - User successfully authenticated - application/json
+ * @return {InvalidRequestError} 400 - The payload is invalid - application/json
+ * @return {DisabledEndpointError} 404 - The feature is not activated - application/json
+ * @tags Authentication
+ */
+router.post(
+  '/signin/telegram',
+  bodyValidator(signInTelegramSchema),
+  aw(signInTelegramHandler)
+);
+
+/**
+ * POST /signin/mfa/totp
 /**
  * POST /signin/anonymous
  * @summary Anonymous authentication

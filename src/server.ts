@@ -37,8 +37,7 @@ export const start = async () => {
   });
   if (insertAuthRoles?.affected_rows) {
     logger.info(
-      `Inserted ${
-        insertAuthRoles.affected_rows
+      `Inserted ${insertAuthRoles.affected_rows
       } roles: ${insertAuthRoles.returning.map(({ role }) => role).join(', ')}`
     );
   }

@@ -11,6 +11,7 @@ import {
 import { signUpEmailPasswordSchema } from '@/routes/signup/email-password';
 import { signInEmailPasswordSchema } from '@/routes/signin/email-password';
 import { signInMfaTotpSchema } from '@/routes/signin/mfa';
+import { signInTelegramSchema } from '@/routes/signin/telegram';
 import { signInAnonymousSchema } from '@/routes/signin/anonymous';
 import { signOutSchema } from '@/routes/signout/signout';
 import { userPasswordResetSchema } from '@/routes/user/password-reset';
@@ -49,6 +50,7 @@ const requestSchemas = [
   signInPasswordlessSmsSchema,
   signInOtpSchema,
   signInMfaTotpSchema,
+  signInTelegramSchema,
   signInAnonymousSchema,
   signOutSchema,
   userPasswordResetSchema,

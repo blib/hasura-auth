@@ -126,6 +126,10 @@ export const ENV = {
   get AUTH_ANONYMOUS_USERS_ENABLED() {
     return castBooleanEnv('AUTH_ANONYMOUS_USERS_ENABLED', false);
   },
+  // SIGN UP
+  get AUTH_TELEGRAM_USERS_ENABLED() {
+    return castBooleanEnv('AUTH_TELEGRAM_USERS_ENABLED', false);
+  },
   get AUTH_DISABLE_NEW_USERS() {
     return castBooleanEnv('AUTH_DISABLE_NEW_USERS', false);
   },

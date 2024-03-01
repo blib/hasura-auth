@@ -73,6 +73,7 @@ export type User = Pick<
   | 'metadata'
   | 'emailVerified'
   | 'phoneNumber'
+  | 'telegramId'
   | 'phoneNumberVerified'
   | 'activeMfaType'
 > & { roles: string[] };

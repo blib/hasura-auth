@@ -259,6 +259,24 @@ export const hasuraAuthMetadataPatch: MetadataPatch = {
         ],
       },
       {
+        table: { name: "telegram_bot_tokens", schema: schema },
+        configuration: {
+          custom_name: "authTelegramBotTokens",
+          column_config: {},
+          custom_column_names: {},
+          custom_root_fields: {
+            delete: "deleteAuthTelegramBotTokens",
+            delete_by_pk: "deleteAuthTelegramBotToken",
+            insert: "insertAuthTelegramBotTokens",
+            insert_one: "insertAuthTelegramBotToken",
+            select: "authTelegramBotTokens",
+            select_by_pk: "authTelegramBotToken",
+            update: "updateAuthTelegramBotTokens",
+            update_by_pk: "updateAuthTelegramBotToken"
+          }
+        }
+      },
+      {
         table: { name: 'users', schema },
         configuration: {
           custom_name: 'users',

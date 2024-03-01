@@ -511,6 +511,32 @@
             },
             "type" : "object"
          },
+         "SignInTelegramSchema" : {
+            "additionalProperties" : false,
+            "properties" : {
+               "initData" : {
+                  "example" : "user%3D%257B%2522id%2522%32....85669%252C%2522first_name%2522%253A%2522%25D0%...",
+                  "type" : "string"
+               },
+               "locale" : {
+                  "default" : "en",
+                  "description" : "A two-characters locale",
+                  "example" : "en",
+                  "maxLength" : 2,
+                  "minLength" : 2,
+                  "type" : "string"
+               },
+               "botId" : {
+                  "example" : "1234567890",
+                  "type" : "string"
+               }
+            },
+            "required" : [
+               "initData",
+               "botId"
+            ],
+            "type" : "object"
+         },
          "SignInAnonymousSchema" : {
             "additionalProperties" : false,
             "properties" : {
@@ -1614,6 +1640,60 @@
             },
             "security" : [],
             "summary" : "Anonymous authentication",
+            "tags" : [
+               "Authentication"
+            ]
+         }
+      },
+      "/signin/telegram" : {
+         "post" : {
+            "deprecated" : false,
+            "parameters" : [],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/SignInTelegramSchema"
+                     }
+                  }
+               },
+               "description" : "",
+               "required" : true
+            },
+            "responses" : {
+               "200" : {
+                  "content" : {
+                     "application/json" : {
+                        "schema" : {
+                           "$ref" : "#/components/schemas/SessionPayload"
+                        }
+                     }
+                  },
+                  "description" : "User successfully authenticated"
+               },
+               "400" : {
+                  "content" : {
+                     "application/json" : {
+                        "schema" : {
+                           "$ref" : "#/components/schemas/InvalidRequestError"
+                        }
+                     }
+                  },
+                  "description" : "The payload is invalid"
+               },
+               "404" : {
+                  "content" : {
+                     "application/json" : {
+                        "schema" : {
+                           "$ref" : "#/components/schemas/DisabledEndpointError"
+                        }
+                     }
+                  },
+                  "description" : "The feature is not activated"
+               }
+            },
+            "security" : [],
+            "summary" : "Telegram authentication",
             "tags" : [
                "Authentication"
             ]

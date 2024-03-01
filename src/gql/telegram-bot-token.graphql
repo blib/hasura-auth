@@ -1,0 +1,12 @@
+fragment telegramBotTokenFields on authTelegramBotTokens {
+  id
+  createdAt
+  name
+  token
+}
+
+query authTelegramBotToken($id: String!) {
+  authTelegramBotToken(id: $id) {
+    ...telegramBotTokenFields
+  }
+}

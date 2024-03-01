@@ -1,4 +1,4 @@
-openapi: "3.0.0"
+openapi: '3.0.0'
 info:
   version: 1.0.0
   title: Nhost Auth
@@ -19,7 +19,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SignInEmailPasswordSchema"
+              $ref: '#/components/schemas/SignInEmailPasswordSchema'
         required: true
       responses:
         200:
@@ -27,7 +27,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SessionPayload"
+                $ref: '#/components/schemas/SessionPayload'
       tags:
         - signin
         - email-and-password
@@ -60,9 +60,9 @@ components:
       type: object
       properties:
         mfa:
-          $ref: "#/components/schemas/MFA"
+          $ref: '#/components/schemas/MFA'
         session:
-          $ref: "#/components/schemas/Session"
+          $ref: '#/components/schemas/Session'
 
     MFA:
       type: object
@@ -153,6 +153,9 @@ components:
         phoneNumberVerified:
           default: false
           type: boolean
+        telegramId:
+          default: ''
+          type: string
         roles:
           default:
             - me
@@ -180,6 +183,7 @@ components:
         - emailVerified
         - phoneNumber
         - phoneNumberVerified
+        - telegramId
         - roles
       type: object
 
