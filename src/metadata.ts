@@ -301,6 +301,7 @@ export const hasuraAuthMetadataPatch: MetadataPatch = {
             avatar_url: 'avatarUrl',
             locale: 'locale',
             email: 'email',
+            telegram_id: 'telegramId',
             phone_number: 'phoneNumber',
             password_hash: 'passwordHash',
             email_verified: 'emailVerified',
