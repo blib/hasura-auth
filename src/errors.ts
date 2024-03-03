@@ -159,6 +159,10 @@ export const ERRORS = asErrors({
     status: StatusCodes.FORBIDDEN,
     message: 'Sign up is disabled.',
   },
+  'bot-not-registred-request': {
+    status: StatusCodes.BAD_REQUEST,
+    message: 'Bot is not registred with service',
+  },
 });
 
 export const sendError = (

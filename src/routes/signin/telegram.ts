@@ -31,11 +31,11 @@ export const signInTelegramHandler: RequestHandler<{}, {}, BodyType> = async (
   // check if hmac sha256 of id and bot_id is equal to the one in the metadata
   const botToken = await getTelegramBotToken(botId)
   if (!botToken) {
-    return sendError(res, 'internal-error');
+    return sendError(res, 'bot-not-registred-request');
   }
   const data = qs.parse(initData);
 
-  logger.info(`Data before hash: ${JSON.stringify(data)}`);
+  logger.debug(`Data before hash: ${JSON.stringify(data)}`);
 
   const hash = data.hash as string;
   delete data.hash; // Remove hash from object to build the verification string
@@ -66,8 +66,7 @@ export const signInTelegramHandler: RequestHandler<{}, {}, BodyType> = async (
     }
   }
 
-  const userData= JSON.parse(data.user);
-  logger.info(`User data: ${(userData)}`);
+  const userData = JSON.parse(data.user);
 
   let user = await getUserByTelegramId(userData.id);
 
