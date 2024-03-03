@@ -263,7 +263,9 @@ export const hasuraAuthMetadataPatch: MetadataPatch = {
         configuration: {
           custom_name: "authTelegramBotTokens",
           column_config: {},
-          custom_column_names: {},
+          custom_column_names: {
+            created_at: 'createdAt',
+          },
           custom_root_fields: {
             delete: "deleteAuthTelegramBotTokens",
             delete_by_pk: "deleteAuthTelegramBotToken",
