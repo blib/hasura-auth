@@ -16,7 +16,17 @@ export const tokenHandler: RequestHandler<
   {},
   { refreshToken: string }
 > = async (req, res) => {
-  const { refreshToken } = req.body;
+  let { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    // get refresh token from cookie
+    req.headers && req.headers['cookie']?.split(';').forEach((cookie) => {
+      const parts = cookie.match(/(.*?)=(.*)$/)
+      if (parts && parts[1].trim() == 'refreshtoken') {
+        refreshToken = (parts[2] || '').trim();
+      }
+    });
+  }
 
   const user = await getUserByRefreshToken(refreshToken);
 
