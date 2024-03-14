@@ -82,7 +82,7 @@ export const signInTelegramHandler: RequestHandler<{}, {}, BodyType> = async (
       roles: {
         data: userRoles,
       },
-      telegramId: userData.id.toString(),
+      telegramId: userData.id,
       disabled: ENV.AUTH_DISABLE_NEW_USERS,
       defaultRole: ENV.AUTH_USER_DEFAULT_ROLE,
       metadata: {},

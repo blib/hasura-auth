@@ -17,7 +17,9 @@ export type Scalars = {
   bigint: any;
   bytea: any;
   citext: any;
+  json: any;
   jsonb: any;
+  timestamp: any;
   timestamptz: any;
   uuid: any;
 };
@@ -527,6 +529,13 @@ export type AuthRefreshTokenTypes_Mutation_Response = {
   returning: Array<AuthRefreshTokenTypes>;
 };
 
+/** input type for inserting object relation for remote table "auth.refresh_token_types" */
+export type AuthRefreshTokenTypes_Obj_Rel_Insert_Input = {
+  data: AuthRefreshTokenTypes_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<AuthRefreshTokenTypes_On_Conflict>;
+};
+
 /** on_conflict condition type for table "auth.refresh_token_types" */
 export type AuthRefreshTokenTypes_On_Conflict = {
   constraint: AuthRefreshTokenTypes_Constraint;
@@ -597,6 +606,8 @@ export type AuthRefreshTokens = {
   id: Scalars['uuid'];
   metadata?: Maybe<Scalars['jsonb']>;
   refreshTokenHash?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  refresh_token_type: AuthRefreshTokenTypes;
   type: AuthRefreshTokenTypes_Enum;
   /** An object relationship */
   user: Users;
@@ -671,6 +682,7 @@ export type AuthRefreshTokens_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   metadata?: InputMaybe<Jsonb_Comparison_Exp>;
   refreshTokenHash?: InputMaybe<String_Comparison_Exp>;
+  refresh_token_type?: InputMaybe<AuthRefreshTokenTypes_Bool_Exp>;
   type?: InputMaybe<AuthRefreshTokenTypes_Enum_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
   userId?: InputMaybe<Uuid_Comparison_Exp>;
@@ -704,6 +716,7 @@ export type AuthRefreshTokens_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>;
   metadata?: InputMaybe<Scalars['jsonb']>;
   refreshTokenHash?: InputMaybe<Scalars['String']>;
+  refresh_token_type?: InputMaybe<AuthRefreshTokenTypes_Obj_Rel_Insert_Input>;
   type?: InputMaybe<AuthRefreshTokenTypes_Enum>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   userId?: InputMaybe<Scalars['uuid']>;
@@ -770,6 +783,7 @@ export type AuthRefreshTokens_Order_By = {
   id?: InputMaybe<Order_By>;
   metadata?: InputMaybe<Order_By>;
   refreshTokenHash?: InputMaybe<Order_By>;
+  refresh_token_type?: InputMaybe<AuthRefreshTokenTypes_Order_By>;
   type?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
   userId?: InputMaybe<Order_By>;
@@ -1059,7 +1073,31 @@ export type AuthTelegramBotTokens = {
   createdAt: Scalars['timestamptz'];
   id: Scalars['String'];
   name: Scalars['String'];
+  /** An array relationship */
+  telegram_bots: Array<Telegram_Bot>;
+  /** An aggregate relationship */
+  telegram_bots_aggregate: Telegram_Bot_Aggregate;
   token: Scalars['String'];
+};
+
+
+/** columns and relationships of "auth.telegram_bot_tokens" */
+export type AuthTelegramBotTokensTelegram_BotsArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Bot_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Bot_Order_By>>;
+  where?: InputMaybe<Telegram_Bot_Bool_Exp>;
+};
+
+
+/** columns and relationships of "auth.telegram_bot_tokens" */
+export type AuthTelegramBotTokensTelegram_Bots_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Bot_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Bot_Order_By>>;
+  where?: InputMaybe<Telegram_Bot_Bool_Exp>;
 };
 
 /** aggregated selection of "auth.telegram_bot_tokens" */
@@ -1092,6 +1130,8 @@ export type AuthTelegramBotTokens_Bool_Exp = {
   createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  telegram_bots?: InputMaybe<Telegram_Bot_Bool_Exp>;
+  telegram_bots_aggregate?: InputMaybe<Telegram_Bot_Aggregate_Bool_Exp>;
   token?: InputMaybe<String_Comparison_Exp>;
 };
 
@@ -1106,6 +1146,7 @@ export type AuthTelegramBotTokens_Insert_Input = {
   createdAt?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  telegram_bots?: InputMaybe<Telegram_Bot_Arr_Rel_Insert_Input>;
   token?: InputMaybe<Scalars['String']>;
 };
 
@@ -1136,6 +1177,13 @@ export type AuthTelegramBotTokens_Mutation_Response = {
   returning: Array<AuthTelegramBotTokens>;
 };
 
+/** input type for inserting object relation for remote table "auth.telegram_bot_tokens" */
+export type AuthTelegramBotTokens_Obj_Rel_Insert_Input = {
+  data: AuthTelegramBotTokens_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<AuthTelegramBotTokens_On_Conflict>;
+};
+
 /** on_conflict condition type for table "auth.telegram_bot_tokens" */
 export type AuthTelegramBotTokens_On_Conflict = {
   constraint: AuthTelegramBotTokens_Constraint;
@@ -1148,6 +1196,7 @@ export type AuthTelegramBotTokens_Order_By = {
   createdAt?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  telegram_bots_aggregate?: InputMaybe<Telegram_Bot_Aggregate_Order_By>;
   token?: InputMaybe<Order_By>;
 };
 
@@ -2425,6 +2474,283 @@ export type Citext_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['citext']>;
 };
 
+/** columns and relationships of "company" */
+export type Company = {
+  __typename?: 'company';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  /** An array relationship */
+  spaces: Array<Space>;
+  /** An aggregate relationship */
+  spaces_aggregate: Space_Aggregate;
+  /** An array relationship */
+  telegram_bots: Array<Telegram_Bot>;
+  /** An aggregate relationship */
+  telegram_bots_aggregate: Telegram_Bot_Aggregate;
+  /** An array relationship */
+  user_companies: Array<User_Company>;
+  /** An aggregate relationship */
+  user_companies_aggregate: User_Company_Aggregate;
+};
+
+
+/** columns and relationships of "company" */
+export type CompanySpacesArgs = {
+  distinct_on?: InputMaybe<Array<Space_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Space_Order_By>>;
+  where?: InputMaybe<Space_Bool_Exp>;
+};
+
+
+/** columns and relationships of "company" */
+export type CompanySpaces_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Space_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Space_Order_By>>;
+  where?: InputMaybe<Space_Bool_Exp>;
+};
+
+
+/** columns and relationships of "company" */
+export type CompanyTelegram_BotsArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Bot_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Bot_Order_By>>;
+  where?: InputMaybe<Telegram_Bot_Bool_Exp>;
+};
+
+
+/** columns and relationships of "company" */
+export type CompanyTelegram_Bots_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Bot_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Bot_Order_By>>;
+  where?: InputMaybe<Telegram_Bot_Bool_Exp>;
+};
+
+
+/** columns and relationships of "company" */
+export type CompanyUser_CompaniesArgs = {
+  distinct_on?: InputMaybe<Array<User_Company_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Company_Order_By>>;
+  where?: InputMaybe<User_Company_Bool_Exp>;
+};
+
+
+/** columns and relationships of "company" */
+export type CompanyUser_Companies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Company_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Company_Order_By>>;
+  where?: InputMaybe<User_Company_Bool_Exp>;
+};
+
+/** aggregated selection of "company" */
+export type Company_Aggregate = {
+  __typename?: 'company_aggregate';
+  aggregate?: Maybe<Company_Aggregate_Fields>;
+  nodes: Array<Company>;
+};
+
+/** aggregate fields of "company" */
+export type Company_Aggregate_Fields = {
+  __typename?: 'company_aggregate_fields';
+  avg?: Maybe<Company_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Company_Max_Fields>;
+  min?: Maybe<Company_Min_Fields>;
+  stddev?: Maybe<Company_Stddev_Fields>;
+  stddev_pop?: Maybe<Company_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Company_Stddev_Samp_Fields>;
+  sum?: Maybe<Company_Sum_Fields>;
+  var_pop?: Maybe<Company_Var_Pop_Fields>;
+  var_samp?: Maybe<Company_Var_Samp_Fields>;
+  variance?: Maybe<Company_Variance_Fields>;
+};
+
+
+/** aggregate fields of "company" */
+export type Company_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Company_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type Company_Avg_Fields = {
+  __typename?: 'company_avg_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "company". All fields are combined with a logical 'AND'. */
+export type Company_Bool_Exp = {
+  _and?: InputMaybe<Array<Company_Bool_Exp>>;
+  _not?: InputMaybe<Company_Bool_Exp>;
+  _or?: InputMaybe<Array<Company_Bool_Exp>>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  spaces?: InputMaybe<Space_Bool_Exp>;
+  spaces_aggregate?: InputMaybe<Space_Aggregate_Bool_Exp>;
+  telegram_bots?: InputMaybe<Telegram_Bot_Bool_Exp>;
+  telegram_bots_aggregate?: InputMaybe<Telegram_Bot_Aggregate_Bool_Exp>;
+  user_companies?: InputMaybe<User_Company_Bool_Exp>;
+  user_companies_aggregate?: InputMaybe<User_Company_Aggregate_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "company" */
+export enum Company_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  CompaniesPkey = 'companies_pkey'
+}
+
+/** input type for inserting data into table "company" */
+export type Company_Insert_Input = {
+  name?: InputMaybe<Scalars['String']>;
+  spaces?: InputMaybe<Space_Arr_Rel_Insert_Input>;
+  telegram_bots?: InputMaybe<Telegram_Bot_Arr_Rel_Insert_Input>;
+  user_companies?: InputMaybe<User_Company_Arr_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Company_Max_Fields = {
+  __typename?: 'company_max_fields';
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Company_Min_Fields = {
+  __typename?: 'company_min_fields';
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "company" */
+export type Company_Mutation_Response = {
+  __typename?: 'company_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Company>;
+};
+
+/** input type for inserting object relation for remote table "company" */
+export type Company_Obj_Rel_Insert_Input = {
+  data: Company_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Company_On_Conflict>;
+};
+
+/** on_conflict condition type for table "company" */
+export type Company_On_Conflict = {
+  constraint: Company_Constraint;
+  update_columns?: Array<Company_Update_Column>;
+  where?: InputMaybe<Company_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "company". */
+export type Company_Order_By = {
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  spaces_aggregate?: InputMaybe<Space_Aggregate_Order_By>;
+  telegram_bots_aggregate?: InputMaybe<Telegram_Bot_Aggregate_Order_By>;
+  user_companies_aggregate?: InputMaybe<User_Company_Aggregate_Order_By>;
+};
+
+/** primary key columns input for table: company */
+export type Company_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "company" */
+export enum Company_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+/** input type for updating data in table "company" */
+export type Company_Set_Input = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type Company_Stddev_Fields = {
+  __typename?: 'company_stddev_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Company_Stddev_Pop_Fields = {
+  __typename?: 'company_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Company_Stddev_Samp_Fields = {
+  __typename?: 'company_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** Streaming cursor of the table "company" */
+export type Company_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Company_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Company_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate sum on columns */
+export type Company_Sum_Fields = {
+  __typename?: 'company_sum_fields';
+  id?: Maybe<Scalars['Int']>;
+};
+
+/** update columns of table "company" */
+export enum Company_Update_Column {
+  /** column name */
+  Name = 'name'
+}
+
+export type Company_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Company_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Company_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Company_Var_Pop_Fields = {
+  __typename?: 'company_var_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Company_Var_Samp_Fields = {
+  __typename?: 'company_var_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Company_Variance_Fields = {
+  __typename?: 'company_variance_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
 /** ordering argument of a cursor */
 export enum Cursor_Ordering {
   /** ascending ordering of the cursor */
@@ -2432,6 +2758,727 @@ export enum Cursor_Ordering {
   /** descending ordering of the cursor */
   Desc = 'DESC'
 }
+
+/** columns and relationships of "event" */
+export type Event = {
+  __typename?: 'event';
+  date: Scalars['timestamptz'];
+  description: Scalars['String'];
+  /** An array relationship */
+  event_participants: Array<Event_Participant>;
+  /** An aggregate relationship */
+  event_participants_aggregate: Event_Participant_Aggregate;
+  id: Scalars['Int'];
+  is_online: Scalars['Boolean'];
+  location: Scalars['String'];
+  name: Scalars['String'];
+  /** An object relationship */
+  space: Space;
+  space_id: Scalars['Int'];
+};
+
+
+/** columns and relationships of "event" */
+export type EventEvent_ParticipantsArgs = {
+  distinct_on?: InputMaybe<Array<Event_Participant_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Participant_Order_By>>;
+  where?: InputMaybe<Event_Participant_Bool_Exp>;
+};
+
+
+/** columns and relationships of "event" */
+export type EventEvent_Participants_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Event_Participant_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Participant_Order_By>>;
+  where?: InputMaybe<Event_Participant_Bool_Exp>;
+};
+
+/** aggregated selection of "event" */
+export type Event_Aggregate = {
+  __typename?: 'event_aggregate';
+  aggregate?: Maybe<Event_Aggregate_Fields>;
+  nodes: Array<Event>;
+};
+
+export type Event_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Event_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Event_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<Event_Aggregate_Bool_Exp_Count>;
+};
+
+export type Event_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Event_Select_Column_Event_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Event_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Event_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Event_Select_Column_Event_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Event_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Event_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Event_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Event_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "event" */
+export type Event_Aggregate_Fields = {
+  __typename?: 'event_aggregate_fields';
+  avg?: Maybe<Event_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Event_Max_Fields>;
+  min?: Maybe<Event_Min_Fields>;
+  stddev?: Maybe<Event_Stddev_Fields>;
+  stddev_pop?: Maybe<Event_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Event_Stddev_Samp_Fields>;
+  sum?: Maybe<Event_Sum_Fields>;
+  var_pop?: Maybe<Event_Var_Pop_Fields>;
+  var_samp?: Maybe<Event_Var_Samp_Fields>;
+  variance?: Maybe<Event_Variance_Fields>;
+};
+
+
+/** aggregate fields of "event" */
+export type Event_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Event_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "event" */
+export type Event_Aggregate_Order_By = {
+  avg?: InputMaybe<Event_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Event_Max_Order_By>;
+  min?: InputMaybe<Event_Min_Order_By>;
+  stddev?: InputMaybe<Event_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Event_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Event_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Event_Sum_Order_By>;
+  var_pop?: InputMaybe<Event_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Event_Var_Samp_Order_By>;
+  variance?: InputMaybe<Event_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "event" */
+export type Event_Arr_Rel_Insert_Input = {
+  data: Array<Event_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Event_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Event_Avg_Fields = {
+  __typename?: 'event_avg_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "event" */
+export type Event_Avg_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "event". All fields are combined with a logical 'AND'. */
+export type Event_Bool_Exp = {
+  _and?: InputMaybe<Array<Event_Bool_Exp>>;
+  _not?: InputMaybe<Event_Bool_Exp>;
+  _or?: InputMaybe<Array<Event_Bool_Exp>>;
+  date?: InputMaybe<Timestamptz_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  event_participants?: InputMaybe<Event_Participant_Bool_Exp>;
+  event_participants_aggregate?: InputMaybe<Event_Participant_Aggregate_Bool_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  is_online?: InputMaybe<Boolean_Comparison_Exp>;
+  location?: InputMaybe<String_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  space?: InputMaybe<Space_Bool_Exp>;
+  space_id?: InputMaybe<Int_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "event" */
+export enum Event_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  EventPkey = 'event_pkey'
+}
+
+/** input type for incrementing numeric columns in table "event" */
+export type Event_Inc_Input = {
+  space_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "event" */
+export type Event_Insert_Input = {
+  date?: InputMaybe<Scalars['timestamptz']>;
+  description?: InputMaybe<Scalars['String']>;
+  event_participants?: InputMaybe<Event_Participant_Arr_Rel_Insert_Input>;
+  is_online?: InputMaybe<Scalars['Boolean']>;
+  location?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  space?: InputMaybe<Space_Obj_Rel_Insert_Input>;
+  space_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** aggregate max on columns */
+export type Event_Max_Fields = {
+  __typename?: 'event_max_fields';
+  date?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  location?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  space_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by max() on columns of table "event" */
+export type Event_Max_Order_By = {
+  date?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  location?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Event_Min_Fields = {
+  __typename?: 'event_min_fields';
+  date?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  location?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  space_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by min() on columns of table "event" */
+export type Event_Min_Order_By = {
+  date?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  location?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "event" */
+export type Event_Mutation_Response = {
+  __typename?: 'event_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Event>;
+};
+
+/** input type for inserting object relation for remote table "event" */
+export type Event_Obj_Rel_Insert_Input = {
+  data: Event_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Event_On_Conflict>;
+};
+
+/** on_conflict condition type for table "event" */
+export type Event_On_Conflict = {
+  constraint: Event_Constraint;
+  update_columns?: Array<Event_Update_Column>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "event". */
+export type Event_Order_By = {
+  date?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  event_participants_aggregate?: InputMaybe<Event_Participant_Aggregate_Order_By>;
+  id?: InputMaybe<Order_By>;
+  is_online?: InputMaybe<Order_By>;
+  location?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  space?: InputMaybe<Space_Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "event_participant" */
+export type Event_Participant = {
+  __typename?: 'event_participant';
+  /** An object relationship */
+  event: Event;
+  event_id: Scalars['Int'];
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "event_participant" */
+export type Event_Participant_Aggregate = {
+  __typename?: 'event_participant_aggregate';
+  aggregate?: Maybe<Event_Participant_Aggregate_Fields>;
+  nodes: Array<Event_Participant>;
+};
+
+export type Event_Participant_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Event_Participant_Aggregate_Bool_Exp_Count>;
+};
+
+export type Event_Participant_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Event_Participant_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Event_Participant_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "event_participant" */
+export type Event_Participant_Aggregate_Fields = {
+  __typename?: 'event_participant_aggregate_fields';
+  avg?: Maybe<Event_Participant_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Event_Participant_Max_Fields>;
+  min?: Maybe<Event_Participant_Min_Fields>;
+  stddev?: Maybe<Event_Participant_Stddev_Fields>;
+  stddev_pop?: Maybe<Event_Participant_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Event_Participant_Stddev_Samp_Fields>;
+  sum?: Maybe<Event_Participant_Sum_Fields>;
+  var_pop?: Maybe<Event_Participant_Var_Pop_Fields>;
+  var_samp?: Maybe<Event_Participant_Var_Samp_Fields>;
+  variance?: Maybe<Event_Participant_Variance_Fields>;
+};
+
+
+/** aggregate fields of "event_participant" */
+export type Event_Participant_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Event_Participant_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "event_participant" */
+export type Event_Participant_Aggregate_Order_By = {
+  avg?: InputMaybe<Event_Participant_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Event_Participant_Max_Order_By>;
+  min?: InputMaybe<Event_Participant_Min_Order_By>;
+  stddev?: InputMaybe<Event_Participant_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Event_Participant_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Event_Participant_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Event_Participant_Sum_Order_By>;
+  var_pop?: InputMaybe<Event_Participant_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Event_Participant_Var_Samp_Order_By>;
+  variance?: InputMaybe<Event_Participant_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "event_participant" */
+export type Event_Participant_Arr_Rel_Insert_Input = {
+  data: Array<Event_Participant_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Event_Participant_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Event_Participant_Avg_Fields = {
+  __typename?: 'event_participant_avg_fields';
+  event_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "event_participant" */
+export type Event_Participant_Avg_Order_By = {
+  event_id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "event_participant". All fields are combined with a logical 'AND'. */
+export type Event_Participant_Bool_Exp = {
+  _and?: InputMaybe<Array<Event_Participant_Bool_Exp>>;
+  _not?: InputMaybe<Event_Participant_Bool_Exp>;
+  _or?: InputMaybe<Array<Event_Participant_Bool_Exp>>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  event_id?: InputMaybe<Int_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "event_participant" */
+export enum Event_Participant_Constraint {
+  /** unique or primary key constraint on columns "user_id", "event_id" */
+  EventParticipantPkey = 'event_participant_pkey'
+}
+
+/** input type for incrementing numeric columns in table "event_participant" */
+export type Event_Participant_Inc_Input = {
+  event_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "event_participant" */
+export type Event_Participant_Insert_Input = {
+  event?: InputMaybe<Event_Obj_Rel_Insert_Input>;
+  event_id?: InputMaybe<Scalars['Int']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Event_Participant_Max_Fields = {
+  __typename?: 'event_participant_max_fields';
+  event_id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "event_participant" */
+export type Event_Participant_Max_Order_By = {
+  event_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Event_Participant_Min_Fields = {
+  __typename?: 'event_participant_min_fields';
+  event_id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "event_participant" */
+export type Event_Participant_Min_Order_By = {
+  event_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "event_participant" */
+export type Event_Participant_Mutation_Response = {
+  __typename?: 'event_participant_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Event_Participant>;
+};
+
+/** on_conflict condition type for table "event_participant" */
+export type Event_Participant_On_Conflict = {
+  constraint: Event_Participant_Constraint;
+  update_columns?: Array<Event_Participant_Update_Column>;
+  where?: InputMaybe<Event_Participant_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "event_participant". */
+export type Event_Participant_Order_By = {
+  event?: InputMaybe<Event_Order_By>;
+  event_id?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: event_participant */
+export type Event_Participant_Pk_Columns_Input = {
+  event_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+/** select columns of table "event_participant" */
+export enum Event_Participant_Select_Column {
+  /** column name */
+  EventId = 'event_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "event_participant" */
+export type Event_Participant_Set_Input = {
+  event_id?: InputMaybe<Scalars['Int']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate stddev on columns */
+export type Event_Participant_Stddev_Fields = {
+  __typename?: 'event_participant_stddev_fields';
+  event_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "event_participant" */
+export type Event_Participant_Stddev_Order_By = {
+  event_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Event_Participant_Stddev_Pop_Fields = {
+  __typename?: 'event_participant_stddev_pop_fields';
+  event_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "event_participant" */
+export type Event_Participant_Stddev_Pop_Order_By = {
+  event_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Event_Participant_Stddev_Samp_Fields = {
+  __typename?: 'event_participant_stddev_samp_fields';
+  event_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "event_participant" */
+export type Event_Participant_Stddev_Samp_Order_By = {
+  event_id?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "event_participant" */
+export type Event_Participant_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Event_Participant_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Event_Participant_Stream_Cursor_Value_Input = {
+  event_id?: InputMaybe<Scalars['Int']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate sum on columns */
+export type Event_Participant_Sum_Fields = {
+  __typename?: 'event_participant_sum_fields';
+  event_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "event_participant" */
+export type Event_Participant_Sum_Order_By = {
+  event_id?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "event_participant" */
+export enum Event_Participant_Update_Column {
+  /** column name */
+  EventId = 'event_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type Event_Participant_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Event_Participant_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Event_Participant_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Event_Participant_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Event_Participant_Var_Pop_Fields = {
+  __typename?: 'event_participant_var_pop_fields';
+  event_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "event_participant" */
+export type Event_Participant_Var_Pop_Order_By = {
+  event_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Event_Participant_Var_Samp_Fields = {
+  __typename?: 'event_participant_var_samp_fields';
+  event_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "event_participant" */
+export type Event_Participant_Var_Samp_Order_By = {
+  event_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Event_Participant_Variance_Fields = {
+  __typename?: 'event_participant_variance_fields';
+  event_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "event_participant" */
+export type Event_Participant_Variance_Order_By = {
+  event_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: event */
+export type Event_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "event" */
+export enum Event_Select_Column {
+  /** column name */
+  Date = 'date',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsOnline = 'is_online',
+  /** column name */
+  Location = 'location',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  SpaceId = 'space_id'
+}
+
+/** select "event_aggregate_bool_exp_bool_and_arguments_columns" columns of table "event" */
+export enum Event_Select_Column_Event_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsOnline = 'is_online'
+}
+
+/** select "event_aggregate_bool_exp_bool_or_arguments_columns" columns of table "event" */
+export enum Event_Select_Column_Event_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsOnline = 'is_online'
+}
+
+/** input type for updating data in table "event" */
+export type Event_Set_Input = {
+  date?: InputMaybe<Scalars['timestamptz']>;
+  description?: InputMaybe<Scalars['String']>;
+  is_online?: InputMaybe<Scalars['Boolean']>;
+  location?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  space_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** aggregate stddev on columns */
+export type Event_Stddev_Fields = {
+  __typename?: 'event_stddev_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "event" */
+export type Event_Stddev_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Event_Stddev_Pop_Fields = {
+  __typename?: 'event_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "event" */
+export type Event_Stddev_Pop_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Event_Stddev_Samp_Fields = {
+  __typename?: 'event_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "event" */
+export type Event_Stddev_Samp_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "event" */
+export type Event_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Event_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Event_Stream_Cursor_Value_Input = {
+  date?: InputMaybe<Scalars['timestamptz']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
+  is_online?: InputMaybe<Scalars['Boolean']>;
+  location?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  space_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** aggregate sum on columns */
+export type Event_Sum_Fields = {
+  __typename?: 'event_sum_fields';
+  id?: Maybe<Scalars['Int']>;
+  space_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "event" */
+export type Event_Sum_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "event" */
+export enum Event_Update_Column {
+  /** column name */
+  Date = 'date',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  IsOnline = 'is_online',
+  /** column name */
+  Location = 'location',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  SpaceId = 'space_id'
+}
+
+export type Event_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Event_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Event_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Event_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Event_Var_Pop_Fields = {
+  __typename?: 'event_var_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "event" */
+export type Event_Var_Pop_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Event_Var_Samp_Fields = {
+  __typename?: 'event_var_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "event" */
+export type Event_Var_Samp_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Event_Variance_Fields = {
+  __typename?: 'event_variance_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "event" */
+export type Event_Variance_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
 
 /** columns and relationships of "storage.files" */
 export type Files = {
@@ -2447,6 +3494,8 @@ export type Files = {
   mimeType?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   size?: Maybe<Scalars['Int']>;
+  /** An object relationship */
+  telegram_file?: Maybe<Telegram_File>;
   updatedAt: Scalars['timestamptz'];
   uploadedByUserId?: Maybe<Scalars['uuid']>;
 };
@@ -2567,6 +3616,7 @@ export type Files_Bool_Exp = {
   mimeType?: InputMaybe<String_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   size?: InputMaybe<Int_Comparison_Exp>;
+  telegram_file?: InputMaybe<Telegram_File_Bool_Exp>;
   updatedAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   uploadedByUserId?: InputMaybe<Uuid_Comparison_Exp>;
 };
@@ -2609,6 +3659,7 @@ export type Files_Insert_Input = {
   mimeType?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   size?: InputMaybe<Scalars['Int']>;
+  telegram_file?: InputMaybe<Telegram_File_Obj_Rel_Insert_Input>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
   uploadedByUserId?: InputMaybe<Scalars['uuid']>;
 };
@@ -2702,6 +3753,7 @@ export type Files_Order_By = {
   mimeType?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   size?: InputMaybe<Order_By>;
+  telegram_file?: InputMaybe<Telegram_File_Order_By>;
   updatedAt?: InputMaybe<Order_By>;
   uploadedByUserId?: InputMaybe<Order_By>;
 };
@@ -2914,6 +3966,19 @@ export type Files_Variance_Order_By = {
   size?: InputMaybe<Order_By>;
 };
 
+/** Boolean expression to compare columns of type "json". All fields are combined with logical 'AND'. */
+export type Json_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['json']>;
+  _gt?: InputMaybe<Scalars['json']>;
+  _gte?: InputMaybe<Scalars['json']>;
+  _in?: InputMaybe<Array<Scalars['json']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['json']>;
+  _lte?: InputMaybe<Scalars['json']>;
+  _neq?: InputMaybe<Scalars['json']>;
+  _nin?: InputMaybe<Array<Scalars['json']>>;
+};
+
 export type Jsonb_Cast_Exp = {
   String?: InputMaybe<String_Comparison_Exp>;
 };
@@ -2997,14 +4062,62 @@ export type Mutation_Root = {
   deleteVirus?: Maybe<Virus>;
   /** delete data from the table: "storage.virus" */
   deleteViruses?: Maybe<Virus_Mutation_Response>;
-  /** delete data from the table: "otp_code" */
-  delete_otp_code?: Maybe<Otp_Code_Mutation_Response>;
-  /** delete single row from the table: "otp_code" */
-  delete_otp_code_by_pk?: Maybe<Otp_Code>;
-  /** delete data from the table: "part" */
-  delete_part?: Maybe<Part_Mutation_Response>;
-  /** delete single row from the table: "part" */
-  delete_part_by_pk?: Maybe<Part>;
+  /** delete data from the table: "company" */
+  delete_company?: Maybe<Company_Mutation_Response>;
+  /** delete single row from the table: "company" */
+  delete_company_by_pk?: Maybe<Company>;
+  /** delete data from the table: "event" */
+  delete_event?: Maybe<Event_Mutation_Response>;
+  /** delete single row from the table: "event" */
+  delete_event_by_pk?: Maybe<Event>;
+  /** delete data from the table: "event_participant" */
+  delete_event_participant?: Maybe<Event_Participant_Mutation_Response>;
+  /** delete single row from the table: "event_participant" */
+  delete_event_participant_by_pk?: Maybe<Event_Participant>;
+  /** delete data from the table: "space" */
+  delete_space?: Maybe<Space_Mutation_Response>;
+  /** delete single row from the table: "space" */
+  delete_space_by_pk?: Maybe<Space>;
+  /** delete data from the table: "space_document" */
+  delete_space_document?: Maybe<Space_Document_Mutation_Response>;
+  /** delete single row from the table: "space_document" */
+  delete_space_document_by_pk?: Maybe<Space_Document>;
+  /** delete data from the table: "telegram_bot" */
+  delete_telegram_bot?: Maybe<Telegram_Bot_Mutation_Response>;
+  /** delete single row from the table: "telegram_bot" */
+  delete_telegram_bot_by_pk?: Maybe<Telegram_Bot>;
+  /** delete data from the table: "telegram_chat" */
+  delete_telegram_chat?: Maybe<Telegram_Chat_Mutation_Response>;
+  /** delete single row from the table: "telegram_chat" */
+  delete_telegram_chat_by_pk?: Maybe<Telegram_Chat>;
+  /** delete data from the table: "telegram_file" */
+  delete_telegram_file?: Maybe<Telegram_File_Mutation_Response>;
+  /** delete single row from the table: "telegram_file" */
+  delete_telegram_file_by_pk?: Maybe<Telegram_File>;
+  /** delete data from the table: "tinder_swipes" */
+  delete_tinder_swipes?: Maybe<Tinder_Swipes_Mutation_Response>;
+  /** delete single row from the table: "tinder_swipes" */
+  delete_tinder_swipes_by_pk?: Maybe<Tinder_Swipes>;
+  /** delete data from the table: "user_company" */
+  delete_user_company?: Maybe<User_Company_Mutation_Response>;
+  /** delete single row from the table: "user_company" */
+  delete_user_company_by_pk?: Maybe<User_Company>;
+  /** delete data from the table: "user_extended_info" */
+  delete_user_extended_info?: Maybe<User_Extended_Info_Mutation_Response>;
+  /** delete single row from the table: "user_extended_info" */
+  delete_user_extended_info_by_pk?: Maybe<User_Extended_Info>;
+  /** delete data from the table: "user_profile" */
+  delete_user_profile?: Maybe<User_Profile_Mutation_Response>;
+  /** delete single row from the table: "user_profile" */
+  delete_user_profile_by_pk?: Maybe<User_Profile>;
+  /** delete data from the table: "user_space" */
+  delete_user_space?: Maybe<User_Space_Mutation_Response>;
+  /** delete single row from the table: "user_space" */
+  delete_user_space_by_pk?: Maybe<User_Space>;
+  /** delete data from the table: "webhook_logs" */
+  delete_webhook_logs?: Maybe<Webhook_Logs_Mutation_Response>;
+  /** delete single row from the table: "webhook_logs" */
+  delete_webhook_logs_by_pk?: Maybe<Webhook_Logs>;
   /** insert a single row into the table: "auth.providers" */
   insertAuthProvider?: Maybe<AuthProviders>;
   /** insert a single row into the table: "auth.provider_requests" */
@@ -3057,14 +4170,62 @@ export type Mutation_Root = {
   insertVirus?: Maybe<Virus>;
   /** insert data into the table: "storage.virus" */
   insertViruses?: Maybe<Virus_Mutation_Response>;
-  /** insert data into the table: "otp_code" */
-  insert_otp_code?: Maybe<Otp_Code_Mutation_Response>;
-  /** insert a single row into the table: "otp_code" */
-  insert_otp_code_one?: Maybe<Otp_Code>;
-  /** insert data into the table: "part" */
-  insert_part?: Maybe<Part_Mutation_Response>;
-  /** insert a single row into the table: "part" */
-  insert_part_one?: Maybe<Part>;
+  /** insert data into the table: "company" */
+  insert_company?: Maybe<Company_Mutation_Response>;
+  /** insert a single row into the table: "company" */
+  insert_company_one?: Maybe<Company>;
+  /** insert data into the table: "event" */
+  insert_event?: Maybe<Event_Mutation_Response>;
+  /** insert a single row into the table: "event" */
+  insert_event_one?: Maybe<Event>;
+  /** insert data into the table: "event_participant" */
+  insert_event_participant?: Maybe<Event_Participant_Mutation_Response>;
+  /** insert a single row into the table: "event_participant" */
+  insert_event_participant_one?: Maybe<Event_Participant>;
+  /** insert data into the table: "space" */
+  insert_space?: Maybe<Space_Mutation_Response>;
+  /** insert data into the table: "space_document" */
+  insert_space_document?: Maybe<Space_Document_Mutation_Response>;
+  /** insert a single row into the table: "space_document" */
+  insert_space_document_one?: Maybe<Space_Document>;
+  /** insert a single row into the table: "space" */
+  insert_space_one?: Maybe<Space>;
+  /** insert data into the table: "telegram_bot" */
+  insert_telegram_bot?: Maybe<Telegram_Bot_Mutation_Response>;
+  /** insert a single row into the table: "telegram_bot" */
+  insert_telegram_bot_one?: Maybe<Telegram_Bot>;
+  /** insert data into the table: "telegram_chat" */
+  insert_telegram_chat?: Maybe<Telegram_Chat_Mutation_Response>;
+  /** insert a single row into the table: "telegram_chat" */
+  insert_telegram_chat_one?: Maybe<Telegram_Chat>;
+  /** insert data into the table: "telegram_file" */
+  insert_telegram_file?: Maybe<Telegram_File_Mutation_Response>;
+  /** insert a single row into the table: "telegram_file" */
+  insert_telegram_file_one?: Maybe<Telegram_File>;
+  /** insert data into the table: "tinder_swipes" */
+  insert_tinder_swipes?: Maybe<Tinder_Swipes_Mutation_Response>;
+  /** insert a single row into the table: "tinder_swipes" */
+  insert_tinder_swipes_one?: Maybe<Tinder_Swipes>;
+  /** insert data into the table: "user_company" */
+  insert_user_company?: Maybe<User_Company_Mutation_Response>;
+  /** insert a single row into the table: "user_company" */
+  insert_user_company_one?: Maybe<User_Company>;
+  /** insert data into the table: "user_extended_info" */
+  insert_user_extended_info?: Maybe<User_Extended_Info_Mutation_Response>;
+  /** insert a single row into the table: "user_extended_info" */
+  insert_user_extended_info_one?: Maybe<User_Extended_Info>;
+  /** insert data into the table: "user_profile" */
+  insert_user_profile?: Maybe<User_Profile_Mutation_Response>;
+  /** insert a single row into the table: "user_profile" */
+  insert_user_profile_one?: Maybe<User_Profile>;
+  /** insert data into the table: "user_space" */
+  insert_user_space?: Maybe<User_Space_Mutation_Response>;
+  /** insert a single row into the table: "user_space" */
+  insert_user_space_one?: Maybe<User_Space>;
+  /** insert data into the table: "webhook_logs" */
+  insert_webhook_logs?: Maybe<Webhook_Logs_Mutation_Response>;
+  /** insert a single row into the table: "webhook_logs" */
+  insert_webhook_logs_one?: Maybe<Webhook_Logs>;
   /** update single row of the table: "auth.providers" */
   updateAuthProvider?: Maybe<AuthProviders>;
   /** update single row of the table: "auth.provider_requests" */
@@ -3137,24 +4298,96 @@ export type Mutation_Root = {
   update_authUserSecurityKeys_many?: Maybe<Array<Maybe<AuthUserSecurityKeys_Mutation_Response>>>;
   /** update multiples rows of table: "storage.buckets" */
   update_buckets_many?: Maybe<Array<Maybe<Buckets_Mutation_Response>>>;
+  /** update data of the table: "company" */
+  update_company?: Maybe<Company_Mutation_Response>;
+  /** update single row of the table: "company" */
+  update_company_by_pk?: Maybe<Company>;
+  /** update multiples rows of table: "company" */
+  update_company_many?: Maybe<Array<Maybe<Company_Mutation_Response>>>;
+  /** update data of the table: "event" */
+  update_event?: Maybe<Event_Mutation_Response>;
+  /** update single row of the table: "event" */
+  update_event_by_pk?: Maybe<Event>;
+  /** update multiples rows of table: "event" */
+  update_event_many?: Maybe<Array<Maybe<Event_Mutation_Response>>>;
+  /** update data of the table: "event_participant" */
+  update_event_participant?: Maybe<Event_Participant_Mutation_Response>;
+  /** update single row of the table: "event_participant" */
+  update_event_participant_by_pk?: Maybe<Event_Participant>;
+  /** update multiples rows of table: "event_participant" */
+  update_event_participant_many?: Maybe<Array<Maybe<Event_Participant_Mutation_Response>>>;
   /** update multiples rows of table: "storage.files" */
   update_files_many?: Maybe<Array<Maybe<Files_Mutation_Response>>>;
-  /** update data of the table: "otp_code" */
-  update_otp_code?: Maybe<Otp_Code_Mutation_Response>;
-  /** update single row of the table: "otp_code" */
-  update_otp_code_by_pk?: Maybe<Otp_Code>;
-  /** update multiples rows of table: "otp_code" */
-  update_otp_code_many?: Maybe<Array<Maybe<Otp_Code_Mutation_Response>>>;
-  /** update data of the table: "part" */
-  update_part?: Maybe<Part_Mutation_Response>;
-  /** update single row of the table: "part" */
-  update_part_by_pk?: Maybe<Part>;
-  /** update multiples rows of table: "part" */
-  update_part_many?: Maybe<Array<Maybe<Part_Mutation_Response>>>;
+  /** update data of the table: "space" */
+  update_space?: Maybe<Space_Mutation_Response>;
+  /** update single row of the table: "space" */
+  update_space_by_pk?: Maybe<Space>;
+  /** update data of the table: "space_document" */
+  update_space_document?: Maybe<Space_Document_Mutation_Response>;
+  /** update single row of the table: "space_document" */
+  update_space_document_by_pk?: Maybe<Space_Document>;
+  /** update multiples rows of table: "space_document" */
+  update_space_document_many?: Maybe<Array<Maybe<Space_Document_Mutation_Response>>>;
+  /** update multiples rows of table: "space" */
+  update_space_many?: Maybe<Array<Maybe<Space_Mutation_Response>>>;
+  /** update data of the table: "telegram_bot" */
+  update_telegram_bot?: Maybe<Telegram_Bot_Mutation_Response>;
+  /** update single row of the table: "telegram_bot" */
+  update_telegram_bot_by_pk?: Maybe<Telegram_Bot>;
+  /** update multiples rows of table: "telegram_bot" */
+  update_telegram_bot_many?: Maybe<Array<Maybe<Telegram_Bot_Mutation_Response>>>;
+  /** update data of the table: "telegram_chat" */
+  update_telegram_chat?: Maybe<Telegram_Chat_Mutation_Response>;
+  /** update single row of the table: "telegram_chat" */
+  update_telegram_chat_by_pk?: Maybe<Telegram_Chat>;
+  /** update multiples rows of table: "telegram_chat" */
+  update_telegram_chat_many?: Maybe<Array<Maybe<Telegram_Chat_Mutation_Response>>>;
+  /** update data of the table: "telegram_file" */
+  update_telegram_file?: Maybe<Telegram_File_Mutation_Response>;
+  /** update single row of the table: "telegram_file" */
+  update_telegram_file_by_pk?: Maybe<Telegram_File>;
+  /** update multiples rows of table: "telegram_file" */
+  update_telegram_file_many?: Maybe<Array<Maybe<Telegram_File_Mutation_Response>>>;
+  /** update data of the table: "tinder_swipes" */
+  update_tinder_swipes?: Maybe<Tinder_Swipes_Mutation_Response>;
+  /** update single row of the table: "tinder_swipes" */
+  update_tinder_swipes_by_pk?: Maybe<Tinder_Swipes>;
+  /** update multiples rows of table: "tinder_swipes" */
+  update_tinder_swipes_many?: Maybe<Array<Maybe<Tinder_Swipes_Mutation_Response>>>;
+  /** update data of the table: "user_company" */
+  update_user_company?: Maybe<User_Company_Mutation_Response>;
+  /** update single row of the table: "user_company" */
+  update_user_company_by_pk?: Maybe<User_Company>;
+  /** update multiples rows of table: "user_company" */
+  update_user_company_many?: Maybe<Array<Maybe<User_Company_Mutation_Response>>>;
+  /** update data of the table: "user_extended_info" */
+  update_user_extended_info?: Maybe<User_Extended_Info_Mutation_Response>;
+  /** update single row of the table: "user_extended_info" */
+  update_user_extended_info_by_pk?: Maybe<User_Extended_Info>;
+  /** update multiples rows of table: "user_extended_info" */
+  update_user_extended_info_many?: Maybe<Array<Maybe<User_Extended_Info_Mutation_Response>>>;
+  /** update data of the table: "user_profile" */
+  update_user_profile?: Maybe<User_Profile_Mutation_Response>;
+  /** update single row of the table: "user_profile" */
+  update_user_profile_by_pk?: Maybe<User_Profile>;
+  /** update multiples rows of table: "user_profile" */
+  update_user_profile_many?: Maybe<Array<Maybe<User_Profile_Mutation_Response>>>;
+  /** update data of the table: "user_space" */
+  update_user_space?: Maybe<User_Space_Mutation_Response>;
+  /** update single row of the table: "user_space" */
+  update_user_space_by_pk?: Maybe<User_Space>;
+  /** update multiples rows of table: "user_space" */
+  update_user_space_many?: Maybe<Array<Maybe<User_Space_Mutation_Response>>>;
   /** update multiples rows of table: "auth.users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
   /** update multiples rows of table: "storage.virus" */
   update_virus_many?: Maybe<Array<Maybe<Virus_Mutation_Response>>>;
+  /** update data of the table: "webhook_logs" */
+  update_webhook_logs?: Maybe<Webhook_Logs_Mutation_Response>;
+  /** update single row of the table: "webhook_logs" */
+  update_webhook_logs_by_pk?: Maybe<Webhook_Logs>;
+  /** update multiples rows of table: "webhook_logs" */
+  update_webhook_logs_many?: Maybe<Array<Maybe<Webhook_Logs_Mutation_Response>>>;
 };
 
 
@@ -3315,26 +4548,175 @@ export type Mutation_RootDeleteVirusesArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_Otp_CodeArgs = {
-  where: Otp_Code_Bool_Exp;
+export type Mutation_RootDelete_CompanyArgs = {
+  where: Company_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Otp_Code_By_PkArgs = {
+export type Mutation_RootDelete_Company_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_EventArgs = {
+  where: Event_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Event_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Event_ParticipantArgs = {
+  where: Event_Participant_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Event_Participant_By_PkArgs = {
+  event_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_SpaceArgs = {
+  where: Space_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Space_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Space_DocumentArgs = {
+  where: Space_Document_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Space_Document_By_PkArgs = {
+  id: Scalars['bigint'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Telegram_BotArgs = {
+  where: Telegram_Bot_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Telegram_Bot_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Telegram_ChatArgs = {
+  where: Telegram_Chat_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Telegram_Chat_By_PkArgs = {
+  id: Scalars['bigint'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Telegram_FileArgs = {
+  where: Telegram_File_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Telegram_File_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Tinder_SwipesArgs = {
+  where: Tinder_Swipes_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Tinder_Swipes_By_PkArgs = {
+  from_user_id: Scalars['uuid'];
+  to_user_id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_CompanyArgs = {
+  where: User_Company_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_Company_By_PkArgs = {
+  company_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_Extended_InfoArgs = {
+  where: User_Extended_Info_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_Extended_Info_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_PartArgs = {
-  where: Part_Bool_Exp;
+export type Mutation_RootDelete_User_ProfileArgs = {
+  where: User_Profile_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Part_By_PkArgs = {
-  id: Scalars['Int'];
+export type Mutation_RootDelete_User_Profile_By_PkArgs = {
+  space_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_SpaceArgs = {
+  where: User_Space_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_Space_By_PkArgs = {
+  space_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Webhook_LogsArgs = {
+  where: Webhook_Logs_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Webhook_Logs_By_PkArgs = {
+  id: Scalars['bigint'];
 };
 
 
@@ -3521,30 +4903,198 @@ export type Mutation_RootInsertVirusesArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_Otp_CodeArgs = {
-  objects: Array<Otp_Code_Insert_Input>;
-  on_conflict?: InputMaybe<Otp_Code_On_Conflict>;
+export type Mutation_RootInsert_CompanyArgs = {
+  objects: Array<Company_Insert_Input>;
+  on_conflict?: InputMaybe<Company_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Otp_Code_OneArgs = {
-  object: Otp_Code_Insert_Input;
-  on_conflict?: InputMaybe<Otp_Code_On_Conflict>;
+export type Mutation_RootInsert_Company_OneArgs = {
+  object: Company_Insert_Input;
+  on_conflict?: InputMaybe<Company_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_PartArgs = {
-  objects: Array<Part_Insert_Input>;
-  on_conflict?: InputMaybe<Part_On_Conflict>;
+export type Mutation_RootInsert_EventArgs = {
+  objects: Array<Event_Insert_Input>;
+  on_conflict?: InputMaybe<Event_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Part_OneArgs = {
-  object: Part_Insert_Input;
-  on_conflict?: InputMaybe<Part_On_Conflict>;
+export type Mutation_RootInsert_Event_OneArgs = {
+  object: Event_Insert_Input;
+  on_conflict?: InputMaybe<Event_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Event_ParticipantArgs = {
+  objects: Array<Event_Participant_Insert_Input>;
+  on_conflict?: InputMaybe<Event_Participant_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Event_Participant_OneArgs = {
+  object: Event_Participant_Insert_Input;
+  on_conflict?: InputMaybe<Event_Participant_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_SpaceArgs = {
+  objects: Array<Space_Insert_Input>;
+  on_conflict?: InputMaybe<Space_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Space_DocumentArgs = {
+  objects: Array<Space_Document_Insert_Input>;
+  on_conflict?: InputMaybe<Space_Document_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Space_Document_OneArgs = {
+  object: Space_Document_Insert_Input;
+  on_conflict?: InputMaybe<Space_Document_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Space_OneArgs = {
+  object: Space_Insert_Input;
+  on_conflict?: InputMaybe<Space_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Telegram_BotArgs = {
+  objects: Array<Telegram_Bot_Insert_Input>;
+  on_conflict?: InputMaybe<Telegram_Bot_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Telegram_Bot_OneArgs = {
+  object: Telegram_Bot_Insert_Input;
+  on_conflict?: InputMaybe<Telegram_Bot_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Telegram_ChatArgs = {
+  objects: Array<Telegram_Chat_Insert_Input>;
+  on_conflict?: InputMaybe<Telegram_Chat_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Telegram_Chat_OneArgs = {
+  object: Telegram_Chat_Insert_Input;
+  on_conflict?: InputMaybe<Telegram_Chat_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Telegram_FileArgs = {
+  objects: Array<Telegram_File_Insert_Input>;
+  on_conflict?: InputMaybe<Telegram_File_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Telegram_File_OneArgs = {
+  object: Telegram_File_Insert_Input;
+  on_conflict?: InputMaybe<Telegram_File_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Tinder_SwipesArgs = {
+  objects: Array<Tinder_Swipes_Insert_Input>;
+  on_conflict?: InputMaybe<Tinder_Swipes_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Tinder_Swipes_OneArgs = {
+  object: Tinder_Swipes_Insert_Input;
+  on_conflict?: InputMaybe<Tinder_Swipes_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_CompanyArgs = {
+  objects: Array<User_Company_Insert_Input>;
+  on_conflict?: InputMaybe<User_Company_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Company_OneArgs = {
+  object: User_Company_Insert_Input;
+  on_conflict?: InputMaybe<User_Company_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Extended_InfoArgs = {
+  objects: Array<User_Extended_Info_Insert_Input>;
+  on_conflict?: InputMaybe<User_Extended_Info_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Extended_Info_OneArgs = {
+  object: User_Extended_Info_Insert_Input;
+  on_conflict?: InputMaybe<User_Extended_Info_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_ProfileArgs = {
+  objects: Array<User_Profile_Insert_Input>;
+  on_conflict?: InputMaybe<User_Profile_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Profile_OneArgs = {
+  object: User_Profile_Insert_Input;
+  on_conflict?: InputMaybe<User_Profile_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_SpaceArgs = {
+  objects: Array<User_Space_Insert_Input>;
+  on_conflict?: InputMaybe<User_Space_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Space_OneArgs = {
+  object: User_Space_Insert_Input;
+  on_conflict?: InputMaybe<User_Space_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Webhook_LogsArgs = {
+  objects: Array<Webhook_Logs_Insert_Input>;
+  on_conflict?: InputMaybe<Webhook_Logs_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Webhook_Logs_OneArgs = {
+  object: Webhook_Logs_Insert_Input;
+  on_conflict?: InputMaybe<Webhook_Logs_On_Conflict>;
 };
 
 
@@ -3847,50 +5397,286 @@ export type Mutation_RootUpdate_Buckets_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_CompanyArgs = {
+  _set?: InputMaybe<Company_Set_Input>;
+  where: Company_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Company_By_PkArgs = {
+  _set?: InputMaybe<Company_Set_Input>;
+  pk_columns: Company_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Company_ManyArgs = {
+  updates: Array<Company_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_EventArgs = {
+  _inc?: InputMaybe<Event_Inc_Input>;
+  _set?: InputMaybe<Event_Set_Input>;
+  where: Event_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Event_By_PkArgs = {
+  _inc?: InputMaybe<Event_Inc_Input>;
+  _set?: InputMaybe<Event_Set_Input>;
+  pk_columns: Event_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Event_ManyArgs = {
+  updates: Array<Event_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Event_ParticipantArgs = {
+  _inc?: InputMaybe<Event_Participant_Inc_Input>;
+  _set?: InputMaybe<Event_Participant_Set_Input>;
+  where: Event_Participant_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Event_Participant_By_PkArgs = {
+  _inc?: InputMaybe<Event_Participant_Inc_Input>;
+  _set?: InputMaybe<Event_Participant_Set_Input>;
+  pk_columns: Event_Participant_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Event_Participant_ManyArgs = {
+  updates: Array<Event_Participant_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Files_ManyArgs = {
   updates: Array<Files_Updates>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Otp_CodeArgs = {
-  _set?: InputMaybe<Otp_Code_Set_Input>;
-  where: Otp_Code_Bool_Exp;
+export type Mutation_RootUpdate_SpaceArgs = {
+  _inc?: InputMaybe<Space_Inc_Input>;
+  _set?: InputMaybe<Space_Set_Input>;
+  where: Space_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Otp_Code_By_PkArgs = {
-  _set?: InputMaybe<Otp_Code_Set_Input>;
-  pk_columns: Otp_Code_Pk_Columns_Input;
+export type Mutation_RootUpdate_Space_By_PkArgs = {
+  _inc?: InputMaybe<Space_Inc_Input>;
+  _set?: InputMaybe<Space_Set_Input>;
+  pk_columns: Space_Pk_Columns_Input;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Otp_Code_ManyArgs = {
-  updates: Array<Otp_Code_Updates>;
+export type Mutation_RootUpdate_Space_DocumentArgs = {
+  _inc?: InputMaybe<Space_Document_Inc_Input>;
+  _set?: InputMaybe<Space_Document_Set_Input>;
+  where: Space_Document_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_PartArgs = {
-  _inc?: InputMaybe<Part_Inc_Input>;
-  _set?: InputMaybe<Part_Set_Input>;
-  where: Part_Bool_Exp;
+export type Mutation_RootUpdate_Space_Document_By_PkArgs = {
+  _inc?: InputMaybe<Space_Document_Inc_Input>;
+  _set?: InputMaybe<Space_Document_Set_Input>;
+  pk_columns: Space_Document_Pk_Columns_Input;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Part_By_PkArgs = {
-  _inc?: InputMaybe<Part_Inc_Input>;
-  _set?: InputMaybe<Part_Set_Input>;
-  pk_columns: Part_Pk_Columns_Input;
+export type Mutation_RootUpdate_Space_Document_ManyArgs = {
+  updates: Array<Space_Document_Updates>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Part_ManyArgs = {
-  updates: Array<Part_Updates>;
+export type Mutation_RootUpdate_Space_ManyArgs = {
+  updates: Array<Space_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Telegram_BotArgs = {
+  _inc?: InputMaybe<Telegram_Bot_Inc_Input>;
+  _set?: InputMaybe<Telegram_Bot_Set_Input>;
+  where: Telegram_Bot_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Telegram_Bot_By_PkArgs = {
+  _inc?: InputMaybe<Telegram_Bot_Inc_Input>;
+  _set?: InputMaybe<Telegram_Bot_Set_Input>;
+  pk_columns: Telegram_Bot_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Telegram_Bot_ManyArgs = {
+  updates: Array<Telegram_Bot_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Telegram_ChatArgs = {
+  _inc?: InputMaybe<Telegram_Chat_Inc_Input>;
+  _set?: InputMaybe<Telegram_Chat_Set_Input>;
+  where: Telegram_Chat_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Telegram_Chat_By_PkArgs = {
+  _inc?: InputMaybe<Telegram_Chat_Inc_Input>;
+  _set?: InputMaybe<Telegram_Chat_Set_Input>;
+  pk_columns: Telegram_Chat_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Telegram_Chat_ManyArgs = {
+  updates: Array<Telegram_Chat_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Telegram_FileArgs = {
+  _set?: InputMaybe<Telegram_File_Set_Input>;
+  where: Telegram_File_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Telegram_File_By_PkArgs = {
+  _set?: InputMaybe<Telegram_File_Set_Input>;
+  pk_columns: Telegram_File_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Telegram_File_ManyArgs = {
+  updates: Array<Telegram_File_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Tinder_SwipesArgs = {
+  _set?: InputMaybe<Tinder_Swipes_Set_Input>;
+  where: Tinder_Swipes_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Tinder_Swipes_By_PkArgs = {
+  _set?: InputMaybe<Tinder_Swipes_Set_Input>;
+  pk_columns: Tinder_Swipes_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Tinder_Swipes_ManyArgs = {
+  updates: Array<Tinder_Swipes_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_CompanyArgs = {
+  _inc?: InputMaybe<User_Company_Inc_Input>;
+  _set?: InputMaybe<User_Company_Set_Input>;
+  where: User_Company_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Company_By_PkArgs = {
+  _inc?: InputMaybe<User_Company_Inc_Input>;
+  _set?: InputMaybe<User_Company_Set_Input>;
+  pk_columns: User_Company_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Company_ManyArgs = {
+  updates: Array<User_Company_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Extended_InfoArgs = {
+  _set?: InputMaybe<User_Extended_Info_Set_Input>;
+  where: User_Extended_Info_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Extended_Info_By_PkArgs = {
+  _set?: InputMaybe<User_Extended_Info_Set_Input>;
+  pk_columns: User_Extended_Info_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Extended_Info_ManyArgs = {
+  updates: Array<User_Extended_Info_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_ProfileArgs = {
+  _inc?: InputMaybe<User_Profile_Inc_Input>;
+  _set?: InputMaybe<User_Profile_Set_Input>;
+  where: User_Profile_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Profile_By_PkArgs = {
+  _inc?: InputMaybe<User_Profile_Inc_Input>;
+  _set?: InputMaybe<User_Profile_Set_Input>;
+  pk_columns: User_Profile_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Profile_ManyArgs = {
+  updates: Array<User_Profile_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_SpaceArgs = {
+  _inc?: InputMaybe<User_Space_Inc_Input>;
+  _set?: InputMaybe<User_Space_Set_Input>;
+  where: User_Space_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Space_By_PkArgs = {
+  _inc?: InputMaybe<User_Space_Inc_Input>;
+  _set?: InputMaybe<User_Space_Set_Input>;
+  pk_columns: User_Space_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Space_ManyArgs = {
+  updates: Array<User_Space_Updates>;
 };
 
 
@@ -3903,6 +5689,26 @@ export type Mutation_RootUpdate_Users_ManyArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Virus_ManyArgs = {
   updates: Array<Virus_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Webhook_LogsArgs = {
+  _set?: InputMaybe<Webhook_Logs_Set_Input>;
+  where: Webhook_Logs_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Webhook_Logs_By_PkArgs = {
+  _set?: InputMaybe<Webhook_Logs_Set_Input>;
+  pk_columns: Webhook_Logs_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Webhook_Logs_ManyArgs = {
+  updates: Array<Webhook_Logs_Updates>;
 };
 
 /** column ordering options */
@@ -3920,385 +5726,6 @@ export enum Order_By {
   /** in descending order, nulls last */
   DescNullsLast = 'desc_nulls_last'
 }
-
-/** columns and relationships of "otp_code" */
-export type Otp_Code = {
-  __typename?: 'otp_code';
-  code: Scalars['String'];
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id: Scalars['uuid'];
-  updated_at?: Maybe<Scalars['timestamptz']>;
-};
-
-/** aggregated selection of "otp_code" */
-export type Otp_Code_Aggregate = {
-  __typename?: 'otp_code_aggregate';
-  aggregate?: Maybe<Otp_Code_Aggregate_Fields>;
-  nodes: Array<Otp_Code>;
-};
-
-/** aggregate fields of "otp_code" */
-export type Otp_Code_Aggregate_Fields = {
-  __typename?: 'otp_code_aggregate_fields';
-  count: Scalars['Int'];
-  max?: Maybe<Otp_Code_Max_Fields>;
-  min?: Maybe<Otp_Code_Min_Fields>;
-};
-
-
-/** aggregate fields of "otp_code" */
-export type Otp_Code_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Otp_Code_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']>;
-};
-
-/** Boolean expression to filter rows from the table "otp_code". All fields are combined with a logical 'AND'. */
-export type Otp_Code_Bool_Exp = {
-  _and?: InputMaybe<Array<Otp_Code_Bool_Exp>>;
-  _not?: InputMaybe<Otp_Code_Bool_Exp>;
-  _or?: InputMaybe<Array<Otp_Code_Bool_Exp>>;
-  code?: InputMaybe<String_Comparison_Exp>;
-  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "otp_code" */
-export enum Otp_Code_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  OtpCodePkey = 'otp_code_pkey'
-}
-
-/** input type for inserting data into table "otp_code" */
-export type Otp_Code_Insert_Input = {
-  code?: InputMaybe<Scalars['String']>;
-  created_at?: InputMaybe<Scalars['timestamptz']>;
-  id?: InputMaybe<Scalars['uuid']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']>;
-};
-
-/** aggregate max on columns */
-export type Otp_Code_Max_Fields = {
-  __typename?: 'otp_code_max_fields';
-  code?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-};
-
-/** aggregate min on columns */
-export type Otp_Code_Min_Fields = {
-  __typename?: 'otp_code_min_fields';
-  code?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-};
-
-/** response of any mutation on the table "otp_code" */
-export type Otp_Code_Mutation_Response = {
-  __typename?: 'otp_code_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Otp_Code>;
-};
-
-/** on_conflict condition type for table "otp_code" */
-export type Otp_Code_On_Conflict = {
-  constraint: Otp_Code_Constraint;
-  update_columns?: Array<Otp_Code_Update_Column>;
-  where?: InputMaybe<Otp_Code_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "otp_code". */
-export type Otp_Code_Order_By = {
-  code?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: otp_code */
-export type Otp_Code_Pk_Columns_Input = {
-  id: Scalars['uuid'];
-};
-
-/** select columns of table "otp_code" */
-export enum Otp_Code_Select_Column {
-  /** column name */
-  Code = 'code',
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  UpdatedAt = 'updated_at'
-}
-
-/** input type for updating data in table "otp_code" */
-export type Otp_Code_Set_Input = {
-  code?: InputMaybe<Scalars['String']>;
-  created_at?: InputMaybe<Scalars['timestamptz']>;
-  id?: InputMaybe<Scalars['uuid']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']>;
-};
-
-/** Streaming cursor of the table "otp_code" */
-export type Otp_Code_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Otp_Code_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Otp_Code_Stream_Cursor_Value_Input = {
-  code?: InputMaybe<Scalars['String']>;
-  created_at?: InputMaybe<Scalars['timestamptz']>;
-  id?: InputMaybe<Scalars['uuid']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']>;
-};
-
-/** update columns of table "otp_code" */
-export enum Otp_Code_Update_Column {
-  /** column name */
-  Code = 'code',
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  UpdatedAt = 'updated_at'
-}
-
-export type Otp_Code_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Otp_Code_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Otp_Code_Bool_Exp;
-};
-
-/** columns and relationships of "part" */
-export type Part = {
-  __typename?: 'part';
-  created_at: Scalars['timestamptz'];
-  id: Scalars['Int'];
-  name: Scalars['String'];
-  updated_at: Scalars['timestamptz'];
-};
-
-/** aggregated selection of "part" */
-export type Part_Aggregate = {
-  __typename?: 'part_aggregate';
-  aggregate?: Maybe<Part_Aggregate_Fields>;
-  nodes: Array<Part>;
-};
-
-/** aggregate fields of "part" */
-export type Part_Aggregate_Fields = {
-  __typename?: 'part_aggregate_fields';
-  avg?: Maybe<Part_Avg_Fields>;
-  count: Scalars['Int'];
-  max?: Maybe<Part_Max_Fields>;
-  min?: Maybe<Part_Min_Fields>;
-  stddev?: Maybe<Part_Stddev_Fields>;
-  stddev_pop?: Maybe<Part_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Part_Stddev_Samp_Fields>;
-  sum?: Maybe<Part_Sum_Fields>;
-  var_pop?: Maybe<Part_Var_Pop_Fields>;
-  var_samp?: Maybe<Part_Var_Samp_Fields>;
-  variance?: Maybe<Part_Variance_Fields>;
-};
-
-
-/** aggregate fields of "part" */
-export type Part_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Part_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']>;
-};
-
-/** aggregate avg on columns */
-export type Part_Avg_Fields = {
-  __typename?: 'part_avg_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-/** Boolean expression to filter rows from the table "part". All fields are combined with a logical 'AND'. */
-export type Part_Bool_Exp = {
-  _and?: InputMaybe<Array<Part_Bool_Exp>>;
-  _not?: InputMaybe<Part_Bool_Exp>;
-  _or?: InputMaybe<Array<Part_Bool_Exp>>;
-  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
-  id?: InputMaybe<Int_Comparison_Exp>;
-  name?: InputMaybe<String_Comparison_Exp>;
-  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "part" */
-export enum Part_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  PartPkey = 'part_pkey'
-}
-
-/** input type for incrementing numeric columns in table "part" */
-export type Part_Inc_Input = {
-  id?: InputMaybe<Scalars['Int']>;
-};
-
-/** input type for inserting data into table "part" */
-export type Part_Insert_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']>;
-  id?: InputMaybe<Scalars['Int']>;
-  name?: InputMaybe<Scalars['String']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']>;
-};
-
-/** aggregate max on columns */
-export type Part_Max_Fields = {
-  __typename?: 'part_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-};
-
-/** aggregate min on columns */
-export type Part_Min_Fields = {
-  __typename?: 'part_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-};
-
-/** response of any mutation on the table "part" */
-export type Part_Mutation_Response = {
-  __typename?: 'part_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Part>;
-};
-
-/** on_conflict condition type for table "part" */
-export type Part_On_Conflict = {
-  constraint: Part_Constraint;
-  update_columns?: Array<Part_Update_Column>;
-  where?: InputMaybe<Part_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "part". */
-export type Part_Order_By = {
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  name?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: part */
-export type Part_Pk_Columns_Input = {
-  id: Scalars['Int'];
-};
-
-/** select columns of table "part" */
-export enum Part_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name',
-  /** column name */
-  UpdatedAt = 'updated_at'
-}
-
-/** input type for updating data in table "part" */
-export type Part_Set_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']>;
-  id?: InputMaybe<Scalars['Int']>;
-  name?: InputMaybe<Scalars['String']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']>;
-};
-
-/** aggregate stddev on columns */
-export type Part_Stddev_Fields = {
-  __typename?: 'part_stddev_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Part_Stddev_Pop_Fields = {
-  __typename?: 'part_stddev_pop_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Part_Stddev_Samp_Fields = {
-  __typename?: 'part_stddev_samp_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-/** Streaming cursor of the table "part" */
-export type Part_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Part_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Part_Stream_Cursor_Value_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']>;
-  id?: InputMaybe<Scalars['Int']>;
-  name?: InputMaybe<Scalars['String']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']>;
-};
-
-/** aggregate sum on columns */
-export type Part_Sum_Fields = {
-  __typename?: 'part_sum_fields';
-  id?: Maybe<Scalars['Int']>;
-};
-
-/** update columns of table "part" */
-export enum Part_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name',
-  /** column name */
-  UpdatedAt = 'updated_at'
-}
-
-export type Part_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Part_Inc_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Part_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Part_Bool_Exp;
-};
-
-/** aggregate var_pop on columns */
-export type Part_Var_Pop_Fields = {
-  __typename?: 'part_var_pop_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate var_samp on columns */
-export type Part_Var_Samp_Fields = {
-  __typename?: 'part_var_samp_fields';
-  id?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate variance on columns */
-export type Part_Variance_Fields = {
-  __typename?: 'part_variance_fields';
-  id?: Maybe<Scalars['Float']>;
-};
 
 export type Query_Root = {
   __typename?: 'query_root';
@@ -4362,26 +5789,92 @@ export type Query_Root = {
   buckets: Array<Buckets>;
   /** fetch aggregated fields from the table: "storage.buckets" */
   bucketsAggregate: Buckets_Aggregate;
+  /** fetch data from the table: "company" */
+  company: Array<Company>;
+  /** fetch aggregated fields from the table: "company" */
+  company_aggregate: Company_Aggregate;
+  /** fetch data from the table: "company" using primary key columns */
+  company_by_pk?: Maybe<Company>;
+  /** fetch data from the table: "event" */
+  event: Array<Event>;
+  /** fetch aggregated fields from the table: "event" */
+  event_aggregate: Event_Aggregate;
+  /** fetch data from the table: "event" using primary key columns */
+  event_by_pk?: Maybe<Event>;
+  /** fetch data from the table: "event_participant" */
+  event_participant: Array<Event_Participant>;
+  /** fetch aggregated fields from the table: "event_participant" */
+  event_participant_aggregate: Event_Participant_Aggregate;
+  /** fetch data from the table: "event_participant" using primary key columns */
+  event_participant_by_pk?: Maybe<Event_Participant>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
   files: Array<Files>;
   /** fetch aggregated fields from the table: "storage.files" */
   filesAggregate: Files_Aggregate;
-  /** fetch data from the table: "otp_code" */
-  otp_code: Array<Otp_Code>;
-  /** fetch aggregated fields from the table: "otp_code" */
-  otp_code_aggregate: Otp_Code_Aggregate;
-  /** fetch data from the table: "otp_code" using primary key columns */
-  otp_code_by_pk?: Maybe<Otp_Code>;
-  /** fetch data from the table: "part" */
-  part: Array<Part>;
-  /** fetch aggregated fields from the table: "part" */
-  part_aggregate: Part_Aggregate;
-  /** fetch data from the table: "part" using primary key columns */
-  part_by_pk?: Maybe<Part>;
+  /** fetch data from the table: "space" */
+  space: Array<Space>;
+  /** fetch aggregated fields from the table: "space" */
+  space_aggregate: Space_Aggregate;
+  /** fetch data from the table: "space" using primary key columns */
+  space_by_pk?: Maybe<Space>;
+  /** fetch data from the table: "space_document" */
+  space_document: Array<Space_Document>;
+  /** fetch aggregated fields from the table: "space_document" */
+  space_document_aggregate: Space_Document_Aggregate;
+  /** fetch data from the table: "space_document" using primary key columns */
+  space_document_by_pk?: Maybe<Space_Document>;
+  /** fetch data from the table: "telegram_bot" */
+  telegram_bot: Array<Telegram_Bot>;
+  /** fetch aggregated fields from the table: "telegram_bot" */
+  telegram_bot_aggregate: Telegram_Bot_Aggregate;
+  /** fetch data from the table: "telegram_bot" using primary key columns */
+  telegram_bot_by_pk?: Maybe<Telegram_Bot>;
+  /** fetch data from the table: "telegram_chat" */
+  telegram_chat: Array<Telegram_Chat>;
+  /** fetch aggregated fields from the table: "telegram_chat" */
+  telegram_chat_aggregate: Telegram_Chat_Aggregate;
+  /** fetch data from the table: "telegram_chat" using primary key columns */
+  telegram_chat_by_pk?: Maybe<Telegram_Chat>;
+  /** fetch data from the table: "telegram_file" */
+  telegram_file: Array<Telegram_File>;
+  /** fetch aggregated fields from the table: "telegram_file" */
+  telegram_file_aggregate: Telegram_File_Aggregate;
+  /** fetch data from the table: "telegram_file" using primary key columns */
+  telegram_file_by_pk?: Maybe<Telegram_File>;
+  /** fetch data from the table: "tinder_swipes" */
+  tinder_swipes: Array<Tinder_Swipes>;
+  /** fetch aggregated fields from the table: "tinder_swipes" */
+  tinder_swipes_aggregate: Tinder_Swipes_Aggregate;
+  /** fetch data from the table: "tinder_swipes" using primary key columns */
+  tinder_swipes_by_pk?: Maybe<Tinder_Swipes>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
+  /** fetch data from the table: "user_company" */
+  user_company: Array<User_Company>;
+  /** fetch aggregated fields from the table: "user_company" */
+  user_company_aggregate: User_Company_Aggregate;
+  /** fetch data from the table: "user_company" using primary key columns */
+  user_company_by_pk?: Maybe<User_Company>;
+  /** fetch data from the table: "user_extended_info" */
+  user_extended_info: Array<User_Extended_Info>;
+  /** fetch aggregated fields from the table: "user_extended_info" */
+  user_extended_info_aggregate: User_Extended_Info_Aggregate;
+  /** fetch data from the table: "user_extended_info" using primary key columns */
+  user_extended_info_by_pk?: Maybe<User_Extended_Info>;
+  /** fetch data from the table: "user_profile" */
+  user_profile: Array<User_Profile>;
+  /** fetch aggregated fields from the table: "user_profile" */
+  user_profile_aggregate: User_Profile_Aggregate;
+  /** fetch data from the table: "user_profile" using primary key columns */
+  user_profile_by_pk?: Maybe<User_Profile>;
+  /** fetch data from the table: "user_space" */
+  user_space: Array<User_Space>;
+  /** fetch aggregated fields from the table: "user_space" */
+  user_space_aggregate: User_Space_Aggregate;
+  /** fetch data from the table: "user_space" using primary key columns */
+  user_space_by_pk?: Maybe<User_Space>;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "auth.users" */
@@ -4392,6 +5885,12 @@ export type Query_Root = {
   viruses: Array<Virus>;
   /** fetch aggregated fields from the table: "storage.virus" */
   virusesAggregate: Virus_Aggregate;
+  /** fetch data from the table: "webhook_logs" */
+  webhook_logs: Array<Webhook_Logs>;
+  /** fetch aggregated fields from the table: "webhook_logs" */
+  webhook_logs_aggregate: Webhook_Logs_Aggregate;
+  /** fetch data from the table: "webhook_logs" using primary key columns */
+  webhook_logs_by_pk?: Maybe<Webhook_Logs>;
 };
 
 
@@ -4625,6 +6124,76 @@ export type Query_RootBucketsAggregateArgs = {
 };
 
 
+export type Query_RootCompanyArgs = {
+  distinct_on?: InputMaybe<Array<Company_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Company_Order_By>>;
+  where?: InputMaybe<Company_Bool_Exp>;
+};
+
+
+export type Query_RootCompany_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Company_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Company_Order_By>>;
+  where?: InputMaybe<Company_Bool_Exp>;
+};
+
+
+export type Query_RootCompany_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Query_RootEventArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+
+export type Query_RootEvent_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+
+export type Query_RootEvent_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Query_RootEvent_ParticipantArgs = {
+  distinct_on?: InputMaybe<Array<Event_Participant_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Participant_Order_By>>;
+  where?: InputMaybe<Event_Participant_Bool_Exp>;
+};
+
+
+export type Query_RootEvent_Participant_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Event_Participant_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Participant_Order_By>>;
+  where?: InputMaybe<Event_Participant_Bool_Exp>;
+};
+
+
+export type Query_RootEvent_Participant_By_PkArgs = {
+  event_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+
 export type Query_RootFileArgs = {
   id: Scalars['uuid'];
 };
@@ -4648,54 +6217,242 @@ export type Query_RootFilesAggregateArgs = {
 };
 
 
-export type Query_RootOtp_CodeArgs = {
-  distinct_on?: InputMaybe<Array<Otp_Code_Select_Column>>;
+export type Query_RootSpaceArgs = {
+  distinct_on?: InputMaybe<Array<Space_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Otp_Code_Order_By>>;
-  where?: InputMaybe<Otp_Code_Bool_Exp>;
+  order_by?: InputMaybe<Array<Space_Order_By>>;
+  where?: InputMaybe<Space_Bool_Exp>;
 };
 
 
-export type Query_RootOtp_Code_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Otp_Code_Select_Column>>;
+export type Query_RootSpace_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Space_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Otp_Code_Order_By>>;
-  where?: InputMaybe<Otp_Code_Bool_Exp>;
+  order_by?: InputMaybe<Array<Space_Order_By>>;
+  where?: InputMaybe<Space_Bool_Exp>;
 };
 
 
-export type Query_RootOtp_Code_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
-export type Query_RootPartArgs = {
-  distinct_on?: InputMaybe<Array<Part_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Part_Order_By>>;
-  where?: InputMaybe<Part_Bool_Exp>;
-};
-
-
-export type Query_RootPart_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Part_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Part_Order_By>>;
-  where?: InputMaybe<Part_Bool_Exp>;
-};
-
-
-export type Query_RootPart_By_PkArgs = {
+export type Query_RootSpace_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+export type Query_RootSpace_DocumentArgs = {
+  distinct_on?: InputMaybe<Array<Space_Document_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Space_Document_Order_By>>;
+  where?: InputMaybe<Space_Document_Bool_Exp>;
+};
+
+
+export type Query_RootSpace_Document_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Space_Document_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Space_Document_Order_By>>;
+  where?: InputMaybe<Space_Document_Bool_Exp>;
+};
+
+
+export type Query_RootSpace_Document_By_PkArgs = {
+  id: Scalars['bigint'];
+};
+
+
+export type Query_RootTelegram_BotArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Bot_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Bot_Order_By>>;
+  where?: InputMaybe<Telegram_Bot_Bool_Exp>;
+};
+
+
+export type Query_RootTelegram_Bot_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Bot_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Bot_Order_By>>;
+  where?: InputMaybe<Telegram_Bot_Bool_Exp>;
+};
+
+
+export type Query_RootTelegram_Bot_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Query_RootTelegram_ChatArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Chat_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Chat_Order_By>>;
+  where?: InputMaybe<Telegram_Chat_Bool_Exp>;
+};
+
+
+export type Query_RootTelegram_Chat_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Chat_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Chat_Order_By>>;
+  where?: InputMaybe<Telegram_Chat_Bool_Exp>;
+};
+
+
+export type Query_RootTelegram_Chat_By_PkArgs = {
+  id: Scalars['bigint'];
+};
+
+
+export type Query_RootTelegram_FileArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_File_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_File_Order_By>>;
+  where?: InputMaybe<Telegram_File_Bool_Exp>;
+};
+
+
+export type Query_RootTelegram_File_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_File_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_File_Order_By>>;
+  where?: InputMaybe<Telegram_File_Bool_Exp>;
+};
+
+
+export type Query_RootTelegram_File_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Query_RootTinder_SwipesArgs = {
+  distinct_on?: InputMaybe<Array<Tinder_Swipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tinder_Swipes_Order_By>>;
+  where?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+};
+
+
+export type Query_RootTinder_Swipes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tinder_Swipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tinder_Swipes_Order_By>>;
+  where?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+};
+
+
+export type Query_RootTinder_Swipes_By_PkArgs = {
+  from_user_id: Scalars['uuid'];
+  to_user_id: Scalars['uuid'];
 };
 
 
 export type Query_RootUserArgs = {
   id: Scalars['uuid'];
+};
+
+
+export type Query_RootUser_CompanyArgs = {
+  distinct_on?: InputMaybe<Array<User_Company_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Company_Order_By>>;
+  where?: InputMaybe<User_Company_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Company_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Company_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Company_Order_By>>;
+  where?: InputMaybe<User_Company_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Company_By_PkArgs = {
+  company_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+
+export type Query_RootUser_Extended_InfoArgs = {
+  distinct_on?: InputMaybe<Array<User_Extended_Info_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Extended_Info_Order_By>>;
+  where?: InputMaybe<User_Extended_Info_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Extended_Info_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Extended_Info_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Extended_Info_Order_By>>;
+  where?: InputMaybe<User_Extended_Info_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Extended_Info_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootUser_ProfileArgs = {
+  distinct_on?: InputMaybe<Array<User_Profile_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Profile_Order_By>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Profile_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Profile_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Profile_Order_By>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Profile_By_PkArgs = {
+  space_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+
+export type Query_RootUser_SpaceArgs = {
+  distinct_on?: InputMaybe<Array<User_Space_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Space_Order_By>>;
+  where?: InputMaybe<User_Space_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Space_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Space_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Space_Order_By>>;
+  where?: InputMaybe<User_Space_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Space_By_PkArgs = {
+  space_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
 };
 
 
@@ -4737,6 +6494,943 @@ export type Query_RootVirusesAggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Virus_Order_By>>;
   where?: InputMaybe<Virus_Bool_Exp>;
+};
+
+
+export type Query_RootWebhook_LogsArgs = {
+  distinct_on?: InputMaybe<Array<Webhook_Logs_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Webhook_Logs_Order_By>>;
+  where?: InputMaybe<Webhook_Logs_Bool_Exp>;
+};
+
+
+export type Query_RootWebhook_Logs_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Webhook_Logs_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Webhook_Logs_Order_By>>;
+  where?: InputMaybe<Webhook_Logs_Bool_Exp>;
+};
+
+
+export type Query_RootWebhook_Logs_By_PkArgs = {
+  id: Scalars['bigint'];
+};
+
+/** columns and relationships of "space" */
+export type Space = {
+  __typename?: 'space';
+  /** An object relationship */
+  company: Company;
+  company_id: Scalars['Int'];
+  created_at: Scalars['timestamp'];
+  description: Scalars['String'];
+  /** An array relationship */
+  events: Array<Event>;
+  /** An aggregate relationship */
+  events_aggregate: Event_Aggregate;
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  /** An array relationship */
+  space_documents: Array<Space_Document>;
+  /** An aggregate relationship */
+  space_documents_aggregate: Space_Document_Aggregate;
+  /** An array relationship */
+  telegram_bots: Array<Telegram_Bot>;
+  /** An aggregate relationship */
+  telegram_bots_aggregate: Telegram_Bot_Aggregate;
+  /** An array relationship */
+  telegram_chats: Array<Telegram_Chat>;
+  /** An aggregate relationship */
+  telegram_chats_aggregate: Telegram_Chat_Aggregate;
+  /** An array relationship */
+  user_profiles: Array<User_Profile>;
+  /** An aggregate relationship */
+  user_profiles_aggregate: User_Profile_Aggregate;
+  /** An array relationship */
+  users: Array<User_Space>;
+  /** An aggregate relationship */
+  users_aggregate: User_Space_Aggregate;
+};
+
+
+/** columns and relationships of "space" */
+export type SpaceEventsArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+
+/** columns and relationships of "space" */
+export type SpaceEvents_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+
+/** columns and relationships of "space" */
+export type SpaceSpace_DocumentsArgs = {
+  distinct_on?: InputMaybe<Array<Space_Document_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Space_Document_Order_By>>;
+  where?: InputMaybe<Space_Document_Bool_Exp>;
+};
+
+
+/** columns and relationships of "space" */
+export type SpaceSpace_Documents_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Space_Document_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Space_Document_Order_By>>;
+  where?: InputMaybe<Space_Document_Bool_Exp>;
+};
+
+
+/** columns and relationships of "space" */
+export type SpaceTelegram_BotsArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Bot_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Bot_Order_By>>;
+  where?: InputMaybe<Telegram_Bot_Bool_Exp>;
+};
+
+
+/** columns and relationships of "space" */
+export type SpaceTelegram_Bots_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Bot_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Bot_Order_By>>;
+  where?: InputMaybe<Telegram_Bot_Bool_Exp>;
+};
+
+
+/** columns and relationships of "space" */
+export type SpaceTelegram_ChatsArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Chat_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Chat_Order_By>>;
+  where?: InputMaybe<Telegram_Chat_Bool_Exp>;
+};
+
+
+/** columns and relationships of "space" */
+export type SpaceTelegram_Chats_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Chat_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Chat_Order_By>>;
+  where?: InputMaybe<Telegram_Chat_Bool_Exp>;
+};
+
+
+/** columns and relationships of "space" */
+export type SpaceUser_ProfilesArgs = {
+  distinct_on?: InputMaybe<Array<User_Profile_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Profile_Order_By>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+
+/** columns and relationships of "space" */
+export type SpaceUser_Profiles_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Profile_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Profile_Order_By>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+
+/** columns and relationships of "space" */
+export type SpaceUsersArgs = {
+  distinct_on?: InputMaybe<Array<User_Space_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Space_Order_By>>;
+  where?: InputMaybe<User_Space_Bool_Exp>;
+};
+
+
+/** columns and relationships of "space" */
+export type SpaceUsers_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Space_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Space_Order_By>>;
+  where?: InputMaybe<User_Space_Bool_Exp>;
+};
+
+/** aggregated selection of "space" */
+export type Space_Aggregate = {
+  __typename?: 'space_aggregate';
+  aggregate?: Maybe<Space_Aggregate_Fields>;
+  nodes: Array<Space>;
+};
+
+export type Space_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Space_Aggregate_Bool_Exp_Count>;
+};
+
+export type Space_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Space_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Space_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "space" */
+export type Space_Aggregate_Fields = {
+  __typename?: 'space_aggregate_fields';
+  avg?: Maybe<Space_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Space_Max_Fields>;
+  min?: Maybe<Space_Min_Fields>;
+  stddev?: Maybe<Space_Stddev_Fields>;
+  stddev_pop?: Maybe<Space_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Space_Stddev_Samp_Fields>;
+  sum?: Maybe<Space_Sum_Fields>;
+  var_pop?: Maybe<Space_Var_Pop_Fields>;
+  var_samp?: Maybe<Space_Var_Samp_Fields>;
+  variance?: Maybe<Space_Variance_Fields>;
+};
+
+
+/** aggregate fields of "space" */
+export type Space_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Space_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "space" */
+export type Space_Aggregate_Order_By = {
+  avg?: InputMaybe<Space_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Space_Max_Order_By>;
+  min?: InputMaybe<Space_Min_Order_By>;
+  stddev?: InputMaybe<Space_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Space_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Space_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Space_Sum_Order_By>;
+  var_pop?: InputMaybe<Space_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Space_Var_Samp_Order_By>;
+  variance?: InputMaybe<Space_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "space" */
+export type Space_Arr_Rel_Insert_Input = {
+  data: Array<Space_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Space_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Space_Avg_Fields = {
+  __typename?: 'space_avg_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "space" */
+export type Space_Avg_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "space". All fields are combined with a logical 'AND'. */
+export type Space_Bool_Exp = {
+  _and?: InputMaybe<Array<Space_Bool_Exp>>;
+  _not?: InputMaybe<Space_Bool_Exp>;
+  _or?: InputMaybe<Array<Space_Bool_Exp>>;
+  company?: InputMaybe<Company_Bool_Exp>;
+  company_id?: InputMaybe<Int_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  events?: InputMaybe<Event_Bool_Exp>;
+  events_aggregate?: InputMaybe<Event_Aggregate_Bool_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  space_documents?: InputMaybe<Space_Document_Bool_Exp>;
+  space_documents_aggregate?: InputMaybe<Space_Document_Aggregate_Bool_Exp>;
+  telegram_bots?: InputMaybe<Telegram_Bot_Bool_Exp>;
+  telegram_bots_aggregate?: InputMaybe<Telegram_Bot_Aggregate_Bool_Exp>;
+  telegram_chats?: InputMaybe<Telegram_Chat_Bool_Exp>;
+  telegram_chats_aggregate?: InputMaybe<Telegram_Chat_Aggregate_Bool_Exp>;
+  user_profiles?: InputMaybe<User_Profile_Bool_Exp>;
+  user_profiles_aggregate?: InputMaybe<User_Profile_Aggregate_Bool_Exp>;
+  users?: InputMaybe<User_Space_Bool_Exp>;
+  users_aggregate?: InputMaybe<User_Space_Aggregate_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "space" */
+export enum Space_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  SpacePkey = 'space_pkey'
+}
+
+/** columns and relationships of "space_document" */
+export type Space_Document = {
+  __typename?: 'space_document';
+  data_id?: Maybe<Scalars['uuid']>;
+  description: Scalars['String'];
+  /** An object relationship */
+  file?: Maybe<Files>;
+  icon: Scalars['String'];
+  id: Scalars['bigint'];
+  /** An object relationship */
+  preview_file?: Maybe<Files>;
+  preview_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
+  space: Space;
+  space_id: Scalars['Int'];
+  summary: Scalars['String'];
+  uploaded_by_person_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
+  uploded_by_user?: Maybe<Users>;
+};
+
+/** aggregated selection of "space_document" */
+export type Space_Document_Aggregate = {
+  __typename?: 'space_document_aggregate';
+  aggregate?: Maybe<Space_Document_Aggregate_Fields>;
+  nodes: Array<Space_Document>;
+};
+
+export type Space_Document_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Space_Document_Aggregate_Bool_Exp_Count>;
+};
+
+export type Space_Document_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Space_Document_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Space_Document_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "space_document" */
+export type Space_Document_Aggregate_Fields = {
+  __typename?: 'space_document_aggregate_fields';
+  avg?: Maybe<Space_Document_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Space_Document_Max_Fields>;
+  min?: Maybe<Space_Document_Min_Fields>;
+  stddev?: Maybe<Space_Document_Stddev_Fields>;
+  stddev_pop?: Maybe<Space_Document_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Space_Document_Stddev_Samp_Fields>;
+  sum?: Maybe<Space_Document_Sum_Fields>;
+  var_pop?: Maybe<Space_Document_Var_Pop_Fields>;
+  var_samp?: Maybe<Space_Document_Var_Samp_Fields>;
+  variance?: Maybe<Space_Document_Variance_Fields>;
+};
+
+
+/** aggregate fields of "space_document" */
+export type Space_Document_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Space_Document_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "space_document" */
+export type Space_Document_Aggregate_Order_By = {
+  avg?: InputMaybe<Space_Document_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Space_Document_Max_Order_By>;
+  min?: InputMaybe<Space_Document_Min_Order_By>;
+  stddev?: InputMaybe<Space_Document_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Space_Document_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Space_Document_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Space_Document_Sum_Order_By>;
+  var_pop?: InputMaybe<Space_Document_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Space_Document_Var_Samp_Order_By>;
+  variance?: InputMaybe<Space_Document_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "space_document" */
+export type Space_Document_Arr_Rel_Insert_Input = {
+  data: Array<Space_Document_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Space_Document_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Space_Document_Avg_Fields = {
+  __typename?: 'space_document_avg_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "space_document" */
+export type Space_Document_Avg_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "space_document". All fields are combined with a logical 'AND'. */
+export type Space_Document_Bool_Exp = {
+  _and?: InputMaybe<Array<Space_Document_Bool_Exp>>;
+  _not?: InputMaybe<Space_Document_Bool_Exp>;
+  _or?: InputMaybe<Array<Space_Document_Bool_Exp>>;
+  data_id?: InputMaybe<Uuid_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  file?: InputMaybe<Files_Bool_Exp>;
+  icon?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Bigint_Comparison_Exp>;
+  preview_file?: InputMaybe<Files_Bool_Exp>;
+  preview_id?: InputMaybe<Uuid_Comparison_Exp>;
+  space?: InputMaybe<Space_Bool_Exp>;
+  space_id?: InputMaybe<Int_Comparison_Exp>;
+  summary?: InputMaybe<String_Comparison_Exp>;
+  uploaded_by_person_id?: InputMaybe<Uuid_Comparison_Exp>;
+  uploded_by_user?: InputMaybe<Users_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "space_document" */
+export enum Space_Document_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  SpaceDocumentPkey = 'space_document_pkey'
+}
+
+/** input type for incrementing numeric columns in table "space_document" */
+export type Space_Document_Inc_Input = {
+  space_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "space_document" */
+export type Space_Document_Insert_Input = {
+  data_id?: InputMaybe<Scalars['uuid']>;
+  description?: InputMaybe<Scalars['String']>;
+  file?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  icon?: InputMaybe<Scalars['String']>;
+  preview_file?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  preview_id?: InputMaybe<Scalars['uuid']>;
+  space?: InputMaybe<Space_Obj_Rel_Insert_Input>;
+  space_id?: InputMaybe<Scalars['Int']>;
+  summary?: InputMaybe<Scalars['String']>;
+  uploaded_by_person_id?: InputMaybe<Scalars['uuid']>;
+  uploded_by_user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Space_Document_Max_Fields = {
+  __typename?: 'space_document_max_fields';
+  data_id?: Maybe<Scalars['uuid']>;
+  description?: Maybe<Scalars['String']>;
+  icon?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['bigint']>;
+  preview_id?: Maybe<Scalars['uuid']>;
+  space_id?: Maybe<Scalars['Int']>;
+  summary?: Maybe<Scalars['String']>;
+  uploaded_by_person_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "space_document" */
+export type Space_Document_Max_Order_By = {
+  data_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  icon?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  preview_id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+  summary?: InputMaybe<Order_By>;
+  uploaded_by_person_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Space_Document_Min_Fields = {
+  __typename?: 'space_document_min_fields';
+  data_id?: Maybe<Scalars['uuid']>;
+  description?: Maybe<Scalars['String']>;
+  icon?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['bigint']>;
+  preview_id?: Maybe<Scalars['uuid']>;
+  space_id?: Maybe<Scalars['Int']>;
+  summary?: Maybe<Scalars['String']>;
+  uploaded_by_person_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "space_document" */
+export type Space_Document_Min_Order_By = {
+  data_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  icon?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  preview_id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+  summary?: InputMaybe<Order_By>;
+  uploaded_by_person_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "space_document" */
+export type Space_Document_Mutation_Response = {
+  __typename?: 'space_document_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Space_Document>;
+};
+
+/** on_conflict condition type for table "space_document" */
+export type Space_Document_On_Conflict = {
+  constraint: Space_Document_Constraint;
+  update_columns?: Array<Space_Document_Update_Column>;
+  where?: InputMaybe<Space_Document_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "space_document". */
+export type Space_Document_Order_By = {
+  data_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  file?: InputMaybe<Files_Order_By>;
+  icon?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  preview_file?: InputMaybe<Files_Order_By>;
+  preview_id?: InputMaybe<Order_By>;
+  space?: InputMaybe<Space_Order_By>;
+  space_id?: InputMaybe<Order_By>;
+  summary?: InputMaybe<Order_By>;
+  uploaded_by_person_id?: InputMaybe<Order_By>;
+  uploded_by_user?: InputMaybe<Users_Order_By>;
+};
+
+/** primary key columns input for table: space_document */
+export type Space_Document_Pk_Columns_Input = {
+  id: Scalars['bigint'];
+};
+
+/** select columns of table "space_document" */
+export enum Space_Document_Select_Column {
+  /** column name */
+  DataId = 'data_id',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Icon = 'icon',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PreviewId = 'preview_id',
+  /** column name */
+  SpaceId = 'space_id',
+  /** column name */
+  Summary = 'summary',
+  /** column name */
+  UploadedByPersonId = 'uploaded_by_person_id'
+}
+
+/** input type for updating data in table "space_document" */
+export type Space_Document_Set_Input = {
+  data_id?: InputMaybe<Scalars['uuid']>;
+  description?: InputMaybe<Scalars['String']>;
+  icon?: InputMaybe<Scalars['String']>;
+  preview_id?: InputMaybe<Scalars['uuid']>;
+  space_id?: InputMaybe<Scalars['Int']>;
+  summary?: InputMaybe<Scalars['String']>;
+  uploaded_by_person_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate stddev on columns */
+export type Space_Document_Stddev_Fields = {
+  __typename?: 'space_document_stddev_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "space_document" */
+export type Space_Document_Stddev_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Space_Document_Stddev_Pop_Fields = {
+  __typename?: 'space_document_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "space_document" */
+export type Space_Document_Stddev_Pop_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Space_Document_Stddev_Samp_Fields = {
+  __typename?: 'space_document_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "space_document" */
+export type Space_Document_Stddev_Samp_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "space_document" */
+export type Space_Document_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Space_Document_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Space_Document_Stream_Cursor_Value_Input = {
+  data_id?: InputMaybe<Scalars['uuid']>;
+  description?: InputMaybe<Scalars['String']>;
+  icon?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['bigint']>;
+  preview_id?: InputMaybe<Scalars['uuid']>;
+  space_id?: InputMaybe<Scalars['Int']>;
+  summary?: InputMaybe<Scalars['String']>;
+  uploaded_by_person_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate sum on columns */
+export type Space_Document_Sum_Fields = {
+  __typename?: 'space_document_sum_fields';
+  id?: Maybe<Scalars['bigint']>;
+  space_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "space_document" */
+export type Space_Document_Sum_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "space_document" */
+export enum Space_Document_Update_Column {
+  /** column name */
+  DataId = 'data_id',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Icon = 'icon',
+  /** column name */
+  PreviewId = 'preview_id',
+  /** column name */
+  SpaceId = 'space_id',
+  /** column name */
+  Summary = 'summary',
+  /** column name */
+  UploadedByPersonId = 'uploaded_by_person_id'
+}
+
+export type Space_Document_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Space_Document_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Space_Document_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Space_Document_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Space_Document_Var_Pop_Fields = {
+  __typename?: 'space_document_var_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "space_document" */
+export type Space_Document_Var_Pop_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Space_Document_Var_Samp_Fields = {
+  __typename?: 'space_document_var_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "space_document" */
+export type Space_Document_Var_Samp_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Space_Document_Variance_Fields = {
+  __typename?: 'space_document_variance_fields';
+  id?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "space_document" */
+export type Space_Document_Variance_Order_By = {
+  id?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** input type for incrementing numeric columns in table "space" */
+export type Space_Inc_Input = {
+  company_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "space" */
+export type Space_Insert_Input = {
+  company?: InputMaybe<Company_Obj_Rel_Insert_Input>;
+  company_id?: InputMaybe<Scalars['Int']>;
+  created_at?: InputMaybe<Scalars['timestamp']>;
+  description?: InputMaybe<Scalars['String']>;
+  events?: InputMaybe<Event_Arr_Rel_Insert_Input>;
+  name?: InputMaybe<Scalars['String']>;
+  space_documents?: InputMaybe<Space_Document_Arr_Rel_Insert_Input>;
+  telegram_bots?: InputMaybe<Telegram_Bot_Arr_Rel_Insert_Input>;
+  telegram_chats?: InputMaybe<Telegram_Chat_Arr_Rel_Insert_Input>;
+  user_profiles?: InputMaybe<User_Profile_Arr_Rel_Insert_Input>;
+  users?: InputMaybe<User_Space_Arr_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Space_Max_Fields = {
+  __typename?: 'space_max_fields';
+  company_id?: Maybe<Scalars['Int']>;
+  created_at?: Maybe<Scalars['timestamp']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "space" */
+export type Space_Max_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Space_Min_Fields = {
+  __typename?: 'space_min_fields';
+  company_id?: Maybe<Scalars['Int']>;
+  created_at?: Maybe<Scalars['timestamp']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "space" */
+export type Space_Min_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "space" */
+export type Space_Mutation_Response = {
+  __typename?: 'space_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Space>;
+};
+
+/** input type for inserting object relation for remote table "space" */
+export type Space_Obj_Rel_Insert_Input = {
+  data: Space_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Space_On_Conflict>;
+};
+
+/** on_conflict condition type for table "space" */
+export type Space_On_Conflict = {
+  constraint: Space_Constraint;
+  update_columns?: Array<Space_Update_Column>;
+  where?: InputMaybe<Space_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "space". */
+export type Space_Order_By = {
+  company?: InputMaybe<Company_Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  events_aggregate?: InputMaybe<Event_Aggregate_Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  space_documents_aggregate?: InputMaybe<Space_Document_Aggregate_Order_By>;
+  telegram_bots_aggregate?: InputMaybe<Telegram_Bot_Aggregate_Order_By>;
+  telegram_chats_aggregate?: InputMaybe<Telegram_Chat_Aggregate_Order_By>;
+  user_profiles_aggregate?: InputMaybe<User_Profile_Aggregate_Order_By>;
+  users_aggregate?: InputMaybe<User_Space_Aggregate_Order_By>;
+};
+
+/** primary key columns input for table: space */
+export type Space_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "space" */
+export enum Space_Select_Column {
+  /** column name */
+  CompanyId = 'company_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+/** input type for updating data in table "space" */
+export type Space_Set_Input = {
+  company_id?: InputMaybe<Scalars['Int']>;
+  created_at?: InputMaybe<Scalars['timestamp']>;
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type Space_Stddev_Fields = {
+  __typename?: 'space_stddev_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "space" */
+export type Space_Stddev_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Space_Stddev_Pop_Fields = {
+  __typename?: 'space_stddev_pop_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "space" */
+export type Space_Stddev_Pop_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Space_Stddev_Samp_Fields = {
+  __typename?: 'space_stddev_samp_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "space" */
+export type Space_Stddev_Samp_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "space" */
+export type Space_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Space_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Space_Stream_Cursor_Value_Input = {
+  company_id?: InputMaybe<Scalars['Int']>;
+  created_at?: InputMaybe<Scalars['timestamp']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate sum on columns */
+export type Space_Sum_Fields = {
+  __typename?: 'space_sum_fields';
+  company_id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "space" */
+export type Space_Sum_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "space" */
+export enum Space_Update_Column {
+  /** column name */
+  CompanyId = 'company_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Name = 'name'
+}
+
+export type Space_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Space_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Space_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Space_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Space_Var_Pop_Fields = {
+  __typename?: 'space_var_pop_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "space" */
+export type Space_Var_Pop_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Space_Var_Samp_Fields = {
+  __typename?: 'space_var_samp_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "space" */
+export type Space_Var_Samp_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Space_Variance_Fields = {
+  __typename?: 'space_variance_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "space" */
+export type Space_Variance_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 export type Subscription_Root = {
@@ -4821,6 +7515,30 @@ export type Subscription_Root = {
   bucketsAggregate: Buckets_Aggregate;
   /** fetch data from the table in a streaming manner: "storage.buckets" */
   buckets_stream: Array<Buckets>;
+  /** fetch data from the table: "company" */
+  company: Array<Company>;
+  /** fetch aggregated fields from the table: "company" */
+  company_aggregate: Company_Aggregate;
+  /** fetch data from the table: "company" using primary key columns */
+  company_by_pk?: Maybe<Company>;
+  /** fetch data from the table in a streaming manner: "company" */
+  company_stream: Array<Company>;
+  /** fetch data from the table: "event" */
+  event: Array<Event>;
+  /** fetch aggregated fields from the table: "event" */
+  event_aggregate: Event_Aggregate;
+  /** fetch data from the table: "event" using primary key columns */
+  event_by_pk?: Maybe<Event>;
+  /** fetch data from the table: "event_participant" */
+  event_participant: Array<Event_Participant>;
+  /** fetch aggregated fields from the table: "event_participant" */
+  event_participant_aggregate: Event_Participant_Aggregate;
+  /** fetch data from the table: "event_participant" using primary key columns */
+  event_participant_by_pk?: Maybe<Event_Participant>;
+  /** fetch data from the table in a streaming manner: "event_participant" */
+  event_participant_stream: Array<Event_Participant>;
+  /** fetch data from the table in a streaming manner: "event" */
+  event_stream: Array<Event>;
   /** fetch data from the table: "storage.files" using primary key columns */
   file?: Maybe<Files>;
   /** An array relationship */
@@ -4829,24 +7547,88 @@ export type Subscription_Root = {
   filesAggregate: Files_Aggregate;
   /** fetch data from the table in a streaming manner: "storage.files" */
   files_stream: Array<Files>;
-  /** fetch data from the table: "otp_code" */
-  otp_code: Array<Otp_Code>;
-  /** fetch aggregated fields from the table: "otp_code" */
-  otp_code_aggregate: Otp_Code_Aggregate;
-  /** fetch data from the table: "otp_code" using primary key columns */
-  otp_code_by_pk?: Maybe<Otp_Code>;
-  /** fetch data from the table in a streaming manner: "otp_code" */
-  otp_code_stream: Array<Otp_Code>;
-  /** fetch data from the table: "part" */
-  part: Array<Part>;
-  /** fetch aggregated fields from the table: "part" */
-  part_aggregate: Part_Aggregate;
-  /** fetch data from the table: "part" using primary key columns */
-  part_by_pk?: Maybe<Part>;
-  /** fetch data from the table in a streaming manner: "part" */
-  part_stream: Array<Part>;
+  /** fetch data from the table: "space" */
+  space: Array<Space>;
+  /** fetch aggregated fields from the table: "space" */
+  space_aggregate: Space_Aggregate;
+  /** fetch data from the table: "space" using primary key columns */
+  space_by_pk?: Maybe<Space>;
+  /** fetch data from the table: "space_document" */
+  space_document: Array<Space_Document>;
+  /** fetch aggregated fields from the table: "space_document" */
+  space_document_aggregate: Space_Document_Aggregate;
+  /** fetch data from the table: "space_document" using primary key columns */
+  space_document_by_pk?: Maybe<Space_Document>;
+  /** fetch data from the table in a streaming manner: "space_document" */
+  space_document_stream: Array<Space_Document>;
+  /** fetch data from the table in a streaming manner: "space" */
+  space_stream: Array<Space>;
+  /** fetch data from the table: "telegram_bot" */
+  telegram_bot: Array<Telegram_Bot>;
+  /** fetch aggregated fields from the table: "telegram_bot" */
+  telegram_bot_aggregate: Telegram_Bot_Aggregate;
+  /** fetch data from the table: "telegram_bot" using primary key columns */
+  telegram_bot_by_pk?: Maybe<Telegram_Bot>;
+  /** fetch data from the table in a streaming manner: "telegram_bot" */
+  telegram_bot_stream: Array<Telegram_Bot>;
+  /** fetch data from the table: "telegram_chat" */
+  telegram_chat: Array<Telegram_Chat>;
+  /** fetch aggregated fields from the table: "telegram_chat" */
+  telegram_chat_aggregate: Telegram_Chat_Aggregate;
+  /** fetch data from the table: "telegram_chat" using primary key columns */
+  telegram_chat_by_pk?: Maybe<Telegram_Chat>;
+  /** fetch data from the table in a streaming manner: "telegram_chat" */
+  telegram_chat_stream: Array<Telegram_Chat>;
+  /** fetch data from the table: "telegram_file" */
+  telegram_file: Array<Telegram_File>;
+  /** fetch aggregated fields from the table: "telegram_file" */
+  telegram_file_aggregate: Telegram_File_Aggregate;
+  /** fetch data from the table: "telegram_file" using primary key columns */
+  telegram_file_by_pk?: Maybe<Telegram_File>;
+  /** fetch data from the table in a streaming manner: "telegram_file" */
+  telegram_file_stream: Array<Telegram_File>;
+  /** fetch data from the table: "tinder_swipes" */
+  tinder_swipes: Array<Tinder_Swipes>;
+  /** fetch aggregated fields from the table: "tinder_swipes" */
+  tinder_swipes_aggregate: Tinder_Swipes_Aggregate;
+  /** fetch data from the table: "tinder_swipes" using primary key columns */
+  tinder_swipes_by_pk?: Maybe<Tinder_Swipes>;
+  /** fetch data from the table in a streaming manner: "tinder_swipes" */
+  tinder_swipes_stream: Array<Tinder_Swipes>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
+  /** fetch data from the table: "user_company" */
+  user_company: Array<User_Company>;
+  /** fetch aggregated fields from the table: "user_company" */
+  user_company_aggregate: User_Company_Aggregate;
+  /** fetch data from the table: "user_company" using primary key columns */
+  user_company_by_pk?: Maybe<User_Company>;
+  /** fetch data from the table in a streaming manner: "user_company" */
+  user_company_stream: Array<User_Company>;
+  /** fetch data from the table: "user_extended_info" */
+  user_extended_info: Array<User_Extended_Info>;
+  /** fetch aggregated fields from the table: "user_extended_info" */
+  user_extended_info_aggregate: User_Extended_Info_Aggregate;
+  /** fetch data from the table: "user_extended_info" using primary key columns */
+  user_extended_info_by_pk?: Maybe<User_Extended_Info>;
+  /** fetch data from the table in a streaming manner: "user_extended_info" */
+  user_extended_info_stream: Array<User_Extended_Info>;
+  /** fetch data from the table: "user_profile" */
+  user_profile: Array<User_Profile>;
+  /** fetch aggregated fields from the table: "user_profile" */
+  user_profile_aggregate: User_Profile_Aggregate;
+  /** fetch data from the table: "user_profile" using primary key columns */
+  user_profile_by_pk?: Maybe<User_Profile>;
+  /** fetch data from the table in a streaming manner: "user_profile" */
+  user_profile_stream: Array<User_Profile>;
+  /** fetch data from the table: "user_space" */
+  user_space: Array<User_Space>;
+  /** fetch aggregated fields from the table: "user_space" */
+  user_space_aggregate: User_Space_Aggregate;
+  /** fetch data from the table: "user_space" using primary key columns */
+  user_space_by_pk?: Maybe<User_Space>;
+  /** fetch data from the table in a streaming manner: "user_space" */
+  user_space_stream: Array<User_Space>;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "auth.users" */
@@ -4861,6 +7643,14 @@ export type Subscription_Root = {
   viruses: Array<Virus>;
   /** fetch aggregated fields from the table: "storage.virus" */
   virusesAggregate: Virus_Aggregate;
+  /** fetch data from the table: "webhook_logs" */
+  webhook_logs: Array<Webhook_Logs>;
+  /** fetch aggregated fields from the table: "webhook_logs" */
+  webhook_logs_aggregate: Webhook_Logs_Aggregate;
+  /** fetch data from the table: "webhook_logs" using primary key columns */
+  webhook_logs_by_pk?: Maybe<Webhook_Logs>;
+  /** fetch data from the table in a streaming manner: "webhook_logs" */
+  webhook_logs_stream: Array<Webhook_Logs>;
 };
 
 
@@ -5164,6 +7954,97 @@ export type Subscription_RootBuckets_StreamArgs = {
 };
 
 
+export type Subscription_RootCompanyArgs = {
+  distinct_on?: InputMaybe<Array<Company_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Company_Order_By>>;
+  where?: InputMaybe<Company_Bool_Exp>;
+};
+
+
+export type Subscription_RootCompany_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Company_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Company_Order_By>>;
+  where?: InputMaybe<Company_Bool_Exp>;
+};
+
+
+export type Subscription_RootCompany_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootCompany_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Company_Stream_Cursor_Input>>;
+  where?: InputMaybe<Company_Bool_Exp>;
+};
+
+
+export type Subscription_RootEventArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+
+export type Subscription_RootEvent_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+
+export type Subscription_RootEvent_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootEvent_ParticipantArgs = {
+  distinct_on?: InputMaybe<Array<Event_Participant_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Participant_Order_By>>;
+  where?: InputMaybe<Event_Participant_Bool_Exp>;
+};
+
+
+export type Subscription_RootEvent_Participant_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Event_Participant_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Participant_Order_By>>;
+  where?: InputMaybe<Event_Participant_Bool_Exp>;
+};
+
+
+export type Subscription_RootEvent_Participant_By_PkArgs = {
+  event_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootEvent_Participant_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Event_Participant_Stream_Cursor_Input>>;
+  where?: InputMaybe<Event_Participant_Bool_Exp>;
+};
+
+
+export type Subscription_RootEvent_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Event_Stream_Cursor_Input>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+
 export type Subscription_RootFileArgs = {
   id: Scalars['uuid'];
 };
@@ -5194,68 +8075,312 @@ export type Subscription_RootFiles_StreamArgs = {
 };
 
 
-export type Subscription_RootOtp_CodeArgs = {
-  distinct_on?: InputMaybe<Array<Otp_Code_Select_Column>>;
+export type Subscription_RootSpaceArgs = {
+  distinct_on?: InputMaybe<Array<Space_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Otp_Code_Order_By>>;
-  where?: InputMaybe<Otp_Code_Bool_Exp>;
+  order_by?: InputMaybe<Array<Space_Order_By>>;
+  where?: InputMaybe<Space_Bool_Exp>;
 };
 
 
-export type Subscription_RootOtp_Code_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Otp_Code_Select_Column>>;
+export type Subscription_RootSpace_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Space_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Otp_Code_Order_By>>;
-  where?: InputMaybe<Otp_Code_Bool_Exp>;
+  order_by?: InputMaybe<Array<Space_Order_By>>;
+  where?: InputMaybe<Space_Bool_Exp>;
 };
 
 
-export type Subscription_RootOtp_Code_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
-export type Subscription_RootOtp_Code_StreamArgs = {
-  batch_size: Scalars['Int'];
-  cursor: Array<InputMaybe<Otp_Code_Stream_Cursor_Input>>;
-  where?: InputMaybe<Otp_Code_Bool_Exp>;
-};
-
-
-export type Subscription_RootPartArgs = {
-  distinct_on?: InputMaybe<Array<Part_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Part_Order_By>>;
-  where?: InputMaybe<Part_Bool_Exp>;
-};
-
-
-export type Subscription_RootPart_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Part_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Part_Order_By>>;
-  where?: InputMaybe<Part_Bool_Exp>;
-};
-
-
-export type Subscription_RootPart_By_PkArgs = {
+export type Subscription_RootSpace_By_PkArgs = {
   id: Scalars['Int'];
 };
 
 
-export type Subscription_RootPart_StreamArgs = {
+export type Subscription_RootSpace_DocumentArgs = {
+  distinct_on?: InputMaybe<Array<Space_Document_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Space_Document_Order_By>>;
+  where?: InputMaybe<Space_Document_Bool_Exp>;
+};
+
+
+export type Subscription_RootSpace_Document_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Space_Document_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Space_Document_Order_By>>;
+  where?: InputMaybe<Space_Document_Bool_Exp>;
+};
+
+
+export type Subscription_RootSpace_Document_By_PkArgs = {
+  id: Scalars['bigint'];
+};
+
+
+export type Subscription_RootSpace_Document_StreamArgs = {
   batch_size: Scalars['Int'];
-  cursor: Array<InputMaybe<Part_Stream_Cursor_Input>>;
-  where?: InputMaybe<Part_Bool_Exp>;
+  cursor: Array<InputMaybe<Space_Document_Stream_Cursor_Input>>;
+  where?: InputMaybe<Space_Document_Bool_Exp>;
+};
+
+
+export type Subscription_RootSpace_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Space_Stream_Cursor_Input>>;
+  where?: InputMaybe<Space_Bool_Exp>;
+};
+
+
+export type Subscription_RootTelegram_BotArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Bot_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Bot_Order_By>>;
+  where?: InputMaybe<Telegram_Bot_Bool_Exp>;
+};
+
+
+export type Subscription_RootTelegram_Bot_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Bot_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Bot_Order_By>>;
+  where?: InputMaybe<Telegram_Bot_Bool_Exp>;
+};
+
+
+export type Subscription_RootTelegram_Bot_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootTelegram_Bot_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Telegram_Bot_Stream_Cursor_Input>>;
+  where?: InputMaybe<Telegram_Bot_Bool_Exp>;
+};
+
+
+export type Subscription_RootTelegram_ChatArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Chat_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Chat_Order_By>>;
+  where?: InputMaybe<Telegram_Chat_Bool_Exp>;
+};
+
+
+export type Subscription_RootTelegram_Chat_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Chat_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Chat_Order_By>>;
+  where?: InputMaybe<Telegram_Chat_Bool_Exp>;
+};
+
+
+export type Subscription_RootTelegram_Chat_By_PkArgs = {
+  id: Scalars['bigint'];
+};
+
+
+export type Subscription_RootTelegram_Chat_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Telegram_Chat_Stream_Cursor_Input>>;
+  where?: InputMaybe<Telegram_Chat_Bool_Exp>;
+};
+
+
+export type Subscription_RootTelegram_FileArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_File_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_File_Order_By>>;
+  where?: InputMaybe<Telegram_File_Bool_Exp>;
+};
+
+
+export type Subscription_RootTelegram_File_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_File_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_File_Order_By>>;
+  where?: InputMaybe<Telegram_File_Bool_Exp>;
+};
+
+
+export type Subscription_RootTelegram_File_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Subscription_RootTelegram_File_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Telegram_File_Stream_Cursor_Input>>;
+  where?: InputMaybe<Telegram_File_Bool_Exp>;
+};
+
+
+export type Subscription_RootTinder_SwipesArgs = {
+  distinct_on?: InputMaybe<Array<Tinder_Swipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tinder_Swipes_Order_By>>;
+  where?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+};
+
+
+export type Subscription_RootTinder_Swipes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tinder_Swipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tinder_Swipes_Order_By>>;
+  where?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+};
+
+
+export type Subscription_RootTinder_Swipes_By_PkArgs = {
+  from_user_id: Scalars['uuid'];
+  to_user_id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootTinder_Swipes_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Tinder_Swipes_Stream_Cursor_Input>>;
+  where?: InputMaybe<Tinder_Swipes_Bool_Exp>;
 };
 
 
 export type Subscription_RootUserArgs = {
   id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootUser_CompanyArgs = {
+  distinct_on?: InputMaybe<Array<User_Company_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Company_Order_By>>;
+  where?: InputMaybe<User_Company_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Company_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Company_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Company_Order_By>>;
+  where?: InputMaybe<User_Company_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Company_By_PkArgs = {
+  company_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootUser_Company_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<User_Company_Stream_Cursor_Input>>;
+  where?: InputMaybe<User_Company_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Extended_InfoArgs = {
+  distinct_on?: InputMaybe<Array<User_Extended_Info_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Extended_Info_Order_By>>;
+  where?: InputMaybe<User_Extended_Info_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Extended_Info_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Extended_Info_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Extended_Info_Order_By>>;
+  where?: InputMaybe<User_Extended_Info_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Extended_Info_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootUser_Extended_Info_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<User_Extended_Info_Stream_Cursor_Input>>;
+  where?: InputMaybe<User_Extended_Info_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_ProfileArgs = {
+  distinct_on?: InputMaybe<Array<User_Profile_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Profile_Order_By>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Profile_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Profile_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Profile_Order_By>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Profile_By_PkArgs = {
+  space_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootUser_Profile_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<User_Profile_Stream_Cursor_Input>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_SpaceArgs = {
+  distinct_on?: InputMaybe<Array<User_Space_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Space_Order_By>>;
+  where?: InputMaybe<User_Space_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Space_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Space_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Space_Order_By>>;
+  where?: InputMaybe<User_Space_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Space_By_PkArgs = {
+  space_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootUser_Space_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<User_Space_Stream_Cursor_Input>>;
+  where?: InputMaybe<User_Space_Bool_Exp>;
 };
 
 
@@ -5313,6 +8438,1519 @@ export type Subscription_RootVirusesAggregateArgs = {
   where?: InputMaybe<Virus_Bool_Exp>;
 };
 
+
+export type Subscription_RootWebhook_LogsArgs = {
+  distinct_on?: InputMaybe<Array<Webhook_Logs_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Webhook_Logs_Order_By>>;
+  where?: InputMaybe<Webhook_Logs_Bool_Exp>;
+};
+
+
+export type Subscription_RootWebhook_Logs_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Webhook_Logs_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Webhook_Logs_Order_By>>;
+  where?: InputMaybe<Webhook_Logs_Bool_Exp>;
+};
+
+
+export type Subscription_RootWebhook_Logs_By_PkArgs = {
+  id: Scalars['bigint'];
+};
+
+
+export type Subscription_RootWebhook_Logs_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Webhook_Logs_Stream_Cursor_Input>>;
+  where?: InputMaybe<Webhook_Logs_Bool_Exp>;
+};
+
+/** columns and relationships of "telegram_bot" */
+export type Telegram_Bot = {
+  __typename?: 'telegram_bot';
+  bot_auth: Scalars['String'];
+  /** An array relationship */
+  chats: Array<Telegram_Chat>;
+  /** An aggregate relationship */
+  chats_aggregate: Telegram_Chat_Aggregate;
+  /** An object relationship */
+  company: Company;
+  company_id: Scalars['Int'];
+  default_space_id?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  inline_description?: Maybe<Scalars['String']>;
+  inline_menu_button?: Maybe<Scalars['String']>;
+  login_url?: Maybe<Scalars['String']>;
+  menu_button?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  space?: Maybe<Space>;
+  telegram_id?: Maybe<Scalars['bigint']>;
+  /** An object relationship */
+  token: AuthTelegramBotTokens;
+  webapp_demo_gif?: Maybe<Scalars['uuid']>;
+  webapp_description?: Maybe<Scalars['String']>;
+  webapp_photo?: Maybe<Scalars['uuid']>;
+  webapp_shortname?: Maybe<Scalars['String']>;
+  webapp_title?: Maybe<Scalars['String']>;
+  webapp_url?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "telegram_bot" */
+export type Telegram_BotChatsArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Chat_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Chat_Order_By>>;
+  where?: InputMaybe<Telegram_Chat_Bool_Exp>;
+};
+
+
+/** columns and relationships of "telegram_bot" */
+export type Telegram_BotChats_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Telegram_Chat_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Telegram_Chat_Order_By>>;
+  where?: InputMaybe<Telegram_Chat_Bool_Exp>;
+};
+
+/** aggregated selection of "telegram_bot" */
+export type Telegram_Bot_Aggregate = {
+  __typename?: 'telegram_bot_aggregate';
+  aggregate?: Maybe<Telegram_Bot_Aggregate_Fields>;
+  nodes: Array<Telegram_Bot>;
+};
+
+export type Telegram_Bot_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Telegram_Bot_Aggregate_Bool_Exp_Count>;
+};
+
+export type Telegram_Bot_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Telegram_Bot_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Telegram_Bot_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "telegram_bot" */
+export type Telegram_Bot_Aggregate_Fields = {
+  __typename?: 'telegram_bot_aggregate_fields';
+  avg?: Maybe<Telegram_Bot_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Telegram_Bot_Max_Fields>;
+  min?: Maybe<Telegram_Bot_Min_Fields>;
+  stddev?: Maybe<Telegram_Bot_Stddev_Fields>;
+  stddev_pop?: Maybe<Telegram_Bot_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Telegram_Bot_Stddev_Samp_Fields>;
+  sum?: Maybe<Telegram_Bot_Sum_Fields>;
+  var_pop?: Maybe<Telegram_Bot_Var_Pop_Fields>;
+  var_samp?: Maybe<Telegram_Bot_Var_Samp_Fields>;
+  variance?: Maybe<Telegram_Bot_Variance_Fields>;
+};
+
+
+/** aggregate fields of "telegram_bot" */
+export type Telegram_Bot_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Telegram_Bot_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "telegram_bot" */
+export type Telegram_Bot_Aggregate_Order_By = {
+  avg?: InputMaybe<Telegram_Bot_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Telegram_Bot_Max_Order_By>;
+  min?: InputMaybe<Telegram_Bot_Min_Order_By>;
+  stddev?: InputMaybe<Telegram_Bot_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Telegram_Bot_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Telegram_Bot_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Telegram_Bot_Sum_Order_By>;
+  var_pop?: InputMaybe<Telegram_Bot_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Telegram_Bot_Var_Samp_Order_By>;
+  variance?: InputMaybe<Telegram_Bot_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "telegram_bot" */
+export type Telegram_Bot_Arr_Rel_Insert_Input = {
+  data: Array<Telegram_Bot_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Telegram_Bot_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Telegram_Bot_Avg_Fields = {
+  __typename?: 'telegram_bot_avg_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  default_space_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  telegram_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "telegram_bot" */
+export type Telegram_Bot_Avg_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  default_space_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  telegram_id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "telegram_bot". All fields are combined with a logical 'AND'. */
+export type Telegram_Bot_Bool_Exp = {
+  _and?: InputMaybe<Array<Telegram_Bot_Bool_Exp>>;
+  _not?: InputMaybe<Telegram_Bot_Bool_Exp>;
+  _or?: InputMaybe<Array<Telegram_Bot_Bool_Exp>>;
+  bot_auth?: InputMaybe<String_Comparison_Exp>;
+  chats?: InputMaybe<Telegram_Chat_Bool_Exp>;
+  chats_aggregate?: InputMaybe<Telegram_Chat_Aggregate_Bool_Exp>;
+  company?: InputMaybe<Company_Bool_Exp>;
+  company_id?: InputMaybe<Int_Comparison_Exp>;
+  default_space_id?: InputMaybe<Int_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  inline_description?: InputMaybe<String_Comparison_Exp>;
+  inline_menu_button?: InputMaybe<String_Comparison_Exp>;
+  login_url?: InputMaybe<String_Comparison_Exp>;
+  menu_button?: InputMaybe<String_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  space?: InputMaybe<Space_Bool_Exp>;
+  telegram_id?: InputMaybe<Bigint_Comparison_Exp>;
+  token?: InputMaybe<AuthTelegramBotTokens_Bool_Exp>;
+  webapp_demo_gif?: InputMaybe<Uuid_Comparison_Exp>;
+  webapp_description?: InputMaybe<String_Comparison_Exp>;
+  webapp_photo?: InputMaybe<Uuid_Comparison_Exp>;
+  webapp_shortname?: InputMaybe<String_Comparison_Exp>;
+  webapp_title?: InputMaybe<String_Comparison_Exp>;
+  webapp_url?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "telegram_bot" */
+export enum Telegram_Bot_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  TelegramBotPkey = 'telegram_bot_pkey'
+}
+
+/** input type for incrementing numeric columns in table "telegram_bot" */
+export type Telegram_Bot_Inc_Input = {
+  company_id?: InputMaybe<Scalars['Int']>;
+  default_space_id?: InputMaybe<Scalars['Int']>;
+  telegram_id?: InputMaybe<Scalars['bigint']>;
+};
+
+/** input type for inserting data into table "telegram_bot" */
+export type Telegram_Bot_Insert_Input = {
+  bot_auth?: InputMaybe<Scalars['String']>;
+  chats?: InputMaybe<Telegram_Chat_Arr_Rel_Insert_Input>;
+  company?: InputMaybe<Company_Obj_Rel_Insert_Input>;
+  company_id?: InputMaybe<Scalars['Int']>;
+  default_space_id?: InputMaybe<Scalars['Int']>;
+  description?: InputMaybe<Scalars['String']>;
+  inline_description?: InputMaybe<Scalars['String']>;
+  inline_menu_button?: InputMaybe<Scalars['String']>;
+  login_url?: InputMaybe<Scalars['String']>;
+  menu_button?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  space?: InputMaybe<Space_Obj_Rel_Insert_Input>;
+  telegram_id?: InputMaybe<Scalars['bigint']>;
+  token?: InputMaybe<AuthTelegramBotTokens_Obj_Rel_Insert_Input>;
+  webapp_demo_gif?: InputMaybe<Scalars['uuid']>;
+  webapp_description?: InputMaybe<Scalars['String']>;
+  webapp_photo?: InputMaybe<Scalars['uuid']>;
+  webapp_shortname?: InputMaybe<Scalars['String']>;
+  webapp_title?: InputMaybe<Scalars['String']>;
+  webapp_url?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Telegram_Bot_Max_Fields = {
+  __typename?: 'telegram_bot_max_fields';
+  bot_auth?: Maybe<Scalars['String']>;
+  company_id?: Maybe<Scalars['Int']>;
+  default_space_id?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  inline_description?: Maybe<Scalars['String']>;
+  inline_menu_button?: Maybe<Scalars['String']>;
+  login_url?: Maybe<Scalars['String']>;
+  menu_button?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  telegram_id?: Maybe<Scalars['bigint']>;
+  webapp_demo_gif?: Maybe<Scalars['uuid']>;
+  webapp_description?: Maybe<Scalars['String']>;
+  webapp_photo?: Maybe<Scalars['uuid']>;
+  webapp_shortname?: Maybe<Scalars['String']>;
+  webapp_title?: Maybe<Scalars['String']>;
+  webapp_url?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "telegram_bot" */
+export type Telegram_Bot_Max_Order_By = {
+  bot_auth?: InputMaybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  default_space_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  inline_description?: InputMaybe<Order_By>;
+  inline_menu_button?: InputMaybe<Order_By>;
+  login_url?: InputMaybe<Order_By>;
+  menu_button?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  telegram_id?: InputMaybe<Order_By>;
+  webapp_demo_gif?: InputMaybe<Order_By>;
+  webapp_description?: InputMaybe<Order_By>;
+  webapp_photo?: InputMaybe<Order_By>;
+  webapp_shortname?: InputMaybe<Order_By>;
+  webapp_title?: InputMaybe<Order_By>;
+  webapp_url?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Telegram_Bot_Min_Fields = {
+  __typename?: 'telegram_bot_min_fields';
+  bot_auth?: Maybe<Scalars['String']>;
+  company_id?: Maybe<Scalars['Int']>;
+  default_space_id?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  inline_description?: Maybe<Scalars['String']>;
+  inline_menu_button?: Maybe<Scalars['String']>;
+  login_url?: Maybe<Scalars['String']>;
+  menu_button?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  telegram_id?: Maybe<Scalars['bigint']>;
+  webapp_demo_gif?: Maybe<Scalars['uuid']>;
+  webapp_description?: Maybe<Scalars['String']>;
+  webapp_photo?: Maybe<Scalars['uuid']>;
+  webapp_shortname?: Maybe<Scalars['String']>;
+  webapp_title?: Maybe<Scalars['String']>;
+  webapp_url?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "telegram_bot" */
+export type Telegram_Bot_Min_Order_By = {
+  bot_auth?: InputMaybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  default_space_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  inline_description?: InputMaybe<Order_By>;
+  inline_menu_button?: InputMaybe<Order_By>;
+  login_url?: InputMaybe<Order_By>;
+  menu_button?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  telegram_id?: InputMaybe<Order_By>;
+  webapp_demo_gif?: InputMaybe<Order_By>;
+  webapp_description?: InputMaybe<Order_By>;
+  webapp_photo?: InputMaybe<Order_By>;
+  webapp_shortname?: InputMaybe<Order_By>;
+  webapp_title?: InputMaybe<Order_By>;
+  webapp_url?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "telegram_bot" */
+export type Telegram_Bot_Mutation_Response = {
+  __typename?: 'telegram_bot_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Telegram_Bot>;
+};
+
+/** input type for inserting object relation for remote table "telegram_bot" */
+export type Telegram_Bot_Obj_Rel_Insert_Input = {
+  data: Telegram_Bot_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Telegram_Bot_On_Conflict>;
+};
+
+/** on_conflict condition type for table "telegram_bot" */
+export type Telegram_Bot_On_Conflict = {
+  constraint: Telegram_Bot_Constraint;
+  update_columns?: Array<Telegram_Bot_Update_Column>;
+  where?: InputMaybe<Telegram_Bot_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "telegram_bot". */
+export type Telegram_Bot_Order_By = {
+  bot_auth?: InputMaybe<Order_By>;
+  chats_aggregate?: InputMaybe<Telegram_Chat_Aggregate_Order_By>;
+  company?: InputMaybe<Company_Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  default_space_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  inline_description?: InputMaybe<Order_By>;
+  inline_menu_button?: InputMaybe<Order_By>;
+  login_url?: InputMaybe<Order_By>;
+  menu_button?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  space?: InputMaybe<Space_Order_By>;
+  telegram_id?: InputMaybe<Order_By>;
+  token?: InputMaybe<AuthTelegramBotTokens_Order_By>;
+  webapp_demo_gif?: InputMaybe<Order_By>;
+  webapp_description?: InputMaybe<Order_By>;
+  webapp_photo?: InputMaybe<Order_By>;
+  webapp_shortname?: InputMaybe<Order_By>;
+  webapp_title?: InputMaybe<Order_By>;
+  webapp_url?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: telegram_bot */
+export type Telegram_Bot_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "telegram_bot" */
+export enum Telegram_Bot_Select_Column {
+  /** column name */
+  BotAuth = 'bot_auth',
+  /** column name */
+  CompanyId = 'company_id',
+  /** column name */
+  DefaultSpaceId = 'default_space_id',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  InlineDescription = 'inline_description',
+  /** column name */
+  InlineMenuButton = 'inline_menu_button',
+  /** column name */
+  LoginUrl = 'login_url',
+  /** column name */
+  MenuButton = 'menu_button',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  TelegramId = 'telegram_id',
+  /** column name */
+  WebappDemoGif = 'webapp_demo_gif',
+  /** column name */
+  WebappDescription = 'webapp_description',
+  /** column name */
+  WebappPhoto = 'webapp_photo',
+  /** column name */
+  WebappShortname = 'webapp_shortname',
+  /** column name */
+  WebappTitle = 'webapp_title',
+  /** column name */
+  WebappUrl = 'webapp_url'
+}
+
+/** input type for updating data in table "telegram_bot" */
+export type Telegram_Bot_Set_Input = {
+  bot_auth?: InputMaybe<Scalars['String']>;
+  company_id?: InputMaybe<Scalars['Int']>;
+  default_space_id?: InputMaybe<Scalars['Int']>;
+  description?: InputMaybe<Scalars['String']>;
+  inline_description?: InputMaybe<Scalars['String']>;
+  inline_menu_button?: InputMaybe<Scalars['String']>;
+  login_url?: InputMaybe<Scalars['String']>;
+  menu_button?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  telegram_id?: InputMaybe<Scalars['bigint']>;
+  webapp_demo_gif?: InputMaybe<Scalars['uuid']>;
+  webapp_description?: InputMaybe<Scalars['String']>;
+  webapp_photo?: InputMaybe<Scalars['uuid']>;
+  webapp_shortname?: InputMaybe<Scalars['String']>;
+  webapp_title?: InputMaybe<Scalars['String']>;
+  webapp_url?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type Telegram_Bot_Stddev_Fields = {
+  __typename?: 'telegram_bot_stddev_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  default_space_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  telegram_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "telegram_bot" */
+export type Telegram_Bot_Stddev_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  default_space_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  telegram_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Telegram_Bot_Stddev_Pop_Fields = {
+  __typename?: 'telegram_bot_stddev_pop_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  default_space_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  telegram_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "telegram_bot" */
+export type Telegram_Bot_Stddev_Pop_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  default_space_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  telegram_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Telegram_Bot_Stddev_Samp_Fields = {
+  __typename?: 'telegram_bot_stddev_samp_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  default_space_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  telegram_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "telegram_bot" */
+export type Telegram_Bot_Stddev_Samp_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  default_space_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  telegram_id?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "telegram_bot" */
+export type Telegram_Bot_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Telegram_Bot_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Telegram_Bot_Stream_Cursor_Value_Input = {
+  bot_auth?: InputMaybe<Scalars['String']>;
+  company_id?: InputMaybe<Scalars['Int']>;
+  default_space_id?: InputMaybe<Scalars['Int']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
+  inline_description?: InputMaybe<Scalars['String']>;
+  inline_menu_button?: InputMaybe<Scalars['String']>;
+  login_url?: InputMaybe<Scalars['String']>;
+  menu_button?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  telegram_id?: InputMaybe<Scalars['bigint']>;
+  webapp_demo_gif?: InputMaybe<Scalars['uuid']>;
+  webapp_description?: InputMaybe<Scalars['String']>;
+  webapp_photo?: InputMaybe<Scalars['uuid']>;
+  webapp_shortname?: InputMaybe<Scalars['String']>;
+  webapp_title?: InputMaybe<Scalars['String']>;
+  webapp_url?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate sum on columns */
+export type Telegram_Bot_Sum_Fields = {
+  __typename?: 'telegram_bot_sum_fields';
+  company_id?: Maybe<Scalars['Int']>;
+  default_space_id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  telegram_id?: Maybe<Scalars['bigint']>;
+};
+
+/** order by sum() on columns of table "telegram_bot" */
+export type Telegram_Bot_Sum_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  default_space_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  telegram_id?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "telegram_bot" */
+export enum Telegram_Bot_Update_Column {
+  /** column name */
+  BotAuth = 'bot_auth',
+  /** column name */
+  CompanyId = 'company_id',
+  /** column name */
+  DefaultSpaceId = 'default_space_id',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  InlineDescription = 'inline_description',
+  /** column name */
+  InlineMenuButton = 'inline_menu_button',
+  /** column name */
+  LoginUrl = 'login_url',
+  /** column name */
+  MenuButton = 'menu_button',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  TelegramId = 'telegram_id',
+  /** column name */
+  WebappDemoGif = 'webapp_demo_gif',
+  /** column name */
+  WebappDescription = 'webapp_description',
+  /** column name */
+  WebappPhoto = 'webapp_photo',
+  /** column name */
+  WebappShortname = 'webapp_shortname',
+  /** column name */
+  WebappTitle = 'webapp_title',
+  /** column name */
+  WebappUrl = 'webapp_url'
+}
+
+export type Telegram_Bot_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Telegram_Bot_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Telegram_Bot_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Telegram_Bot_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Telegram_Bot_Var_Pop_Fields = {
+  __typename?: 'telegram_bot_var_pop_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  default_space_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  telegram_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "telegram_bot" */
+export type Telegram_Bot_Var_Pop_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  default_space_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  telegram_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Telegram_Bot_Var_Samp_Fields = {
+  __typename?: 'telegram_bot_var_samp_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  default_space_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  telegram_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "telegram_bot" */
+export type Telegram_Bot_Var_Samp_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  default_space_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  telegram_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Telegram_Bot_Variance_Fields = {
+  __typename?: 'telegram_bot_variance_fields';
+  company_id?: Maybe<Scalars['Float']>;
+  default_space_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  telegram_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "telegram_bot" */
+export type Telegram_Bot_Variance_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  default_space_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  telegram_id?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "telegram_chat" */
+export type Telegram_Chat = {
+  __typename?: 'telegram_chat';
+  administrator_count: Scalars['Int'];
+  banned_count: Scalars['Int'];
+  bot_id?: Maybe<Scalars['Int']>;
+  bot_present?: Maybe<Scalars['Boolean']>;
+  can_get_members?: Maybe<Scalars['Boolean']>;
+  can_hide_members?: Maybe<Scalars['Boolean']>;
+  description?: Maybe<Scalars['String']>;
+  has_hidden_members?: Maybe<Scalars['Boolean']>;
+  id: Scalars['bigint'];
+  invite_link?: Maybe<Scalars['String']>;
+  is_all_history_available?: Maybe<Scalars['Boolean']>;
+  is_channel?: Maybe<Scalars['Boolean']>;
+  is_group?: Maybe<Scalars['Boolean']>;
+  is_supergroup?: Maybe<Scalars['Boolean']>;
+  linked_chat_id?: Maybe<Scalars['bigint']>;
+  member_count: Scalars['Int'];
+  photo?: Maybe<Scalars['uuid']>;
+  restricted_count: Scalars['Int'];
+  slow_mode_delay: Scalars['Int'];
+  /** An object relationship */
+  space?: Maybe<Space>;
+  space_id?: Maybe<Scalars['Int']>;
+  /** An object relationship */
+  telegram_bot?: Maybe<Telegram_Bot>;
+  title?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+};
+
+/** aggregated selection of "telegram_chat" */
+export type Telegram_Chat_Aggregate = {
+  __typename?: 'telegram_chat_aggregate';
+  aggregate?: Maybe<Telegram_Chat_Aggregate_Fields>;
+  nodes: Array<Telegram_Chat>;
+};
+
+export type Telegram_Chat_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Telegram_Chat_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Telegram_Chat_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<Telegram_Chat_Aggregate_Bool_Exp_Count>;
+};
+
+export type Telegram_Chat_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Telegram_Chat_Select_Column_Telegram_Chat_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Telegram_Chat_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Telegram_Chat_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Telegram_Chat_Select_Column_Telegram_Chat_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Telegram_Chat_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Telegram_Chat_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Telegram_Chat_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Telegram_Chat_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "telegram_chat" */
+export type Telegram_Chat_Aggregate_Fields = {
+  __typename?: 'telegram_chat_aggregate_fields';
+  avg?: Maybe<Telegram_Chat_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Telegram_Chat_Max_Fields>;
+  min?: Maybe<Telegram_Chat_Min_Fields>;
+  stddev?: Maybe<Telegram_Chat_Stddev_Fields>;
+  stddev_pop?: Maybe<Telegram_Chat_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Telegram_Chat_Stddev_Samp_Fields>;
+  sum?: Maybe<Telegram_Chat_Sum_Fields>;
+  var_pop?: Maybe<Telegram_Chat_Var_Pop_Fields>;
+  var_samp?: Maybe<Telegram_Chat_Var_Samp_Fields>;
+  variance?: Maybe<Telegram_Chat_Variance_Fields>;
+};
+
+
+/** aggregate fields of "telegram_chat" */
+export type Telegram_Chat_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Telegram_Chat_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "telegram_chat" */
+export type Telegram_Chat_Aggregate_Order_By = {
+  avg?: InputMaybe<Telegram_Chat_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Telegram_Chat_Max_Order_By>;
+  min?: InputMaybe<Telegram_Chat_Min_Order_By>;
+  stddev?: InputMaybe<Telegram_Chat_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Telegram_Chat_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Telegram_Chat_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Telegram_Chat_Sum_Order_By>;
+  var_pop?: InputMaybe<Telegram_Chat_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Telegram_Chat_Var_Samp_Order_By>;
+  variance?: InputMaybe<Telegram_Chat_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "telegram_chat" */
+export type Telegram_Chat_Arr_Rel_Insert_Input = {
+  data: Array<Telegram_Chat_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Telegram_Chat_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Telegram_Chat_Avg_Fields = {
+  __typename?: 'telegram_chat_avg_fields';
+  administrator_count?: Maybe<Scalars['Float']>;
+  banned_count?: Maybe<Scalars['Float']>;
+  bot_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  linked_chat_id?: Maybe<Scalars['Float']>;
+  member_count?: Maybe<Scalars['Float']>;
+  restricted_count?: Maybe<Scalars['Float']>;
+  slow_mode_delay?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "telegram_chat" */
+export type Telegram_Chat_Avg_Order_By = {
+  administrator_count?: InputMaybe<Order_By>;
+  banned_count?: InputMaybe<Order_By>;
+  bot_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  linked_chat_id?: InputMaybe<Order_By>;
+  member_count?: InputMaybe<Order_By>;
+  restricted_count?: InputMaybe<Order_By>;
+  slow_mode_delay?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "telegram_chat". All fields are combined with a logical 'AND'. */
+export type Telegram_Chat_Bool_Exp = {
+  _and?: InputMaybe<Array<Telegram_Chat_Bool_Exp>>;
+  _not?: InputMaybe<Telegram_Chat_Bool_Exp>;
+  _or?: InputMaybe<Array<Telegram_Chat_Bool_Exp>>;
+  administrator_count?: InputMaybe<Int_Comparison_Exp>;
+  banned_count?: InputMaybe<Int_Comparison_Exp>;
+  bot_id?: InputMaybe<Int_Comparison_Exp>;
+  bot_present?: InputMaybe<Boolean_Comparison_Exp>;
+  can_get_members?: InputMaybe<Boolean_Comparison_Exp>;
+  can_hide_members?: InputMaybe<Boolean_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  has_hidden_members?: InputMaybe<Boolean_Comparison_Exp>;
+  id?: InputMaybe<Bigint_Comparison_Exp>;
+  invite_link?: InputMaybe<String_Comparison_Exp>;
+  is_all_history_available?: InputMaybe<Boolean_Comparison_Exp>;
+  is_channel?: InputMaybe<Boolean_Comparison_Exp>;
+  is_group?: InputMaybe<Boolean_Comparison_Exp>;
+  is_supergroup?: InputMaybe<Boolean_Comparison_Exp>;
+  linked_chat_id?: InputMaybe<Bigint_Comparison_Exp>;
+  member_count?: InputMaybe<Int_Comparison_Exp>;
+  photo?: InputMaybe<Uuid_Comparison_Exp>;
+  restricted_count?: InputMaybe<Int_Comparison_Exp>;
+  slow_mode_delay?: InputMaybe<Int_Comparison_Exp>;
+  space?: InputMaybe<Space_Bool_Exp>;
+  space_id?: InputMaybe<Int_Comparison_Exp>;
+  telegram_bot?: InputMaybe<Telegram_Bot_Bool_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+  username?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "telegram_chat" */
+export enum Telegram_Chat_Constraint {
+  /** unique or primary key constraint on columns "bot_id", "id" */
+  TelegramChatBotIdIdKey = 'telegram_chat_bot_id_id_key',
+  /** unique or primary key constraint on columns "id" */
+  TelegramChatPkey = 'telegram_chat_pkey'
+}
+
+/** input type for incrementing numeric columns in table "telegram_chat" */
+export type Telegram_Chat_Inc_Input = {
+  administrator_count?: InputMaybe<Scalars['Int']>;
+  banned_count?: InputMaybe<Scalars['Int']>;
+  bot_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['bigint']>;
+  linked_chat_id?: InputMaybe<Scalars['bigint']>;
+  member_count?: InputMaybe<Scalars['Int']>;
+  restricted_count?: InputMaybe<Scalars['Int']>;
+  slow_mode_delay?: InputMaybe<Scalars['Int']>;
+  space_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "telegram_chat" */
+export type Telegram_Chat_Insert_Input = {
+  administrator_count?: InputMaybe<Scalars['Int']>;
+  banned_count?: InputMaybe<Scalars['Int']>;
+  bot_id?: InputMaybe<Scalars['Int']>;
+  bot_present?: InputMaybe<Scalars['Boolean']>;
+  can_get_members?: InputMaybe<Scalars['Boolean']>;
+  can_hide_members?: InputMaybe<Scalars['Boolean']>;
+  description?: InputMaybe<Scalars['String']>;
+  has_hidden_members?: InputMaybe<Scalars['Boolean']>;
+  id?: InputMaybe<Scalars['bigint']>;
+  invite_link?: InputMaybe<Scalars['String']>;
+  is_all_history_available?: InputMaybe<Scalars['Boolean']>;
+  is_channel?: InputMaybe<Scalars['Boolean']>;
+  is_group?: InputMaybe<Scalars['Boolean']>;
+  is_supergroup?: InputMaybe<Scalars['Boolean']>;
+  linked_chat_id?: InputMaybe<Scalars['bigint']>;
+  member_count?: InputMaybe<Scalars['Int']>;
+  photo?: InputMaybe<Scalars['uuid']>;
+  restricted_count?: InputMaybe<Scalars['Int']>;
+  slow_mode_delay?: InputMaybe<Scalars['Int']>;
+  space?: InputMaybe<Space_Obj_Rel_Insert_Input>;
+  space_id?: InputMaybe<Scalars['Int']>;
+  telegram_bot?: InputMaybe<Telegram_Bot_Obj_Rel_Insert_Input>;
+  title?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Telegram_Chat_Max_Fields = {
+  __typename?: 'telegram_chat_max_fields';
+  administrator_count?: Maybe<Scalars['Int']>;
+  banned_count?: Maybe<Scalars['Int']>;
+  bot_id?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['bigint']>;
+  invite_link?: Maybe<Scalars['String']>;
+  linked_chat_id?: Maybe<Scalars['bigint']>;
+  member_count?: Maybe<Scalars['Int']>;
+  photo?: Maybe<Scalars['uuid']>;
+  restricted_count?: Maybe<Scalars['Int']>;
+  slow_mode_delay?: Maybe<Scalars['Int']>;
+  space_id?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "telegram_chat" */
+export type Telegram_Chat_Max_Order_By = {
+  administrator_count?: InputMaybe<Order_By>;
+  banned_count?: InputMaybe<Order_By>;
+  bot_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  invite_link?: InputMaybe<Order_By>;
+  linked_chat_id?: InputMaybe<Order_By>;
+  member_count?: InputMaybe<Order_By>;
+  photo?: InputMaybe<Order_By>;
+  restricted_count?: InputMaybe<Order_By>;
+  slow_mode_delay?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  username?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Telegram_Chat_Min_Fields = {
+  __typename?: 'telegram_chat_min_fields';
+  administrator_count?: Maybe<Scalars['Int']>;
+  banned_count?: Maybe<Scalars['Int']>;
+  bot_id?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['bigint']>;
+  invite_link?: Maybe<Scalars['String']>;
+  linked_chat_id?: Maybe<Scalars['bigint']>;
+  member_count?: Maybe<Scalars['Int']>;
+  photo?: Maybe<Scalars['uuid']>;
+  restricted_count?: Maybe<Scalars['Int']>;
+  slow_mode_delay?: Maybe<Scalars['Int']>;
+  space_id?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "telegram_chat" */
+export type Telegram_Chat_Min_Order_By = {
+  administrator_count?: InputMaybe<Order_By>;
+  banned_count?: InputMaybe<Order_By>;
+  bot_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  invite_link?: InputMaybe<Order_By>;
+  linked_chat_id?: InputMaybe<Order_By>;
+  member_count?: InputMaybe<Order_By>;
+  photo?: InputMaybe<Order_By>;
+  restricted_count?: InputMaybe<Order_By>;
+  slow_mode_delay?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  username?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "telegram_chat" */
+export type Telegram_Chat_Mutation_Response = {
+  __typename?: 'telegram_chat_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Telegram_Chat>;
+};
+
+/** on_conflict condition type for table "telegram_chat" */
+export type Telegram_Chat_On_Conflict = {
+  constraint: Telegram_Chat_Constraint;
+  update_columns?: Array<Telegram_Chat_Update_Column>;
+  where?: InputMaybe<Telegram_Chat_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "telegram_chat". */
+export type Telegram_Chat_Order_By = {
+  administrator_count?: InputMaybe<Order_By>;
+  banned_count?: InputMaybe<Order_By>;
+  bot_id?: InputMaybe<Order_By>;
+  bot_present?: InputMaybe<Order_By>;
+  can_get_members?: InputMaybe<Order_By>;
+  can_hide_members?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  has_hidden_members?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  invite_link?: InputMaybe<Order_By>;
+  is_all_history_available?: InputMaybe<Order_By>;
+  is_channel?: InputMaybe<Order_By>;
+  is_group?: InputMaybe<Order_By>;
+  is_supergroup?: InputMaybe<Order_By>;
+  linked_chat_id?: InputMaybe<Order_By>;
+  member_count?: InputMaybe<Order_By>;
+  photo?: InputMaybe<Order_By>;
+  restricted_count?: InputMaybe<Order_By>;
+  slow_mode_delay?: InputMaybe<Order_By>;
+  space?: InputMaybe<Space_Order_By>;
+  space_id?: InputMaybe<Order_By>;
+  telegram_bot?: InputMaybe<Telegram_Bot_Order_By>;
+  title?: InputMaybe<Order_By>;
+  username?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: telegram_chat */
+export type Telegram_Chat_Pk_Columns_Input = {
+  id: Scalars['bigint'];
+};
+
+/** select columns of table "telegram_chat" */
+export enum Telegram_Chat_Select_Column {
+  /** column name */
+  AdministratorCount = 'administrator_count',
+  /** column name */
+  BannedCount = 'banned_count',
+  /** column name */
+  BotId = 'bot_id',
+  /** column name */
+  BotPresent = 'bot_present',
+  /** column name */
+  CanGetMembers = 'can_get_members',
+  /** column name */
+  CanHideMembers = 'can_hide_members',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  HasHiddenMembers = 'has_hidden_members',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  InviteLink = 'invite_link',
+  /** column name */
+  IsAllHistoryAvailable = 'is_all_history_available',
+  /** column name */
+  IsChannel = 'is_channel',
+  /** column name */
+  IsGroup = 'is_group',
+  /** column name */
+  IsSupergroup = 'is_supergroup',
+  /** column name */
+  LinkedChatId = 'linked_chat_id',
+  /** column name */
+  MemberCount = 'member_count',
+  /** column name */
+  Photo = 'photo',
+  /** column name */
+  RestrictedCount = 'restricted_count',
+  /** column name */
+  SlowModeDelay = 'slow_mode_delay',
+  /** column name */
+  SpaceId = 'space_id',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  Username = 'username'
+}
+
+/** select "telegram_chat_aggregate_bool_exp_bool_and_arguments_columns" columns of table "telegram_chat" */
+export enum Telegram_Chat_Select_Column_Telegram_Chat_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  BotPresent = 'bot_present',
+  /** column name */
+  CanGetMembers = 'can_get_members',
+  /** column name */
+  CanHideMembers = 'can_hide_members',
+  /** column name */
+  HasHiddenMembers = 'has_hidden_members',
+  /** column name */
+  IsAllHistoryAvailable = 'is_all_history_available',
+  /** column name */
+  IsChannel = 'is_channel',
+  /** column name */
+  IsGroup = 'is_group',
+  /** column name */
+  IsSupergroup = 'is_supergroup'
+}
+
+/** select "telegram_chat_aggregate_bool_exp_bool_or_arguments_columns" columns of table "telegram_chat" */
+export enum Telegram_Chat_Select_Column_Telegram_Chat_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  BotPresent = 'bot_present',
+  /** column name */
+  CanGetMembers = 'can_get_members',
+  /** column name */
+  CanHideMembers = 'can_hide_members',
+  /** column name */
+  HasHiddenMembers = 'has_hidden_members',
+  /** column name */
+  IsAllHistoryAvailable = 'is_all_history_available',
+  /** column name */
+  IsChannel = 'is_channel',
+  /** column name */
+  IsGroup = 'is_group',
+  /** column name */
+  IsSupergroup = 'is_supergroup'
+}
+
+/** input type for updating data in table "telegram_chat" */
+export type Telegram_Chat_Set_Input = {
+  administrator_count?: InputMaybe<Scalars['Int']>;
+  banned_count?: InputMaybe<Scalars['Int']>;
+  bot_id?: InputMaybe<Scalars['Int']>;
+  bot_present?: InputMaybe<Scalars['Boolean']>;
+  can_get_members?: InputMaybe<Scalars['Boolean']>;
+  can_hide_members?: InputMaybe<Scalars['Boolean']>;
+  description?: InputMaybe<Scalars['String']>;
+  has_hidden_members?: InputMaybe<Scalars['Boolean']>;
+  id?: InputMaybe<Scalars['bigint']>;
+  invite_link?: InputMaybe<Scalars['String']>;
+  is_all_history_available?: InputMaybe<Scalars['Boolean']>;
+  is_channel?: InputMaybe<Scalars['Boolean']>;
+  is_group?: InputMaybe<Scalars['Boolean']>;
+  is_supergroup?: InputMaybe<Scalars['Boolean']>;
+  linked_chat_id?: InputMaybe<Scalars['bigint']>;
+  member_count?: InputMaybe<Scalars['Int']>;
+  photo?: InputMaybe<Scalars['uuid']>;
+  restricted_count?: InputMaybe<Scalars['Int']>;
+  slow_mode_delay?: InputMaybe<Scalars['Int']>;
+  space_id?: InputMaybe<Scalars['Int']>;
+  title?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type Telegram_Chat_Stddev_Fields = {
+  __typename?: 'telegram_chat_stddev_fields';
+  administrator_count?: Maybe<Scalars['Float']>;
+  banned_count?: Maybe<Scalars['Float']>;
+  bot_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  linked_chat_id?: Maybe<Scalars['Float']>;
+  member_count?: Maybe<Scalars['Float']>;
+  restricted_count?: Maybe<Scalars['Float']>;
+  slow_mode_delay?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "telegram_chat" */
+export type Telegram_Chat_Stddev_Order_By = {
+  administrator_count?: InputMaybe<Order_By>;
+  banned_count?: InputMaybe<Order_By>;
+  bot_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  linked_chat_id?: InputMaybe<Order_By>;
+  member_count?: InputMaybe<Order_By>;
+  restricted_count?: InputMaybe<Order_By>;
+  slow_mode_delay?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Telegram_Chat_Stddev_Pop_Fields = {
+  __typename?: 'telegram_chat_stddev_pop_fields';
+  administrator_count?: Maybe<Scalars['Float']>;
+  banned_count?: Maybe<Scalars['Float']>;
+  bot_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  linked_chat_id?: Maybe<Scalars['Float']>;
+  member_count?: Maybe<Scalars['Float']>;
+  restricted_count?: Maybe<Scalars['Float']>;
+  slow_mode_delay?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "telegram_chat" */
+export type Telegram_Chat_Stddev_Pop_Order_By = {
+  administrator_count?: InputMaybe<Order_By>;
+  banned_count?: InputMaybe<Order_By>;
+  bot_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  linked_chat_id?: InputMaybe<Order_By>;
+  member_count?: InputMaybe<Order_By>;
+  restricted_count?: InputMaybe<Order_By>;
+  slow_mode_delay?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Telegram_Chat_Stddev_Samp_Fields = {
+  __typename?: 'telegram_chat_stddev_samp_fields';
+  administrator_count?: Maybe<Scalars['Float']>;
+  banned_count?: Maybe<Scalars['Float']>;
+  bot_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  linked_chat_id?: Maybe<Scalars['Float']>;
+  member_count?: Maybe<Scalars['Float']>;
+  restricted_count?: Maybe<Scalars['Float']>;
+  slow_mode_delay?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "telegram_chat" */
+export type Telegram_Chat_Stddev_Samp_Order_By = {
+  administrator_count?: InputMaybe<Order_By>;
+  banned_count?: InputMaybe<Order_By>;
+  bot_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  linked_chat_id?: InputMaybe<Order_By>;
+  member_count?: InputMaybe<Order_By>;
+  restricted_count?: InputMaybe<Order_By>;
+  slow_mode_delay?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "telegram_chat" */
+export type Telegram_Chat_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Telegram_Chat_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Telegram_Chat_Stream_Cursor_Value_Input = {
+  administrator_count?: InputMaybe<Scalars['Int']>;
+  banned_count?: InputMaybe<Scalars['Int']>;
+  bot_id?: InputMaybe<Scalars['Int']>;
+  bot_present?: InputMaybe<Scalars['Boolean']>;
+  can_get_members?: InputMaybe<Scalars['Boolean']>;
+  can_hide_members?: InputMaybe<Scalars['Boolean']>;
+  description?: InputMaybe<Scalars['String']>;
+  has_hidden_members?: InputMaybe<Scalars['Boolean']>;
+  id?: InputMaybe<Scalars['bigint']>;
+  invite_link?: InputMaybe<Scalars['String']>;
+  is_all_history_available?: InputMaybe<Scalars['Boolean']>;
+  is_channel?: InputMaybe<Scalars['Boolean']>;
+  is_group?: InputMaybe<Scalars['Boolean']>;
+  is_supergroup?: InputMaybe<Scalars['Boolean']>;
+  linked_chat_id?: InputMaybe<Scalars['bigint']>;
+  member_count?: InputMaybe<Scalars['Int']>;
+  photo?: InputMaybe<Scalars['uuid']>;
+  restricted_count?: InputMaybe<Scalars['Int']>;
+  slow_mode_delay?: InputMaybe<Scalars['Int']>;
+  space_id?: InputMaybe<Scalars['Int']>;
+  title?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate sum on columns */
+export type Telegram_Chat_Sum_Fields = {
+  __typename?: 'telegram_chat_sum_fields';
+  administrator_count?: Maybe<Scalars['Int']>;
+  banned_count?: Maybe<Scalars['Int']>;
+  bot_id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['bigint']>;
+  linked_chat_id?: Maybe<Scalars['bigint']>;
+  member_count?: Maybe<Scalars['Int']>;
+  restricted_count?: Maybe<Scalars['Int']>;
+  slow_mode_delay?: Maybe<Scalars['Int']>;
+  space_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "telegram_chat" */
+export type Telegram_Chat_Sum_Order_By = {
+  administrator_count?: InputMaybe<Order_By>;
+  banned_count?: InputMaybe<Order_By>;
+  bot_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  linked_chat_id?: InputMaybe<Order_By>;
+  member_count?: InputMaybe<Order_By>;
+  restricted_count?: InputMaybe<Order_By>;
+  slow_mode_delay?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "telegram_chat" */
+export enum Telegram_Chat_Update_Column {
+  /** column name */
+  AdministratorCount = 'administrator_count',
+  /** column name */
+  BannedCount = 'banned_count',
+  /** column name */
+  BotId = 'bot_id',
+  /** column name */
+  BotPresent = 'bot_present',
+  /** column name */
+  CanGetMembers = 'can_get_members',
+  /** column name */
+  CanHideMembers = 'can_hide_members',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  HasHiddenMembers = 'has_hidden_members',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  InviteLink = 'invite_link',
+  /** column name */
+  IsAllHistoryAvailable = 'is_all_history_available',
+  /** column name */
+  IsChannel = 'is_channel',
+  /** column name */
+  IsGroup = 'is_group',
+  /** column name */
+  IsSupergroup = 'is_supergroup',
+  /** column name */
+  LinkedChatId = 'linked_chat_id',
+  /** column name */
+  MemberCount = 'member_count',
+  /** column name */
+  Photo = 'photo',
+  /** column name */
+  RestrictedCount = 'restricted_count',
+  /** column name */
+  SlowModeDelay = 'slow_mode_delay',
+  /** column name */
+  SpaceId = 'space_id',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  Username = 'username'
+}
+
+export type Telegram_Chat_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Telegram_Chat_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Telegram_Chat_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Telegram_Chat_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Telegram_Chat_Var_Pop_Fields = {
+  __typename?: 'telegram_chat_var_pop_fields';
+  administrator_count?: Maybe<Scalars['Float']>;
+  banned_count?: Maybe<Scalars['Float']>;
+  bot_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  linked_chat_id?: Maybe<Scalars['Float']>;
+  member_count?: Maybe<Scalars['Float']>;
+  restricted_count?: Maybe<Scalars['Float']>;
+  slow_mode_delay?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "telegram_chat" */
+export type Telegram_Chat_Var_Pop_Order_By = {
+  administrator_count?: InputMaybe<Order_By>;
+  banned_count?: InputMaybe<Order_By>;
+  bot_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  linked_chat_id?: InputMaybe<Order_By>;
+  member_count?: InputMaybe<Order_By>;
+  restricted_count?: InputMaybe<Order_By>;
+  slow_mode_delay?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Telegram_Chat_Var_Samp_Fields = {
+  __typename?: 'telegram_chat_var_samp_fields';
+  administrator_count?: Maybe<Scalars['Float']>;
+  banned_count?: Maybe<Scalars['Float']>;
+  bot_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  linked_chat_id?: Maybe<Scalars['Float']>;
+  member_count?: Maybe<Scalars['Float']>;
+  restricted_count?: Maybe<Scalars['Float']>;
+  slow_mode_delay?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "telegram_chat" */
+export type Telegram_Chat_Var_Samp_Order_By = {
+  administrator_count?: InputMaybe<Order_By>;
+  banned_count?: InputMaybe<Order_By>;
+  bot_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  linked_chat_id?: InputMaybe<Order_By>;
+  member_count?: InputMaybe<Order_By>;
+  restricted_count?: InputMaybe<Order_By>;
+  slow_mode_delay?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Telegram_Chat_Variance_Fields = {
+  __typename?: 'telegram_chat_variance_fields';
+  administrator_count?: Maybe<Scalars['Float']>;
+  banned_count?: Maybe<Scalars['Float']>;
+  bot_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  linked_chat_id?: Maybe<Scalars['Float']>;
+  member_count?: Maybe<Scalars['Float']>;
+  restricted_count?: Maybe<Scalars['Float']>;
+  slow_mode_delay?: Maybe<Scalars['Float']>;
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "telegram_chat" */
+export type Telegram_Chat_Variance_Order_By = {
+  administrator_count?: InputMaybe<Order_By>;
+  banned_count?: InputMaybe<Order_By>;
+  bot_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  linked_chat_id?: InputMaybe<Order_By>;
+  member_count?: InputMaybe<Order_By>;
+  restricted_count?: InputMaybe<Order_By>;
+  slow_mode_delay?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "telegram_file" */
+export type Telegram_File = {
+  __typename?: 'telegram_file';
+  /** An object relationship */
+  file?: Maybe<Files>;
+  file_id?: Maybe<Scalars['uuid']>;
+  id: Scalars['String'];
+};
+
+/** aggregated selection of "telegram_file" */
+export type Telegram_File_Aggregate = {
+  __typename?: 'telegram_file_aggregate';
+  aggregate?: Maybe<Telegram_File_Aggregate_Fields>;
+  nodes: Array<Telegram_File>;
+};
+
+/** aggregate fields of "telegram_file" */
+export type Telegram_File_Aggregate_Fields = {
+  __typename?: 'telegram_file_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Telegram_File_Max_Fields>;
+  min?: Maybe<Telegram_File_Min_Fields>;
+};
+
+
+/** aggregate fields of "telegram_file" */
+export type Telegram_File_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Telegram_File_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "telegram_file". All fields are combined with a logical 'AND'. */
+export type Telegram_File_Bool_Exp = {
+  _and?: InputMaybe<Array<Telegram_File_Bool_Exp>>;
+  _not?: InputMaybe<Telegram_File_Bool_Exp>;
+  _or?: InputMaybe<Array<Telegram_File_Bool_Exp>>;
+  file?: InputMaybe<Files_Bool_Exp>;
+  file_id?: InputMaybe<Uuid_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "telegram_file" */
+export enum Telegram_File_Constraint {
+  /** unique or primary key constraint on columns "file_id" */
+  TelegramFileFileIdKey = 'telegram_file_file_id_key',
+  /** unique or primary key constraint on columns "id" */
+  TelegramFilePkey = 'telegram_file_pkey'
+}
+
+/** input type for inserting data into table "telegram_file" */
+export type Telegram_File_Insert_Input = {
+  file?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  file_id?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Telegram_File_Max_Fields = {
+  __typename?: 'telegram_file_max_fields';
+  file_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Telegram_File_Min_Fields = {
+  __typename?: 'telegram_file_min_fields';
+  file_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "telegram_file" */
+export type Telegram_File_Mutation_Response = {
+  __typename?: 'telegram_file_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Telegram_File>;
+};
+
+/** input type for inserting object relation for remote table "telegram_file" */
+export type Telegram_File_Obj_Rel_Insert_Input = {
+  data: Telegram_File_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Telegram_File_On_Conflict>;
+};
+
+/** on_conflict condition type for table "telegram_file" */
+export type Telegram_File_On_Conflict = {
+  constraint: Telegram_File_Constraint;
+  update_columns?: Array<Telegram_File_Update_Column>;
+  where?: InputMaybe<Telegram_File_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "telegram_file". */
+export type Telegram_File_Order_By = {
+  file?: InputMaybe<Files_Order_By>;
+  file_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: telegram_file */
+export type Telegram_File_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "telegram_file" */
+export enum Telegram_File_Select_Column {
+  /** column name */
+  FileId = 'file_id',
+  /** column name */
+  Id = 'id'
+}
+
+/** input type for updating data in table "telegram_file" */
+export type Telegram_File_Set_Input = {
+  file_id?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "telegram_file" */
+export type Telegram_File_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Telegram_File_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Telegram_File_Stream_Cursor_Value_Input = {
+  file_id?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "telegram_file" */
+export enum Telegram_File_Update_Column {
+  /** column name */
+  FileId = 'file_id',
+  /** column name */
+  Id = 'id'
+}
+
+export type Telegram_File_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Telegram_File_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Telegram_File_Bool_Exp;
+};
+
+/** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
+export type Timestamp_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['timestamp']>;
+  _gt?: InputMaybe<Scalars['timestamp']>;
+  _gte?: InputMaybe<Scalars['timestamp']>;
+  _in?: InputMaybe<Array<Scalars['timestamp']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['timestamp']>;
+  _lte?: InputMaybe<Scalars['timestamp']>;
+  _neq?: InputMaybe<Scalars['timestamp']>;
+  _nin?: InputMaybe<Array<Scalars['timestamp']>>;
+};
+
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['timestamptz']>;
@@ -5326,11 +9964,1574 @@ export type Timestamptz_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['timestamptz']>>;
 };
 
+/** columns and relationships of "tinder_swipes" */
+export type Tinder_Swipes = {
+  __typename?: 'tinder_swipes';
+  created_at: Scalars['timestamp'];
+  from_user_id: Scalars['uuid'];
+  liked: Scalars['Boolean'];
+  to_user_id: Scalars['uuid'];
+  /** An object relationship */
+  user: Users;
+  /** An object relationship */
+  userByToUserId: Users;
+};
+
+/** aggregated selection of "tinder_swipes" */
+export type Tinder_Swipes_Aggregate = {
+  __typename?: 'tinder_swipes_aggregate';
+  aggregate?: Maybe<Tinder_Swipes_Aggregate_Fields>;
+  nodes: Array<Tinder_Swipes>;
+};
+
+export type Tinder_Swipes_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Tinder_Swipes_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Tinder_Swipes_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<Tinder_Swipes_Aggregate_Bool_Exp_Count>;
+};
+
+export type Tinder_Swipes_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Tinder_Swipes_Select_Column_Tinder_Swipes_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Tinder_Swipes_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Tinder_Swipes_Select_Column_Tinder_Swipes_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Tinder_Swipes_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Tinder_Swipes_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "tinder_swipes" */
+export type Tinder_Swipes_Aggregate_Fields = {
+  __typename?: 'tinder_swipes_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Tinder_Swipes_Max_Fields>;
+  min?: Maybe<Tinder_Swipes_Min_Fields>;
+};
+
+
+/** aggregate fields of "tinder_swipes" */
+export type Tinder_Swipes_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Tinder_Swipes_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "tinder_swipes" */
+export type Tinder_Swipes_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Tinder_Swipes_Max_Order_By>;
+  min?: InputMaybe<Tinder_Swipes_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "tinder_swipes" */
+export type Tinder_Swipes_Arr_Rel_Insert_Input = {
+  data: Array<Tinder_Swipes_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Tinder_Swipes_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "tinder_swipes". All fields are combined with a logical 'AND'. */
+export type Tinder_Swipes_Bool_Exp = {
+  _and?: InputMaybe<Array<Tinder_Swipes_Bool_Exp>>;
+  _not?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+  _or?: InputMaybe<Array<Tinder_Swipes_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  from_user_id?: InputMaybe<Uuid_Comparison_Exp>;
+  liked?: InputMaybe<Boolean_Comparison_Exp>;
+  to_user_id?: InputMaybe<Uuid_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  userByToUserId?: InputMaybe<Users_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "tinder_swipes" */
+export enum Tinder_Swipes_Constraint {
+  /** unique or primary key constraint on columns "to_user_id", "from_user_id" */
+  TinderSwipesPkey = 'tinder_swipes_pkey'
+}
+
+/** input type for inserting data into table "tinder_swipes" */
+export type Tinder_Swipes_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamp']>;
+  from_user_id?: InputMaybe<Scalars['uuid']>;
+  liked?: InputMaybe<Scalars['Boolean']>;
+  to_user_id?: InputMaybe<Scalars['uuid']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  userByToUserId?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Tinder_Swipes_Max_Fields = {
+  __typename?: 'tinder_swipes_max_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
+  from_user_id?: Maybe<Scalars['uuid']>;
+  to_user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "tinder_swipes" */
+export type Tinder_Swipes_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  from_user_id?: InputMaybe<Order_By>;
+  to_user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Tinder_Swipes_Min_Fields = {
+  __typename?: 'tinder_swipes_min_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
+  from_user_id?: Maybe<Scalars['uuid']>;
+  to_user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "tinder_swipes" */
+export type Tinder_Swipes_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  from_user_id?: InputMaybe<Order_By>;
+  to_user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "tinder_swipes" */
+export type Tinder_Swipes_Mutation_Response = {
+  __typename?: 'tinder_swipes_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Tinder_Swipes>;
+};
+
+/** on_conflict condition type for table "tinder_swipes" */
+export type Tinder_Swipes_On_Conflict = {
+  constraint: Tinder_Swipes_Constraint;
+  update_columns?: Array<Tinder_Swipes_Update_Column>;
+  where?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "tinder_swipes". */
+export type Tinder_Swipes_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  from_user_id?: InputMaybe<Order_By>;
+  liked?: InputMaybe<Order_By>;
+  to_user_id?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  userByToUserId?: InputMaybe<Users_Order_By>;
+};
+
+/** primary key columns input for table: tinder_swipes */
+export type Tinder_Swipes_Pk_Columns_Input = {
+  from_user_id: Scalars['uuid'];
+  to_user_id: Scalars['uuid'];
+};
+
+/** select columns of table "tinder_swipes" */
+export enum Tinder_Swipes_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  FromUserId = 'from_user_id',
+  /** column name */
+  Liked = 'liked',
+  /** column name */
+  ToUserId = 'to_user_id'
+}
+
+/** select "tinder_swipes_aggregate_bool_exp_bool_and_arguments_columns" columns of table "tinder_swipes" */
+export enum Tinder_Swipes_Select_Column_Tinder_Swipes_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  Liked = 'liked'
+}
+
+/** select "tinder_swipes_aggregate_bool_exp_bool_or_arguments_columns" columns of table "tinder_swipes" */
+export enum Tinder_Swipes_Select_Column_Tinder_Swipes_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  Liked = 'liked'
+}
+
+/** input type for updating data in table "tinder_swipes" */
+export type Tinder_Swipes_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamp']>;
+  from_user_id?: InputMaybe<Scalars['uuid']>;
+  liked?: InputMaybe<Scalars['Boolean']>;
+  to_user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** Streaming cursor of the table "tinder_swipes" */
+export type Tinder_Swipes_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Tinder_Swipes_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Tinder_Swipes_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamp']>;
+  from_user_id?: InputMaybe<Scalars['uuid']>;
+  liked?: InputMaybe<Scalars['Boolean']>;
+  to_user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** update columns of table "tinder_swipes" */
+export enum Tinder_Swipes_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  FromUserId = 'from_user_id',
+  /** column name */
+  Liked = 'liked',
+  /** column name */
+  ToUserId = 'to_user_id'
+}
+
+export type Tinder_Swipes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Tinder_Swipes_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Tinder_Swipes_Bool_Exp;
+};
+
+/** columns and relationships of "user_company" */
+export type User_Company = {
+  __typename?: 'user_company';
+  /** An object relationship */
+  company: Company;
+  company_id: Scalars['Int'];
+  is_owner: Scalars['Boolean'];
+  is_staff: Scalars['Boolean'];
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "user_company" */
+export type User_Company_Aggregate = {
+  __typename?: 'user_company_aggregate';
+  aggregate?: Maybe<User_Company_Aggregate_Fields>;
+  nodes: Array<User_Company>;
+};
+
+export type User_Company_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<User_Company_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<User_Company_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<User_Company_Aggregate_Bool_Exp_Count>;
+};
+
+export type User_Company_Aggregate_Bool_Exp_Bool_And = {
+  arguments: User_Company_Select_Column_User_Company_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<User_Company_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type User_Company_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: User_Company_Select_Column_User_Company_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<User_Company_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type User_Company_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<User_Company_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<User_Company_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "user_company" */
+export type User_Company_Aggregate_Fields = {
+  __typename?: 'user_company_aggregate_fields';
+  avg?: Maybe<User_Company_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<User_Company_Max_Fields>;
+  min?: Maybe<User_Company_Min_Fields>;
+  stddev?: Maybe<User_Company_Stddev_Fields>;
+  stddev_pop?: Maybe<User_Company_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<User_Company_Stddev_Samp_Fields>;
+  sum?: Maybe<User_Company_Sum_Fields>;
+  var_pop?: Maybe<User_Company_Var_Pop_Fields>;
+  var_samp?: Maybe<User_Company_Var_Samp_Fields>;
+  variance?: Maybe<User_Company_Variance_Fields>;
+};
+
+
+/** aggregate fields of "user_company" */
+export type User_Company_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Company_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "user_company" */
+export type User_Company_Aggregate_Order_By = {
+  avg?: InputMaybe<User_Company_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<User_Company_Max_Order_By>;
+  min?: InputMaybe<User_Company_Min_Order_By>;
+  stddev?: InputMaybe<User_Company_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<User_Company_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<User_Company_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<User_Company_Sum_Order_By>;
+  var_pop?: InputMaybe<User_Company_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<User_Company_Var_Samp_Order_By>;
+  variance?: InputMaybe<User_Company_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user_company" */
+export type User_Company_Arr_Rel_Insert_Input = {
+  data: Array<User_Company_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Company_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type User_Company_Avg_Fields = {
+  __typename?: 'user_company_avg_fields';
+  company_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "user_company" */
+export type User_Company_Avg_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "user_company". All fields are combined with a logical 'AND'. */
+export type User_Company_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Company_Bool_Exp>>;
+  _not?: InputMaybe<User_Company_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Company_Bool_Exp>>;
+  company?: InputMaybe<Company_Bool_Exp>;
+  company_id?: InputMaybe<Int_Comparison_Exp>;
+  is_owner?: InputMaybe<Boolean_Comparison_Exp>;
+  is_staff?: InputMaybe<Boolean_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "user_company" */
+export enum User_Company_Constraint {
+  /** unique or primary key constraint on columns "user_id", "company_id" */
+  UserCompanyPkey = 'user_company_pkey'
+}
+
+/** input type for incrementing numeric columns in table "user_company" */
+export type User_Company_Inc_Input = {
+  company_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "user_company" */
+export type User_Company_Insert_Input = {
+  company?: InputMaybe<Company_Obj_Rel_Insert_Input>;
+  company_id?: InputMaybe<Scalars['Int']>;
+  is_owner?: InputMaybe<Scalars['Boolean']>;
+  is_staff?: InputMaybe<Scalars['Boolean']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type User_Company_Max_Fields = {
+  __typename?: 'user_company_max_fields';
+  company_id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "user_company" */
+export type User_Company_Max_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type User_Company_Min_Fields = {
+  __typename?: 'user_company_min_fields';
+  company_id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "user_company" */
+export type User_Company_Min_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "user_company" */
+export type User_Company_Mutation_Response = {
+  __typename?: 'user_company_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Company>;
+};
+
+/** on_conflict condition type for table "user_company" */
+export type User_Company_On_Conflict = {
+  constraint: User_Company_Constraint;
+  update_columns?: Array<User_Company_Update_Column>;
+  where?: InputMaybe<User_Company_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_company". */
+export type User_Company_Order_By = {
+  company?: InputMaybe<Company_Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  is_owner?: InputMaybe<Order_By>;
+  is_staff?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: user_company */
+export type User_Company_Pk_Columns_Input = {
+  company_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+/** select columns of table "user_company" */
+export enum User_Company_Select_Column {
+  /** column name */
+  CompanyId = 'company_id',
+  /** column name */
+  IsOwner = 'is_owner',
+  /** column name */
+  IsStaff = 'is_staff',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** select "user_company_aggregate_bool_exp_bool_and_arguments_columns" columns of table "user_company" */
+export enum User_Company_Select_Column_User_Company_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsOwner = 'is_owner',
+  /** column name */
+  IsStaff = 'is_staff'
+}
+
+/** select "user_company_aggregate_bool_exp_bool_or_arguments_columns" columns of table "user_company" */
+export enum User_Company_Select_Column_User_Company_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsOwner = 'is_owner',
+  /** column name */
+  IsStaff = 'is_staff'
+}
+
+/** input type for updating data in table "user_company" */
+export type User_Company_Set_Input = {
+  company_id?: InputMaybe<Scalars['Int']>;
+  is_owner?: InputMaybe<Scalars['Boolean']>;
+  is_staff?: InputMaybe<Scalars['Boolean']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate stddev on columns */
+export type User_Company_Stddev_Fields = {
+  __typename?: 'user_company_stddev_fields';
+  company_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "user_company" */
+export type User_Company_Stddev_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type User_Company_Stddev_Pop_Fields = {
+  __typename?: 'user_company_stddev_pop_fields';
+  company_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "user_company" */
+export type User_Company_Stddev_Pop_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type User_Company_Stddev_Samp_Fields = {
+  __typename?: 'user_company_stddev_samp_fields';
+  company_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "user_company" */
+export type User_Company_Stddev_Samp_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "user_company" */
+export type User_Company_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: User_Company_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type User_Company_Stream_Cursor_Value_Input = {
+  company_id?: InputMaybe<Scalars['Int']>;
+  is_owner?: InputMaybe<Scalars['Boolean']>;
+  is_staff?: InputMaybe<Scalars['Boolean']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate sum on columns */
+export type User_Company_Sum_Fields = {
+  __typename?: 'user_company_sum_fields';
+  company_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "user_company" */
+export type User_Company_Sum_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "user_company" */
+export enum User_Company_Update_Column {
+  /** column name */
+  CompanyId = 'company_id',
+  /** column name */
+  IsOwner = 'is_owner',
+  /** column name */
+  IsStaff = 'is_staff',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type User_Company_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<User_Company_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Company_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: User_Company_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type User_Company_Var_Pop_Fields = {
+  __typename?: 'user_company_var_pop_fields';
+  company_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "user_company" */
+export type User_Company_Var_Pop_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type User_Company_Var_Samp_Fields = {
+  __typename?: 'user_company_var_samp_fields';
+  company_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "user_company" */
+export type User_Company_Var_Samp_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type User_Company_Variance_Fields = {
+  __typename?: 'user_company_variance_fields';
+  company_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "user_company" */
+export type User_Company_Variance_Order_By = {
+  company_id?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "user_extended_info" */
+export type User_Extended_Info = {
+  __typename?: 'user_extended_info';
+  created_at: Scalars['timestamp'];
+  id: Scalars['uuid'];
+  is_active: Scalars['Boolean'];
+  is_superuser: Scalars['Boolean'];
+  is_verified: Scalars['Boolean'];
+  locale?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  user: Users;
+};
+
+/** aggregated selection of "user_extended_info" */
+export type User_Extended_Info_Aggregate = {
+  __typename?: 'user_extended_info_aggregate';
+  aggregate?: Maybe<User_Extended_Info_Aggregate_Fields>;
+  nodes: Array<User_Extended_Info>;
+};
+
+/** aggregate fields of "user_extended_info" */
+export type User_Extended_Info_Aggregate_Fields = {
+  __typename?: 'user_extended_info_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<User_Extended_Info_Max_Fields>;
+  min?: Maybe<User_Extended_Info_Min_Fields>;
+};
+
+
+/** aggregate fields of "user_extended_info" */
+export type User_Extended_Info_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Extended_Info_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "user_extended_info". All fields are combined with a logical 'AND'. */
+export type User_Extended_Info_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Extended_Info_Bool_Exp>>;
+  _not?: InputMaybe<User_Extended_Info_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Extended_Info_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  is_active?: InputMaybe<Boolean_Comparison_Exp>;
+  is_superuser?: InputMaybe<Boolean_Comparison_Exp>;
+  is_verified?: InputMaybe<Boolean_Comparison_Exp>;
+  locale?: InputMaybe<String_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "user_extended_info" */
+export enum User_Extended_Info_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  UserExtendedInfoPkey = 'user_extended_info_pkey'
+}
+
+/** input type for inserting data into table "user_extended_info" */
+export type User_Extended_Info_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamp']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  is_active?: InputMaybe<Scalars['Boolean']>;
+  is_superuser?: InputMaybe<Scalars['Boolean']>;
+  is_verified?: InputMaybe<Scalars['Boolean']>;
+  locale?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type User_Extended_Info_Max_Fields = {
+  __typename?: 'user_extended_info_max_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['uuid']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type User_Extended_Info_Min_Fields = {
+  __typename?: 'user_extended_info_min_fields';
+  created_at?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['uuid']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "user_extended_info" */
+export type User_Extended_Info_Mutation_Response = {
+  __typename?: 'user_extended_info_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Extended_Info>;
+};
+
+/** input type for inserting object relation for remote table "user_extended_info" */
+export type User_Extended_Info_Obj_Rel_Insert_Input = {
+  data: User_Extended_Info_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Extended_Info_On_Conflict>;
+};
+
+/** on_conflict condition type for table "user_extended_info" */
+export type User_Extended_Info_On_Conflict = {
+  constraint: User_Extended_Info_Constraint;
+  update_columns?: Array<User_Extended_Info_Update_Column>;
+  where?: InputMaybe<User_Extended_Info_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_extended_info". */
+export type User_Extended_Info_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  is_active?: InputMaybe<Order_By>;
+  is_superuser?: InputMaybe<Order_By>;
+  is_verified?: InputMaybe<Order_By>;
+  locale?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+};
+
+/** primary key columns input for table: user_extended_info */
+export type User_Extended_Info_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "user_extended_info" */
+export enum User_Extended_Info_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsActive = 'is_active',
+  /** column name */
+  IsSuperuser = 'is_superuser',
+  /** column name */
+  IsVerified = 'is_verified',
+  /** column name */
+  Locale = 'locale'
+}
+
+/** input type for updating data in table "user_extended_info" */
+export type User_Extended_Info_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamp']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  is_active?: InputMaybe<Scalars['Boolean']>;
+  is_superuser?: InputMaybe<Scalars['Boolean']>;
+  is_verified?: InputMaybe<Scalars['Boolean']>;
+  locale?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "user_extended_info" */
+export type User_Extended_Info_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: User_Extended_Info_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type User_Extended_Info_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamp']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  is_active?: InputMaybe<Scalars['Boolean']>;
+  is_superuser?: InputMaybe<Scalars['Boolean']>;
+  is_verified?: InputMaybe<Scalars['Boolean']>;
+  locale?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "user_extended_info" */
+export enum User_Extended_Info_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsActive = 'is_active',
+  /** column name */
+  IsSuperuser = 'is_superuser',
+  /** column name */
+  IsVerified = 'is_verified',
+  /** column name */
+  Locale = 'locale'
+}
+
+export type User_Extended_Info_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Extended_Info_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: User_Extended_Info_Bool_Exp;
+};
+
+/** columns and relationships of "user_profile" */
+export type User_Profile = {
+  __typename?: 'user_profile';
+  about: Scalars['String'];
+  first_name: Scalars['String'];
+  image: Scalars['String'];
+  is_visible: Scalars['Boolean'];
+  last_name: Scalars['String'];
+  links: Scalars['json'];
+  /** An object relationship */
+  space: Space;
+  space_id: Scalars['Int'];
+  tags: Scalars['json'];
+  telegram_username: Scalars['String'];
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid'];
+};
+
+
+/** columns and relationships of "user_profile" */
+export type User_ProfileLinksArgs = {
+  path?: InputMaybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "user_profile" */
+export type User_ProfileTagsArgs = {
+  path?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregated selection of "user_profile" */
+export type User_Profile_Aggregate = {
+  __typename?: 'user_profile_aggregate';
+  aggregate?: Maybe<User_Profile_Aggregate_Fields>;
+  nodes: Array<User_Profile>;
+};
+
+export type User_Profile_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<User_Profile_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<User_Profile_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<User_Profile_Aggregate_Bool_Exp_Count>;
+};
+
+export type User_Profile_Aggregate_Bool_Exp_Bool_And = {
+  arguments: User_Profile_Select_Column_User_Profile_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<User_Profile_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type User_Profile_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: User_Profile_Select_Column_User_Profile_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<User_Profile_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type User_Profile_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<User_Profile_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<User_Profile_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "user_profile" */
+export type User_Profile_Aggregate_Fields = {
+  __typename?: 'user_profile_aggregate_fields';
+  avg?: Maybe<User_Profile_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<User_Profile_Max_Fields>;
+  min?: Maybe<User_Profile_Min_Fields>;
+  stddev?: Maybe<User_Profile_Stddev_Fields>;
+  stddev_pop?: Maybe<User_Profile_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<User_Profile_Stddev_Samp_Fields>;
+  sum?: Maybe<User_Profile_Sum_Fields>;
+  var_pop?: Maybe<User_Profile_Var_Pop_Fields>;
+  var_samp?: Maybe<User_Profile_Var_Samp_Fields>;
+  variance?: Maybe<User_Profile_Variance_Fields>;
+};
+
+
+/** aggregate fields of "user_profile" */
+export type User_Profile_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Profile_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "user_profile" */
+export type User_Profile_Aggregate_Order_By = {
+  avg?: InputMaybe<User_Profile_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<User_Profile_Max_Order_By>;
+  min?: InputMaybe<User_Profile_Min_Order_By>;
+  stddev?: InputMaybe<User_Profile_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<User_Profile_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<User_Profile_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<User_Profile_Sum_Order_By>;
+  var_pop?: InputMaybe<User_Profile_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<User_Profile_Var_Samp_Order_By>;
+  variance?: InputMaybe<User_Profile_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user_profile" */
+export type User_Profile_Arr_Rel_Insert_Input = {
+  data: Array<User_Profile_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Profile_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type User_Profile_Avg_Fields = {
+  __typename?: 'user_profile_avg_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "user_profile" */
+export type User_Profile_Avg_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "user_profile". All fields are combined with a logical 'AND'. */
+export type User_Profile_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Profile_Bool_Exp>>;
+  _not?: InputMaybe<User_Profile_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Profile_Bool_Exp>>;
+  about?: InputMaybe<String_Comparison_Exp>;
+  first_name?: InputMaybe<String_Comparison_Exp>;
+  image?: InputMaybe<String_Comparison_Exp>;
+  is_visible?: InputMaybe<Boolean_Comparison_Exp>;
+  last_name?: InputMaybe<String_Comparison_Exp>;
+  links?: InputMaybe<Json_Comparison_Exp>;
+  space?: InputMaybe<Space_Bool_Exp>;
+  space_id?: InputMaybe<Int_Comparison_Exp>;
+  tags?: InputMaybe<Json_Comparison_Exp>;
+  telegram_username?: InputMaybe<String_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "user_profile" */
+export enum User_Profile_Constraint {
+  /** unique or primary key constraint on columns "user_id", "space_id" */
+  UserProfilePkey = 'user_profile_pkey'
+}
+
+/** input type for incrementing numeric columns in table "user_profile" */
+export type User_Profile_Inc_Input = {
+  space_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "user_profile" */
+export type User_Profile_Insert_Input = {
+  about?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
+  is_visible?: InputMaybe<Scalars['Boolean']>;
+  last_name?: InputMaybe<Scalars['String']>;
+  links?: InputMaybe<Scalars['json']>;
+  space?: InputMaybe<Space_Obj_Rel_Insert_Input>;
+  space_id?: InputMaybe<Scalars['Int']>;
+  tags?: InputMaybe<Scalars['json']>;
+  telegram_username?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type User_Profile_Max_Fields = {
+  __typename?: 'user_profile_max_fields';
+  about?: Maybe<Scalars['String']>;
+  first_name?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  last_name?: Maybe<Scalars['String']>;
+  space_id?: Maybe<Scalars['Int']>;
+  telegram_username?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "user_profile" */
+export type User_Profile_Max_Order_By = {
+  about?: InputMaybe<Order_By>;
+  first_name?: InputMaybe<Order_By>;
+  image?: InputMaybe<Order_By>;
+  last_name?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+  telegram_username?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type User_Profile_Min_Fields = {
+  __typename?: 'user_profile_min_fields';
+  about?: Maybe<Scalars['String']>;
+  first_name?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  last_name?: Maybe<Scalars['String']>;
+  space_id?: Maybe<Scalars['Int']>;
+  telegram_username?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "user_profile" */
+export type User_Profile_Min_Order_By = {
+  about?: InputMaybe<Order_By>;
+  first_name?: InputMaybe<Order_By>;
+  image?: InputMaybe<Order_By>;
+  last_name?: InputMaybe<Order_By>;
+  space_id?: InputMaybe<Order_By>;
+  telegram_username?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "user_profile" */
+export type User_Profile_Mutation_Response = {
+  __typename?: 'user_profile_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Profile>;
+};
+
+/** on_conflict condition type for table "user_profile" */
+export type User_Profile_On_Conflict = {
+  constraint: User_Profile_Constraint;
+  update_columns?: Array<User_Profile_Update_Column>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_profile". */
+export type User_Profile_Order_By = {
+  about?: InputMaybe<Order_By>;
+  first_name?: InputMaybe<Order_By>;
+  image?: InputMaybe<Order_By>;
+  is_visible?: InputMaybe<Order_By>;
+  last_name?: InputMaybe<Order_By>;
+  links?: InputMaybe<Order_By>;
+  space?: InputMaybe<Space_Order_By>;
+  space_id?: InputMaybe<Order_By>;
+  tags?: InputMaybe<Order_By>;
+  telegram_username?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: user_profile */
+export type User_Profile_Pk_Columns_Input = {
+  space_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+/** select columns of table "user_profile" */
+export enum User_Profile_Select_Column {
+  /** column name */
+  About = 'about',
+  /** column name */
+  FirstName = 'first_name',
+  /** column name */
+  Image = 'image',
+  /** column name */
+  IsVisible = 'is_visible',
+  /** column name */
+  LastName = 'last_name',
+  /** column name */
+  Links = 'links',
+  /** column name */
+  SpaceId = 'space_id',
+  /** column name */
+  Tags = 'tags',
+  /** column name */
+  TelegramUsername = 'telegram_username',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** select "user_profile_aggregate_bool_exp_bool_and_arguments_columns" columns of table "user_profile" */
+export enum User_Profile_Select_Column_User_Profile_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsVisible = 'is_visible'
+}
+
+/** select "user_profile_aggregate_bool_exp_bool_or_arguments_columns" columns of table "user_profile" */
+export enum User_Profile_Select_Column_User_Profile_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsVisible = 'is_visible'
+}
+
+/** input type for updating data in table "user_profile" */
+export type User_Profile_Set_Input = {
+  about?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
+  is_visible?: InputMaybe<Scalars['Boolean']>;
+  last_name?: InputMaybe<Scalars['String']>;
+  links?: InputMaybe<Scalars['json']>;
+  space_id?: InputMaybe<Scalars['Int']>;
+  tags?: InputMaybe<Scalars['json']>;
+  telegram_username?: InputMaybe<Scalars['String']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate stddev on columns */
+export type User_Profile_Stddev_Fields = {
+  __typename?: 'user_profile_stddev_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "user_profile" */
+export type User_Profile_Stddev_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type User_Profile_Stddev_Pop_Fields = {
+  __typename?: 'user_profile_stddev_pop_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "user_profile" */
+export type User_Profile_Stddev_Pop_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type User_Profile_Stddev_Samp_Fields = {
+  __typename?: 'user_profile_stddev_samp_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "user_profile" */
+export type User_Profile_Stddev_Samp_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "user_profile" */
+export type User_Profile_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: User_Profile_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type User_Profile_Stream_Cursor_Value_Input = {
+  about?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
+  is_visible?: InputMaybe<Scalars['Boolean']>;
+  last_name?: InputMaybe<Scalars['String']>;
+  links?: InputMaybe<Scalars['json']>;
+  space_id?: InputMaybe<Scalars['Int']>;
+  tags?: InputMaybe<Scalars['json']>;
+  telegram_username?: InputMaybe<Scalars['String']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate sum on columns */
+export type User_Profile_Sum_Fields = {
+  __typename?: 'user_profile_sum_fields';
+  space_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "user_profile" */
+export type User_Profile_Sum_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "user_profile" */
+export enum User_Profile_Update_Column {
+  /** column name */
+  About = 'about',
+  /** column name */
+  FirstName = 'first_name',
+  /** column name */
+  Image = 'image',
+  /** column name */
+  IsVisible = 'is_visible',
+  /** column name */
+  LastName = 'last_name',
+  /** column name */
+  Links = 'links',
+  /** column name */
+  SpaceId = 'space_id',
+  /** column name */
+  Tags = 'tags',
+  /** column name */
+  TelegramUsername = 'telegram_username',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type User_Profile_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<User_Profile_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Profile_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: User_Profile_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type User_Profile_Var_Pop_Fields = {
+  __typename?: 'user_profile_var_pop_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "user_profile" */
+export type User_Profile_Var_Pop_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type User_Profile_Var_Samp_Fields = {
+  __typename?: 'user_profile_var_samp_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "user_profile" */
+export type User_Profile_Var_Samp_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type User_Profile_Variance_Fields = {
+  __typename?: 'user_profile_variance_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "user_profile" */
+export type User_Profile_Variance_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "user_space" */
+export type User_Space = {
+  __typename?: 'user_space';
+  is_admin: Scalars['Boolean'];
+  is_owner: Scalars['Boolean'];
+  is_staff: Scalars['Boolean'];
+  /** An object relationship */
+  space: Space;
+  space_id: Scalars['Int'];
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "user_space" */
+export type User_Space_Aggregate = {
+  __typename?: 'user_space_aggregate';
+  aggregate?: Maybe<User_Space_Aggregate_Fields>;
+  nodes: Array<User_Space>;
+};
+
+export type User_Space_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<User_Space_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<User_Space_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<User_Space_Aggregate_Bool_Exp_Count>;
+};
+
+export type User_Space_Aggregate_Bool_Exp_Bool_And = {
+  arguments: User_Space_Select_Column_User_Space_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<User_Space_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type User_Space_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: User_Space_Select_Column_User_Space_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<User_Space_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type User_Space_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<User_Space_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<User_Space_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "user_space" */
+export type User_Space_Aggregate_Fields = {
+  __typename?: 'user_space_aggregate_fields';
+  avg?: Maybe<User_Space_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<User_Space_Max_Fields>;
+  min?: Maybe<User_Space_Min_Fields>;
+  stddev?: Maybe<User_Space_Stddev_Fields>;
+  stddev_pop?: Maybe<User_Space_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<User_Space_Stddev_Samp_Fields>;
+  sum?: Maybe<User_Space_Sum_Fields>;
+  var_pop?: Maybe<User_Space_Var_Pop_Fields>;
+  var_samp?: Maybe<User_Space_Var_Samp_Fields>;
+  variance?: Maybe<User_Space_Variance_Fields>;
+};
+
+
+/** aggregate fields of "user_space" */
+export type User_Space_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Space_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "user_space" */
+export type User_Space_Aggregate_Order_By = {
+  avg?: InputMaybe<User_Space_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<User_Space_Max_Order_By>;
+  min?: InputMaybe<User_Space_Min_Order_By>;
+  stddev?: InputMaybe<User_Space_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<User_Space_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<User_Space_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<User_Space_Sum_Order_By>;
+  var_pop?: InputMaybe<User_Space_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<User_Space_Var_Samp_Order_By>;
+  variance?: InputMaybe<User_Space_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user_space" */
+export type User_Space_Arr_Rel_Insert_Input = {
+  data: Array<User_Space_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Space_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type User_Space_Avg_Fields = {
+  __typename?: 'user_space_avg_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "user_space" */
+export type User_Space_Avg_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "user_space". All fields are combined with a logical 'AND'. */
+export type User_Space_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Space_Bool_Exp>>;
+  _not?: InputMaybe<User_Space_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Space_Bool_Exp>>;
+  is_admin?: InputMaybe<Boolean_Comparison_Exp>;
+  is_owner?: InputMaybe<Boolean_Comparison_Exp>;
+  is_staff?: InputMaybe<Boolean_Comparison_Exp>;
+  space?: InputMaybe<Space_Bool_Exp>;
+  space_id?: InputMaybe<Int_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "user_space" */
+export enum User_Space_Constraint {
+  /** unique or primary key constraint on columns "user_id", "space_id" */
+  UserSpacePkey = 'user_space_pkey'
+}
+
+/** input type for incrementing numeric columns in table "user_space" */
+export type User_Space_Inc_Input = {
+  space_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "user_space" */
+export type User_Space_Insert_Input = {
+  is_admin?: InputMaybe<Scalars['Boolean']>;
+  is_owner?: InputMaybe<Scalars['Boolean']>;
+  is_staff?: InputMaybe<Scalars['Boolean']>;
+  space?: InputMaybe<Space_Obj_Rel_Insert_Input>;
+  space_id?: InputMaybe<Scalars['Int']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type User_Space_Max_Fields = {
+  __typename?: 'user_space_max_fields';
+  space_id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "user_space" */
+export type User_Space_Max_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type User_Space_Min_Fields = {
+  __typename?: 'user_space_min_fields';
+  space_id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "user_space" */
+export type User_Space_Min_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "user_space" */
+export type User_Space_Mutation_Response = {
+  __typename?: 'user_space_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Space>;
+};
+
+/** on_conflict condition type for table "user_space" */
+export type User_Space_On_Conflict = {
+  constraint: User_Space_Constraint;
+  update_columns?: Array<User_Space_Update_Column>;
+  where?: InputMaybe<User_Space_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_space". */
+export type User_Space_Order_By = {
+  is_admin?: InputMaybe<Order_By>;
+  is_owner?: InputMaybe<Order_By>;
+  is_staff?: InputMaybe<Order_By>;
+  space?: InputMaybe<Space_Order_By>;
+  space_id?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: user_space */
+export type User_Space_Pk_Columns_Input = {
+  space_id: Scalars['Int'];
+  user_id: Scalars['uuid'];
+};
+
+/** select columns of table "user_space" */
+export enum User_Space_Select_Column {
+  /** column name */
+  IsAdmin = 'is_admin',
+  /** column name */
+  IsOwner = 'is_owner',
+  /** column name */
+  IsStaff = 'is_staff',
+  /** column name */
+  SpaceId = 'space_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** select "user_space_aggregate_bool_exp_bool_and_arguments_columns" columns of table "user_space" */
+export enum User_Space_Select_Column_User_Space_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsAdmin = 'is_admin',
+  /** column name */
+  IsOwner = 'is_owner',
+  /** column name */
+  IsStaff = 'is_staff'
+}
+
+/** select "user_space_aggregate_bool_exp_bool_or_arguments_columns" columns of table "user_space" */
+export enum User_Space_Select_Column_User_Space_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsAdmin = 'is_admin',
+  /** column name */
+  IsOwner = 'is_owner',
+  /** column name */
+  IsStaff = 'is_staff'
+}
+
+/** input type for updating data in table "user_space" */
+export type User_Space_Set_Input = {
+  is_admin?: InputMaybe<Scalars['Boolean']>;
+  is_owner?: InputMaybe<Scalars['Boolean']>;
+  is_staff?: InputMaybe<Scalars['Boolean']>;
+  space_id?: InputMaybe<Scalars['Int']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate stddev on columns */
+export type User_Space_Stddev_Fields = {
+  __typename?: 'user_space_stddev_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "user_space" */
+export type User_Space_Stddev_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type User_Space_Stddev_Pop_Fields = {
+  __typename?: 'user_space_stddev_pop_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "user_space" */
+export type User_Space_Stddev_Pop_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type User_Space_Stddev_Samp_Fields = {
+  __typename?: 'user_space_stddev_samp_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "user_space" */
+export type User_Space_Stddev_Samp_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "user_space" */
+export type User_Space_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: User_Space_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type User_Space_Stream_Cursor_Value_Input = {
+  is_admin?: InputMaybe<Scalars['Boolean']>;
+  is_owner?: InputMaybe<Scalars['Boolean']>;
+  is_staff?: InputMaybe<Scalars['Boolean']>;
+  space_id?: InputMaybe<Scalars['Int']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate sum on columns */
+export type User_Space_Sum_Fields = {
+  __typename?: 'user_space_sum_fields';
+  space_id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "user_space" */
+export type User_Space_Sum_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "user_space" */
+export enum User_Space_Update_Column {
+  /** column name */
+  IsAdmin = 'is_admin',
+  /** column name */
+  IsOwner = 'is_owner',
+  /** column name */
+  IsStaff = 'is_staff',
+  /** column name */
+  SpaceId = 'space_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type User_Space_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<User_Space_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Space_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: User_Space_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type User_Space_Var_Pop_Fields = {
+  __typename?: 'user_space_var_pop_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "user_space" */
+export type User_Space_Var_Pop_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type User_Space_Var_Samp_Fields = {
+  __typename?: 'user_space_var_samp_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "user_space" */
+export type User_Space_Var_Samp_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type User_Space_Variance_Fields = {
+  __typename?: 'user_space_variance_fields';
+  space_id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "user_space" */
+export type User_Space_Variance_Order_By = {
+  space_id?: InputMaybe<Order_By>;
+};
+
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type Users = {
   __typename?: 'users';
   activeMfaType?: Maybe<Scalars['String']>;
   avatarUrl: Scalars['String'];
+  /** An array relationship */
+  companies: Array<User_Company>;
+  /** An aggregate relationship */
+  companies_aggregate: User_Company_Aggregate;
   createdAt: Scalars['timestamptz'];
   currentChallenge?: Maybe<Scalars['String']>;
   defaultRole: Scalars['String'];
@@ -5340,11 +11541,19 @@ export type Users = {
   displayName: Scalars['String'];
   email?: Maybe<Scalars['citext']>;
   emailVerified: Scalars['Boolean'];
+  /** An array relationship */
+  event_participants: Array<Event_Participant>;
+  /** An aggregate relationship */
+  event_participants_aggregate: Event_Participant_Aggregate;
   id: Scalars['uuid'];
   isAnonymous: Scalars['Boolean'];
   lastSeen?: Maybe<Scalars['timestamptz']>;
   locale: Scalars['String'];
   metadata?: Maybe<Scalars['jsonb']>;
+  /** An array relationship */
+  my_tinder_swipes: Array<Tinder_Swipes>;
+  /** An aggregate relationship */
+  my_tinder_swipes_aggregate: Tinder_Swipes_Aggregate;
   newEmail?: Maybe<Scalars['citext']>;
   otpHash?: Maybe<Scalars['String']>;
   otpHashExpiresAt: Scalars['timestamptz'];
@@ -5352,6 +11561,10 @@ export type Users = {
   passwordHash?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
   phoneNumberVerified: Scalars['Boolean'];
+  /** An array relationship */
+  profiles: Array<User_Profile>;
+  /** An aggregate relationship */
+  profiles_aggregate: User_Profile_Aggregate;
   /** An array relationship */
   refreshTokens: Array<AuthRefreshTokens>;
   /** An aggregate relationship */
@@ -5364,21 +11577,115 @@ export type Users = {
   securityKeys: Array<AuthUserSecurityKeys>;
   /** An aggregate relationship */
   securityKeys_aggregate: AuthUserSecurityKeys_Aggregate;
+  /** An array relationship */
+  spaces: Array<User_Space>;
+  /** An aggregate relationship */
+  spaces_aggregate: User_Space_Aggregate;
   telegramId?: Maybe<Scalars['String']>;
   ticket?: Maybe<Scalars['String']>;
   ticketExpiresAt: Scalars['timestamptz'];
+  /** An array relationship */
+  tinder_swipes_to_me: Array<Tinder_Swipes>;
+  /** An aggregate relationship */
+  tinder_swipes_to_me_aggregate: Tinder_Swipes_Aggregate;
   totpSecret?: Maybe<Scalars['String']>;
   updatedAt: Scalars['timestamptz'];
+  /** An array relationship */
+  uploaded_to_space_documents: Array<Space_Document>;
+  /** An aggregate relationship */
+  uploaded_to_space_documents_aggregate: Space_Document_Aggregate;
   /** An array relationship */
   userProviders: Array<AuthUserProviders>;
   /** An aggregate relationship */
   userProviders_aggregate: AuthUserProviders_Aggregate;
+  /** An object relationship */
+  user_extended_info?: Maybe<User_Extended_Info>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersCompaniesArgs = {
+  distinct_on?: InputMaybe<Array<User_Company_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Company_Order_By>>;
+  where?: InputMaybe<User_Company_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersCompanies_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Company_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Company_Order_By>>;
+  where?: InputMaybe<User_Company_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersEvent_ParticipantsArgs = {
+  distinct_on?: InputMaybe<Array<Event_Participant_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Participant_Order_By>>;
+  where?: InputMaybe<Event_Participant_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersEvent_Participants_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Event_Participant_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Event_Participant_Order_By>>;
+  where?: InputMaybe<Event_Participant_Bool_Exp>;
 };
 
 
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersMetadataArgs = {
   path?: InputMaybe<Scalars['String']>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersMy_Tinder_SwipesArgs = {
+  distinct_on?: InputMaybe<Array<Tinder_Swipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tinder_Swipes_Order_By>>;
+  where?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersMy_Tinder_Swipes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tinder_Swipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tinder_Swipes_Order_By>>;
+  where?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersProfilesArgs = {
+  distinct_on?: InputMaybe<Array<User_Profile_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Profile_Order_By>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersProfiles_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Profile_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Profile_Order_By>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
 };
 
 
@@ -5439,6 +11746,66 @@ export type UsersSecurityKeys_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<AuthUserSecurityKeys_Order_By>>;
   where?: InputMaybe<AuthUserSecurityKeys_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersSpacesArgs = {
+  distinct_on?: InputMaybe<Array<User_Space_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Space_Order_By>>;
+  where?: InputMaybe<User_Space_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersSpaces_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Space_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Space_Order_By>>;
+  where?: InputMaybe<User_Space_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersTinder_Swipes_To_MeArgs = {
+  distinct_on?: InputMaybe<Array<Tinder_Swipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tinder_Swipes_Order_By>>;
+  where?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersTinder_Swipes_To_Me_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tinder_Swipes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Tinder_Swipes_Order_By>>;
+  where?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersUploaded_To_Space_DocumentsArgs = {
+  distinct_on?: InputMaybe<Array<Space_Document_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Space_Document_Order_By>>;
+  where?: InputMaybe<Space_Document_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersUploaded_To_Space_Documents_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Space_Document_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Space_Document_Order_By>>;
+  where?: InputMaybe<Space_Document_Bool_Exp>;
 };
 
 
@@ -5536,6 +11903,8 @@ export type Users_Bool_Exp = {
   _or?: InputMaybe<Array<Users_Bool_Exp>>;
   activeMfaType?: InputMaybe<String_Comparison_Exp>;
   avatarUrl?: InputMaybe<String_Comparison_Exp>;
+  companies?: InputMaybe<User_Company_Bool_Exp>;
+  companies_aggregate?: InputMaybe<User_Company_Aggregate_Bool_Exp>;
   createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   currentChallenge?: InputMaybe<String_Comparison_Exp>;
   defaultRole?: InputMaybe<String_Comparison_Exp>;
@@ -5544,11 +11913,15 @@ export type Users_Bool_Exp = {
   displayName?: InputMaybe<String_Comparison_Exp>;
   email?: InputMaybe<Citext_Comparison_Exp>;
   emailVerified?: InputMaybe<Boolean_Comparison_Exp>;
+  event_participants?: InputMaybe<Event_Participant_Bool_Exp>;
+  event_participants_aggregate?: InputMaybe<Event_Participant_Aggregate_Bool_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   isAnonymous?: InputMaybe<Boolean_Comparison_Exp>;
   lastSeen?: InputMaybe<Timestamptz_Comparison_Exp>;
   locale?: InputMaybe<String_Comparison_Exp>;
   metadata?: InputMaybe<Jsonb_Comparison_Exp>;
+  my_tinder_swipes?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+  my_tinder_swipes_aggregate?: InputMaybe<Tinder_Swipes_Aggregate_Bool_Exp>;
   newEmail?: InputMaybe<Citext_Comparison_Exp>;
   otpHash?: InputMaybe<String_Comparison_Exp>;
   otpHashExpiresAt?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -5556,19 +11929,28 @@ export type Users_Bool_Exp = {
   passwordHash?: InputMaybe<String_Comparison_Exp>;
   phoneNumber?: InputMaybe<String_Comparison_Exp>;
   phoneNumberVerified?: InputMaybe<Boolean_Comparison_Exp>;
+  profiles?: InputMaybe<User_Profile_Bool_Exp>;
+  profiles_aggregate?: InputMaybe<User_Profile_Aggregate_Bool_Exp>;
   refreshTokens?: InputMaybe<AuthRefreshTokens_Bool_Exp>;
   refreshTokens_aggregate?: InputMaybe<AuthRefreshTokens_Aggregate_Bool_Exp>;
   roles?: InputMaybe<AuthUserRoles_Bool_Exp>;
   roles_aggregate?: InputMaybe<AuthUserRoles_Aggregate_Bool_Exp>;
   securityKeys?: InputMaybe<AuthUserSecurityKeys_Bool_Exp>;
   securityKeys_aggregate?: InputMaybe<AuthUserSecurityKeys_Aggregate_Bool_Exp>;
+  spaces?: InputMaybe<User_Space_Bool_Exp>;
+  spaces_aggregate?: InputMaybe<User_Space_Aggregate_Bool_Exp>;
   telegramId?: InputMaybe<String_Comparison_Exp>;
   ticket?: InputMaybe<String_Comparison_Exp>;
   ticketExpiresAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  tinder_swipes_to_me?: InputMaybe<Tinder_Swipes_Bool_Exp>;
+  tinder_swipes_to_me_aggregate?: InputMaybe<Tinder_Swipes_Aggregate_Bool_Exp>;
   totpSecret?: InputMaybe<String_Comparison_Exp>;
   updatedAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  uploaded_to_space_documents?: InputMaybe<Space_Document_Bool_Exp>;
+  uploaded_to_space_documents_aggregate?: InputMaybe<Space_Document_Aggregate_Bool_Exp>;
   userProviders?: InputMaybe<AuthUserProviders_Bool_Exp>;
   userProviders_aggregate?: InputMaybe<AuthUserProviders_Aggregate_Bool_Exp>;
+  user_extended_info?: InputMaybe<User_Extended_Info_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "auth.users" */
@@ -5579,7 +11961,7 @@ export enum Users_Constraint {
   UsersPhoneNumberKey = 'users_phone_number_key',
   /** unique or primary key constraint on columns "id" */
   UsersPkey = 'users_pkey',
-  /** unique or primary key constraint on columns "telegramId" */
+  /** unique or primary key constraint on columns "telegram_id" */
   UsersTelegramIdKey = 'users_telegram_id_key'
 }
 
@@ -5602,6 +11984,7 @@ export type Users_Delete_Key_Input = {
 export type Users_Insert_Input = {
   activeMfaType?: InputMaybe<Scalars['String']>;
   avatarUrl?: InputMaybe<Scalars['String']>;
+  companies?: InputMaybe<User_Company_Arr_Rel_Insert_Input>;
   createdAt?: InputMaybe<Scalars['timestamptz']>;
   currentChallenge?: InputMaybe<Scalars['String']>;
   defaultRole?: InputMaybe<Scalars['String']>;
@@ -5610,11 +11993,13 @@ export type Users_Insert_Input = {
   displayName?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['citext']>;
   emailVerified?: InputMaybe<Scalars['Boolean']>;
+  event_participants?: InputMaybe<Event_Participant_Arr_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']>;
   isAnonymous?: InputMaybe<Scalars['Boolean']>;
   lastSeen?: InputMaybe<Scalars['timestamptz']>;
   locale?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Scalars['jsonb']>;
+  my_tinder_swipes?: InputMaybe<Tinder_Swipes_Arr_Rel_Insert_Input>;
   newEmail?: InputMaybe<Scalars['citext']>;
   otpHash?: InputMaybe<Scalars['String']>;
   otpHashExpiresAt?: InputMaybe<Scalars['timestamptz']>;
@@ -5622,15 +12007,20 @@ export type Users_Insert_Input = {
   passwordHash?: InputMaybe<Scalars['String']>;
   phoneNumber?: InputMaybe<Scalars['String']>;
   phoneNumberVerified?: InputMaybe<Scalars['Boolean']>;
+  profiles?: InputMaybe<User_Profile_Arr_Rel_Insert_Input>;
   refreshTokens?: InputMaybe<AuthRefreshTokens_Arr_Rel_Insert_Input>;
   roles?: InputMaybe<AuthUserRoles_Arr_Rel_Insert_Input>;
   securityKeys?: InputMaybe<AuthUserSecurityKeys_Arr_Rel_Insert_Input>;
+  spaces?: InputMaybe<User_Space_Arr_Rel_Insert_Input>;
   telegramId?: InputMaybe<Scalars['String']>;
   ticket?: InputMaybe<Scalars['String']>;
   ticketExpiresAt?: InputMaybe<Scalars['timestamptz']>;
+  tinder_swipes_to_me?: InputMaybe<Tinder_Swipes_Arr_Rel_Insert_Input>;
   totpSecret?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  uploaded_to_space_documents?: InputMaybe<Space_Document_Arr_Rel_Insert_Input>;
   userProviders?: InputMaybe<AuthUserProviders_Arr_Rel_Insert_Input>;
+  user_extended_info?: InputMaybe<User_Extended_Info_Obj_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -5762,6 +12152,7 @@ export type Users_On_Conflict = {
 export type Users_Order_By = {
   activeMfaType?: InputMaybe<Order_By>;
   avatarUrl?: InputMaybe<Order_By>;
+  companies_aggregate?: InputMaybe<User_Company_Aggregate_Order_By>;
   createdAt?: InputMaybe<Order_By>;
   currentChallenge?: InputMaybe<Order_By>;
   defaultRole?: InputMaybe<Order_By>;
@@ -5770,11 +12161,13 @@ export type Users_Order_By = {
   displayName?: InputMaybe<Order_By>;
   email?: InputMaybe<Order_By>;
   emailVerified?: InputMaybe<Order_By>;
+  event_participants_aggregate?: InputMaybe<Event_Participant_Aggregate_Order_By>;
   id?: InputMaybe<Order_By>;
   isAnonymous?: InputMaybe<Order_By>;
   lastSeen?: InputMaybe<Order_By>;
   locale?: InputMaybe<Order_By>;
   metadata?: InputMaybe<Order_By>;
+  my_tinder_swipes_aggregate?: InputMaybe<Tinder_Swipes_Aggregate_Order_By>;
   newEmail?: InputMaybe<Order_By>;
   otpHash?: InputMaybe<Order_By>;
   otpHashExpiresAt?: InputMaybe<Order_By>;
@@ -5782,15 +12175,20 @@ export type Users_Order_By = {
   passwordHash?: InputMaybe<Order_By>;
   phoneNumber?: InputMaybe<Order_By>;
   phoneNumberVerified?: InputMaybe<Order_By>;
+  profiles_aggregate?: InputMaybe<User_Profile_Aggregate_Order_By>;
   refreshTokens_aggregate?: InputMaybe<AuthRefreshTokens_Aggregate_Order_By>;
   roles_aggregate?: InputMaybe<AuthUserRoles_Aggregate_Order_By>;
   securityKeys_aggregate?: InputMaybe<AuthUserSecurityKeys_Aggregate_Order_By>;
+  spaces_aggregate?: InputMaybe<User_Space_Aggregate_Order_By>;
   telegramId?: InputMaybe<Order_By>;
   ticket?: InputMaybe<Order_By>;
   ticketExpiresAt?: InputMaybe<Order_By>;
+  tinder_swipes_to_me_aggregate?: InputMaybe<Tinder_Swipes_Aggregate_Order_By>;
   totpSecret?: InputMaybe<Order_By>;
   updatedAt?: InputMaybe<Order_By>;
+  uploaded_to_space_documents_aggregate?: InputMaybe<Space_Document_Aggregate_Order_By>;
   userProviders_aggregate?: InputMaybe<AuthUserProviders_Aggregate_Order_By>;
+  user_extended_info?: InputMaybe<User_Extended_Info_Order_By>;
 };
 
 /** primary key columns input for table: auth.users */
@@ -6273,6 +12671,240 @@ export type Virus_Updates = {
   _set?: InputMaybe<Virus_Set_Input>;
   /** filter the rows which have to be updated */
   where: Virus_Bool_Exp;
+};
+
+/** columns and relationships of "webhook_logs" */
+export type Webhook_Logs = {
+  __typename?: 'webhook_logs';
+  error: Scalars['String'];
+  id: Scalars['bigint'];
+  params: Scalars['String'];
+  response_body: Scalars['String'];
+  status: Scalars['String'];
+  url: Scalars['String'];
+};
+
+/** aggregated selection of "webhook_logs" */
+export type Webhook_Logs_Aggregate = {
+  __typename?: 'webhook_logs_aggregate';
+  aggregate?: Maybe<Webhook_Logs_Aggregate_Fields>;
+  nodes: Array<Webhook_Logs>;
+};
+
+/** aggregate fields of "webhook_logs" */
+export type Webhook_Logs_Aggregate_Fields = {
+  __typename?: 'webhook_logs_aggregate_fields';
+  avg?: Maybe<Webhook_Logs_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Webhook_Logs_Max_Fields>;
+  min?: Maybe<Webhook_Logs_Min_Fields>;
+  stddev?: Maybe<Webhook_Logs_Stddev_Fields>;
+  stddev_pop?: Maybe<Webhook_Logs_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Webhook_Logs_Stddev_Samp_Fields>;
+  sum?: Maybe<Webhook_Logs_Sum_Fields>;
+  var_pop?: Maybe<Webhook_Logs_Var_Pop_Fields>;
+  var_samp?: Maybe<Webhook_Logs_Var_Samp_Fields>;
+  variance?: Maybe<Webhook_Logs_Variance_Fields>;
+};
+
+
+/** aggregate fields of "webhook_logs" */
+export type Webhook_Logs_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Webhook_Logs_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type Webhook_Logs_Avg_Fields = {
+  __typename?: 'webhook_logs_avg_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "webhook_logs". All fields are combined with a logical 'AND'. */
+export type Webhook_Logs_Bool_Exp = {
+  _and?: InputMaybe<Array<Webhook_Logs_Bool_Exp>>;
+  _not?: InputMaybe<Webhook_Logs_Bool_Exp>;
+  _or?: InputMaybe<Array<Webhook_Logs_Bool_Exp>>;
+  error?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Bigint_Comparison_Exp>;
+  params?: InputMaybe<String_Comparison_Exp>;
+  response_body?: InputMaybe<String_Comparison_Exp>;
+  status?: InputMaybe<String_Comparison_Exp>;
+  url?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "webhook_logs" */
+export enum Webhook_Logs_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  WebhookLogsPkey = 'webhook_logs_pkey'
+}
+
+/** input type for inserting data into table "webhook_logs" */
+export type Webhook_Logs_Insert_Input = {
+  error?: InputMaybe<Scalars['String']>;
+  params?: InputMaybe<Scalars['String']>;
+  response_body?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Webhook_Logs_Max_Fields = {
+  __typename?: 'webhook_logs_max_fields';
+  error?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['bigint']>;
+  params?: Maybe<Scalars['String']>;
+  response_body?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Webhook_Logs_Min_Fields = {
+  __typename?: 'webhook_logs_min_fields';
+  error?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['bigint']>;
+  params?: Maybe<Scalars['String']>;
+  response_body?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "webhook_logs" */
+export type Webhook_Logs_Mutation_Response = {
+  __typename?: 'webhook_logs_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Webhook_Logs>;
+};
+
+/** on_conflict condition type for table "webhook_logs" */
+export type Webhook_Logs_On_Conflict = {
+  constraint: Webhook_Logs_Constraint;
+  update_columns?: Array<Webhook_Logs_Update_Column>;
+  where?: InputMaybe<Webhook_Logs_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "webhook_logs". */
+export type Webhook_Logs_Order_By = {
+  error?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  params?: InputMaybe<Order_By>;
+  response_body?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  url?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: webhook_logs */
+export type Webhook_Logs_Pk_Columns_Input = {
+  id: Scalars['bigint'];
+};
+
+/** select columns of table "webhook_logs" */
+export enum Webhook_Logs_Select_Column {
+  /** column name */
+  Error = 'error',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Params = 'params',
+  /** column name */
+  ResponseBody = 'response_body',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  Url = 'url'
+}
+
+/** input type for updating data in table "webhook_logs" */
+export type Webhook_Logs_Set_Input = {
+  error?: InputMaybe<Scalars['String']>;
+  params?: InputMaybe<Scalars['String']>;
+  response_body?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type Webhook_Logs_Stddev_Fields = {
+  __typename?: 'webhook_logs_stddev_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Webhook_Logs_Stddev_Pop_Fields = {
+  __typename?: 'webhook_logs_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Webhook_Logs_Stddev_Samp_Fields = {
+  __typename?: 'webhook_logs_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** Streaming cursor of the table "webhook_logs" */
+export type Webhook_Logs_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Webhook_Logs_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Webhook_Logs_Stream_Cursor_Value_Input = {
+  error?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['bigint']>;
+  params?: InputMaybe<Scalars['String']>;
+  response_body?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate sum on columns */
+export type Webhook_Logs_Sum_Fields = {
+  __typename?: 'webhook_logs_sum_fields';
+  id?: Maybe<Scalars['bigint']>;
+};
+
+/** update columns of table "webhook_logs" */
+export enum Webhook_Logs_Update_Column {
+  /** column name */
+  Error = 'error',
+  /** column name */
+  Params = 'params',
+  /** column name */
+  ResponseBody = 'response_body',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  Url = 'url'
+}
+
+export type Webhook_Logs_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Webhook_Logs_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Webhook_Logs_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Webhook_Logs_Var_Pop_Fields = {
+  __typename?: 'webhook_logs_var_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Webhook_Logs_Var_Samp_Fields = {
+  __typename?: 'webhook_logs_var_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Webhook_Logs_Variance_Fields = {
+  __typename?: 'webhook_logs_variance_fields';
+  id?: Maybe<Scalars['Float']>;
 };
 
 export type InsertProviderRequestMutationVariables = Exact<{
