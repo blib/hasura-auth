@@ -65,18 +65,28 @@ export const signInTelegramHandler: RequestHandler<{}, {}, BodyType> = async (
     .update(dataCheckString)
     .digest("hex");
 
-  if (computedHash !== hash && computedHashWeb !== hash) {
+  if (computedHashWeb !== hash) {
     return sendError(res, 'invalid-ticket');
-  } else {
-    const CURRENT_UNIX_TIME = Math.floor(Date.now() / 1000);
-    const TIMEOUT_SECONDS = 3600; // Approximately 1 hour
+  }
+  const CURRENT_UNIX_TIME = Math.floor(Date.now() / 1000);
+  const TIMEOUT_SECONDS = 3600; // Approximately 1 hour
 
-    if (CURRENT_UNIX_TIME - Number(data.auth_date) > TIMEOUT_SECONDS) {
-      return sendError(res, 'invalid-expiry-date');
-    }
+  if (CURRENT_UNIX_TIME - Number(data.auth_date || "") > TIMEOUT_SECONDS) {
+    return sendError(res, 'invalid-expiry-date');
   }
 
-  const userData = JSON.parse(data.user);
+  let userData: { id?: string, first_name?: string, last_name?: string, username?: string, language_code?: string } = {}
+
+  if (computedHash === hash) {
+    userData = JSON.parse(data.user);
+  }
+  if (computedHashWeb === hash) {
+    userData = data;
+  }
+
+  if (!userData.id || (computedHash !== hash && computedHashWeb !== hash)) {
+    return sendError(res, 'invalid-ticket');
+  }
 
   let user = await getUserByTelegramId(userData.id);
 
