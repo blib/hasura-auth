@@ -65,9 +65,6 @@ export const signInTelegramHandler: RequestHandler<{}, {}, BodyType> = async (
     .update(dataCheckString)
     .digest("hex");
 
-  if (computedHashWeb !== hash) {
-    return sendError(res, 'invalid-ticket');
-  }
   const CURRENT_UNIX_TIME = Math.floor(Date.now() / 1000);
   const TIMEOUT_SECONDS = 3600; // Approximately 1 hour
 
@@ -83,8 +80,6 @@ export const signInTelegramHandler: RequestHandler<{}, {}, BodyType> = async (
   if (computedHashWeb === hash) {
     userData = data;
   }
-
-  logger.debug(`user data: ${JSON.stringify(userData)} ${!userData.id} ${computedHash !== hash && computedHashWeb !== hash} `);
 
   if (!userData.id || (computedHash !== hash && computedHashWeb !== hash)) {
     return sendError(res, 'invalid-ticket');
