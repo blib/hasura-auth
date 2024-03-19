@@ -55,14 +55,24 @@ export const signInTelegramHandler: RequestHandler<{}, {}, BodyType> = async (
     .update(dataCheckString)
     .digest("hex");
 
-  if (computedHash !== hash) {
+  const secretKeyWeb = crypto
+    .createHash("sha256")
+    .update(botToken)
+    .digest();
+
+  const computedHashWeb = crypto
+    .createHmac("sha256", secretKeyWeb)
+    .update(dataCheckString)
+    .digest("hex");
+
+  if (computedHash !== hash && computedHashWeb !== hash) {
     return sendError(res, 'invalid-ticket');
   } else {
     const CURRENT_UNIX_TIME = Math.floor(Date.now() / 1000);
     const TIMEOUT_SECONDS = 3600; // Approximately 1 hour
 
     if (CURRENT_UNIX_TIME - Number(data.auth_date) > TIMEOUT_SECONDS) {
-      return sendError(res, 'invalid-ticket');
+      return sendError(res, 'invalid-expiry-date');
     }
   }
 
