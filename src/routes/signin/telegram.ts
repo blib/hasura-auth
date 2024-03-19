@@ -71,7 +71,7 @@ export const signInTelegramHandler: RequestHandler<{}, {}, BodyType> = async (
   const CURRENT_UNIX_TIME = Math.floor(Date.now() / 1000);
   const TIMEOUT_SECONDS = 3600; // Approximately 1 hour
 
-  if (CURRENT_UNIX_TIME - Number(data.auth_date || "") > TIMEOUT_SECONDS) {
+  if (CURRENT_UNIX_TIME - Number(data.auth_date) > TIMEOUT_SECONDS) {
     return sendError(res, 'invalid-expiry-date');
   }
 
@@ -83,6 +83,8 @@ export const signInTelegramHandler: RequestHandler<{}, {}, BodyType> = async (
   if (computedHashWeb === hash) {
     userData = data;
   }
+
+  logger.debug(`user data: ${JSON.stringify(userData)} ${!userData.id} ${computedHash !== hash && computedHashWeb !== hash} `);
 
   if (!userData.id || (computedHash !== hash && computedHashWeb !== hash)) {
     return sendError(res, 'invalid-ticket');
