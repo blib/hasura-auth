@@ -102,6 +102,7 @@ export const signInTelegramHandler: RequestHandler<{}, {}, BodyType> = async (
       telegramId: userData.id,
       disabled: ENV.AUTH_DISABLE_NEW_USERS,
       defaultRole: ENV.AUTH_USER_DEFAULT_ROLE,
+      isAnonymous: ENV.AUTH_ANONYMOUS_USERS_ENABLED,
       metadata: {},
     });
 
