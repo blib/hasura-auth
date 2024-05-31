@@ -94,7 +94,9 @@ export const signInTelegramHandler: RequestHandler<{}, {}, BodyType> = async (
     const userRoles = [{ role: ENV.AUTH_USER_DEFAULT_ROLE }];
 
     user = await insertUser({
-      displayName: userData.username ?? `${userData.first_name} ${userData.last_name}`,
+      displayName: (userData.first_name || userData.last_name) ?
+        `${userData.first_name || ""} ${userData.last_name || ""}`
+        : userData.username,
       locale: userData.language_code || "en",
       roles: {
         data: userRoles,
