@@ -39,6 +39,7 @@ describe('Redirections', () => {
     await client.query(`DELETE FROM auth.users;`);
     // set env vars
     await request.post('/change-env').send({
+      AUTH_DISABLE_SIGNUP: false,
       AUTH_DISABLE_NEW_USERS: false,
       AUTH_EMAIL_PASSWORDLESS_ENABLED: true,
       AUTH_ACCESS_CONTROL_ALLOWED_EMAILS: '',
@@ -116,22 +117,4 @@ describe('Redirections', () => {
     ]);
   });
 
-  it('should not allow a locale of more than two characters', async () => {
-    const email = faker.internet.email();
-
-    const { body } = await request
-      .post('/signin/passwordless/email')
-      .send({
-        email,
-        options: {
-          locale: 'en-us',
-        },
-      })
-      .expect(StatusCodes.BAD_REQUEST);
-
-    expect(body).toBeObject();
-    expect(body.message).toEqual(
-      '"options.locale" length must be 2 characters long'
-    );
-  });
 });

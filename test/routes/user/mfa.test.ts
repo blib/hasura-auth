@@ -29,7 +29,7 @@ describe('mfa totp', () => {
 
   });
 
-  it.only('should generate a secret, enable mfa and sign in with mfa', async () => {
+  it('should generate a secret, enable mfa and sign in with mfa', async () => {
     await request.post('/change-env').send({
       AUTH_MFA_ENABLED: true,
       AUTH_DISABLE_NEW_USERS: false,
@@ -127,7 +127,7 @@ describe('mfa totp', () => {
       .send({ email, password })
       .expect(StatusCodes.OK);
 
-    expect(signInBodyThird.mfa).toBe(null);
+    expect(signInBodyThird.mfa).toBe(undefined);
   });
 
   it('shoud not be possible to generate MFA code when anonymous', async () => {

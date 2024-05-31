@@ -31,12 +31,14 @@ describe('passwordless email (magic link)', () => {
     await client.query(`DELETE FROM auth.users;`);
     // set env vars
     await request.post('/change-env').send({
+      AUTH_DISABLE_SIGNUP: false,
       AUTH_DISABLE_NEW_USERS: false,
       AUTH_EMAIL_PASSWORDLESS_ENABLED: true,
       AUTH_ACCESS_CONTROL_ALLOWED_EMAILS: '',
       AUTH_ACCESS_CONTROL_ALLOWED_EMAIL_DOMAINS: '',
       AUTH_ACCESS_CONTROL_BLOCKED_EMAILS: '',
       AUTH_ACCESS_CONTROL_BLOCKED_EMAIL_DOMAINS: '',
+      AUTH_LOCALE_ALLOWED_LOCALES: 'en,fr',
     });
   });
 
@@ -159,7 +161,7 @@ describe('passwordless email (magic link)', () => {
       .send({
         email: faker.internet.email(),
       })
-      .expect(StatusCodes.BAD_REQUEST);
+      .expect(StatusCodes.UNAUTHORIZED);
   });
 
   it('should be able to sign in twice. First request will create the user', async () => {
@@ -203,8 +205,8 @@ describe('passwordless email (magic link)', () => {
       .expect(StatusCodes.BAD_REQUEST, {
         status: 400,
         message:
-          '"options.allowedRoles[0]" does not match any of the allowed types',
-        error: 'invalid-request',
+          'Role not allowed',
+        error: 'role-not-allowed',
       });
   });
 

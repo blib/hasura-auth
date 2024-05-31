@@ -1,4 +1,4 @@
-openapi: '3.0.0'
+openapi: "3.0.0"
 info:
   version: 1.0.0
   title: Nhost Auth
@@ -12,25 +12,141 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 paths:
-  /signin/email-password:
+  /healthz:
+    head:
+      summary: Health check
+      tags:
+        - health
+      responses:
+        "200":
+          description: >-
+            Service is healthy
+
+    get:
+      summary: Health check
+      tags:
+        - health
+      responses:
+        "200":
+          description: >-
+            Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OKResponse"
+
+  /pat:
     post:
-      description: Sign in and existing user using email and password
+      summary: Create a Personal Access Token (PAT)
+      tags:
+        - pat
+      security:
+        - BearerAuthElevated: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SignInEmailPasswordSchema'
+              $ref: "#/components/schemas/CreatePATRequest"
         required: true
       responses:
-        200:
-          description: Sign in was successful
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SessionPayload'
+                $ref: "#/components/schemas/CreatePATResponse"
+          description: >-
+            Successfully created a Personal Access Token
+
+  /token:
+    post:
+      summary: Refresh the JWT access token
+      tags:
+        - token
+        - access-token
+        - jwt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshTokenRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+          description: >-
+            Successfully refreshed the JWT access token
+
+  /signin/email-password:
+    post:
+      summary: Sign in with email and password
       tags:
         - signin
         - email-and-password
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignInEmailPasswordRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SignInEmailPasswordResponse"
+          description: >-
+            Successfully signed in. Null session means TOTP challenge is needed
+
+  /signin/passwordless/email:
+    post:
+      summary: >-
+        Sign in with magic link sent to user's email. If user doesn't exist, it will be created.
+        The options object is optional and can be used to set the user's when signing up a
+        new user. It is ignored if the user already exists.
+      tags:
+        - signin
+        - signup
+        - passwordless
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignInPasswordlessEmailRequest"
+        required: true
+      responses:
+        "200":
+          description: >-
+            Magic link sent to user's email successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OKResponse"
+
+  /signin/pat:
+    post:
+      summary: >-
+        Sign in with Personal Access Token (PAT)
+      tags:
+        - signin
+        - pat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignInPATRequest"
+        required: true
+      responses:
+        "200":
+          description: >-
+            Successfully signed in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionPayload"
 
   /signup/email-password:
     post:
@@ -38,80 +154,363 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SignUpEmailPasswordSchema'
+              $ref: "#/components/schemas/SignUpEmailPasswordRequest"
         required: true
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SessionPayload'
+                $ref: "#/components/schemas/SessionPayload"
           description: >-
             Successfully registered. Null session means email verification is
             pending
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: >-
+            Signup mechanism is disabled
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: >-
+            User with given email already exists
+
       summary: Signup with email and password
       tags:
         - signup
         - email-and-password
 
-components:
-  schemas:
-    SessionPayload:
-      type: object
-      properties:
-        mfa:
-          $ref: '#/components/schemas/MFA'
-        session:
-          $ref: '#/components/schemas/Session'
+  /signup/webauthn:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpWebauthnRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SignUpWebauthnResponse"
+          description: >-
+            Challenge sent
 
-    MFA:
+      summary: Signup with webauthn
+      tags:
+        - signup
+        - webauthn
+
+  /signup/webauthn/verify:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpWebauthnVerifyRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionPayload"
+          description: >-
+            Sign up successful
+
+      summary: Verify webauthn signup
+      tags:
+        - signup
+        - webauthn
+        - verify
+
+  /user/deanonymize:
+    post:
+      summary: >-
+        Deanonymize an anonymous user in adding missing email or email+password, depending on the chosen authentication method. Will send a confirmation email if the server is configured to do so
+      tags:
+        - anonymous
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDeanonymizeRequest"
+      responses:
+        "200":
+          description: >-
+            User deanonymized successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OKResponse"
+
+  /user/email/change:
+    post:
+      summary: Change user email
+      tags:
+        - user
+        - email
+      security:
+        - BearerAuthElevated: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserEmailChangeRequest"
+      responses:
+        "200":
+          description: >-
+            Email change requested. An email with a verification link has been sent to the new address
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OKResponse"
+
+  /user/email/send-verification-email:
+    post:
+      summary: Send email verification email
+      tags:
+        - user
+        - email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserEmailSendVerificationEmailRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OKResponse"
+          description: >-
+            Email verification email sent successfully
+
+  /user/password/reset:
+    post:
+      summary: >-
+        Request a password reset. An email with a verification link will be sent to the user's address
+      tags:
+        - user
+        - password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserPasswordResetRequest"
+      responses:
+        "200":
+          description: >-
+            Password reset requested
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OKResponse"
+
+  /version:
+    get:
+      summary: Get version
+      tags:
+        - version
+      responses:
+        "200":
+          description: >-
+            Version of the service
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  version:
+                    type: string
+                    example: 0.0.0-dev
+                required:
+                  - version
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+    BearerAuthElevated:
+      type: http
+      scheme: bearer
+      description: >-
+        This endpoint may require elevated permissions, depending on server settings.
+        For details see https://docs.nhost.io/guides/auth/elevated-permissions
+
+  schemas:
+    RefreshTokenRequest:
       type: object
+      additionalProperties: false
+      properties:
+        refreshToken:
+          description: Refresh Token
+          example: 2c35b6f3-c4b9-48e3-978a-d4d0f1d42e24
+          pattern: \b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b
+          type: string
+      required:
+        - refreshToken
+
+    CreatePATRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        expiresAt:
+          description: Expiration date of the PAT
+          format: date-time
+          type: string
+
+        metadata:
+          type: object
+          additionalProperties: true
+          example:
+            name: my-pat
+            used-by: my-app-cli
+          properties: {}
+      required:
+        - expiresAt
+
+    CreatePATResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          description: ID of the PAT
+          example: 2c35b6f3-c4b9-48e3-978a-d4d0f1d42e24
+          pattern: \b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b
+          type: string
+        personalAccessToken:
+          description: PAT
+          example: 2c35b6f3-c4b9-48e3-978a-d4d0f1d42e24
+          pattern: \b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b
+          type: string
+      required:
+        - id
+        - personalAccessToken
+
+    ErrorResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          description: HTTP status error code
+          type: integer
+        message:
+          description: Human friendly error message
+          type: string
+        error:
+          description: Error code that identifies the application error
+          type: string
+          enum:
+            - default-role-must-be-in-allowed-roles
+            - disabled-endpoint
+            - disabled-user
+            - email-already-in-use
+            - email-already-verified
+            - forbidden-anonymous
+            - internal-server-error
+            - invalid-email-password
+            - invalid-request
+            - locale-not-allowed
+            - password-too-short
+            - password-in-hibp-database
+            - redirectTo-not-allowed
+            - role-not-allowed
+            - signup-disabled
+            - unverified-user
+            - user-not-anonymous
+            - invalid-pat
+            - invalid-refresh-token
+      required:
+        - status
+        - message
+        - error
+
+    SignInEmailPasswordResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        session:
+          $ref: "#/components/schemas/Session"
+        mfa:
+          $ref: "#/components/schemas/MFAChallengePayload"
+
+    MFAChallengePayload:
+      type: object
+      additionalProperties: false
       properties:
         ticket:
           type: string
+      required:
+        - ticket
+
+    SessionPayload:
+      type: object
+      additionalProperties: false
+      properties:
+        session:
+          $ref: "#/components/schemas/Session"
+
     Session:
       type: object
+      additionalProperties: false
       properties:
         accessToken:
           type: string
         accessTokenExpiresIn:
-          format: float
-          type: number
+          type: integer
+          format: int64
+        refreshTokenId:
+          description: Refresh token id
+          example: 2c35b6f3-c4b9-48e3-978a-d4d0f1d42e24
+          pattern: \b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b
+          type: string
         refreshToken:
           description: Refresh token during authentication or when refreshing the JWT
           example: 2c35b6f3-c4b9-48e3-978a-d4d0f1d42e24
           pattern: \b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b
           type: string
         user:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
       required:
         - accessToken
         - accessTokenExpiresIn
         - refreshToken
+        - refreshTokenId
 
-    User:
+    SignInPATRequest:
+      type: object
       additionalProperties: false
       properties:
-        activeMfaType:
-          anyOf:
-            - enum:
-                - ''
-              type: string
-            - enum:
-                - totp
-              type: string
-          description: Multi-factor authentication type. A null value deactivates MFA
-          example: totp
+        personalAccessToken:
+          description: PAT
+          example: 2c35b6f3-c4b9-48e3-978a-d4d0f1d42e24
+          pattern: \b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b
+          type: string
+      required:
+        - personalAccessToken
+
+    User:
+      type: object
+      additionalProperties: false
+      properties:
         avatarUrl:
           type: string
         createdAt:
           format: date-time
           type: string
         defaultRole:
-          default: user
-          enum:
-            - me
-            - user
           example: user
           type: string
         displayName:
@@ -123,7 +522,6 @@ components:
           format: email
           type: string
         emailVerified:
-          default: false
           type: boolean
         id:
           description: Id of the user
@@ -131,78 +529,97 @@ components:
           pattern: \b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b
           type: string
         isAnonymous:
-          default: false
           type: boolean
         locale:
-          default: en
           description: A two-characters locale
           example: en
           maxLength: 2
           minLength: 2
           type: string
         metadata:
-          additionalProperties: false
-          default: {}
+          type: object
+          additionalProperties: true
           example:
             firstName: John
             lastName: Smith
           properties: {}
-          type: object
         phoneNumber:
           type: string
         phoneNumberVerified:
-          default: false
           type: boolean
         telegramId:
-          default: ''
+          default: ""
           type: string
         roles:
-          default:
-            - me
-            - user
           example:
             - me
             - user
-          items:
-            oneOf:
-              - enum:
-                  - me
-              - enum:
-                  - user
           type: array
+          items:
+            type: string
       required:
-        - createdAt
-        - displayName
         - avatarUrl
-        - locale
-        - email
-        - isAnonymous
+        - createdAt
         - defaultRole
-        - metadata
-        - activeMfaType
+        - displayName
+        - email
         - emailVerified
+        - id
+        - isAnonymous
+        - locale
+        - metadata
         - phoneNumber
         - phoneNumberVerified
         - telegramId
         - roles
-      type: object
 
-    SignInEmailPasswordSchema:
+    UserDeanonymizeRequest:
       type: object
+      additionalProperties: false
       properties:
+        signInMethod:
+          description: Which sign-in method to use
+          type: string
+          enum:
+            - email-password
+            - passwordless
         email:
           description: A valid email
           example: john.smith@nhost.io
           format: email
           type: string
         password:
+          description: A password of minimum 3 characters
           example: Str0ngPassw#ord-94|%
+          minLength: 3
           type: string
+        connection:
+          deprecated: true
+          description: Deprecated, will be ignored
+          type: string
+        options:
+          $ref: "#/components/schemas/SignUpOptions"
       required:
+        - signInMethod
         - email
-        - password
 
-    SignUpEmailPasswordSchema:
+    UserEmailChangeRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        newEmail:
+          description: A valid email
+          example: john.smith@nhost.io
+          format: email
+          type: string
+        options:
+          $ref: "#/components/schemas/OptionsRedirectTo"
+      required:
+        - newEmail
+
+    UserEmailSendVerificationEmailRequest:
+      type: object
+      additionalProperties: false
       properties:
         email:
           description: A valid email
@@ -210,52 +627,47 @@ components:
           format: email
           type: string
         options:
-          additionalProperties: false
-          properties:
-            allowedRoles:
-              default:
-                - me
-                - user
-              example:
-                - me
-                - user
-              items:
-                oneOf:
-                  - enum:
-                      - me
-                  - enum:
-                      - user
-              type: array
-            defaultRole:
-              default: user
-              enum:
-                - me
-                - user
-              example: user
-              type: string
-            displayName:
-              example: John Smith
-              type: string
-            locale:
-              default: en
-              description: A two-characters locale
-              example: en
-              maxLength: 2
-              minLength: 2
-              type: string
-            metadata:
-              additionalProperties: false
-              default: {}
-              example:
-                firstName: John
-                lastName: Smith
-              properties: {}
-              type: object
-            redirectTo:
-              default: https://my-app.com
-              example: https://my-app.com/catch-redirection
-              type: string
-          type: object
+          $ref: "#/components/schemas/OptionsRedirectTo"
+      required:
+        - email
+
+    UserPasswordResetRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          description: A valid email
+          example: john.smith@nhost.io
+          format: email
+          type: string
+        options:
+          $ref: "#/components/schemas/OptionsRedirectTo"
+      required:
+        - email
+
+    OKResponse:
+      type: string
+      additionalProperties: false
+      enum:
+        - OK
+
+    OptionsRedirectTo:
+      type: object
+      additionalProperties: false
+      properties:
+        redirectTo:
+          example: https://my-app.com/catch-redirection
+          type: string
+
+    SignInEmailPasswordRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          description: A valid email
+          example: john.smith@nhost.io
+          format: email
+          type: string
         password:
           description: A password of minimum 3 characters
           example: Str0ngPassw#ord-94|%
@@ -264,4 +676,115 @@ components:
       required:
         - email
         - password
+
+    SignInPasswordlessEmailRequest:
       type: object
+      additionalProperties: false
+      properties:
+        email:
+          description: A valid email
+          example: john.smith@nhost.io
+          format: email
+          type: string
+        options:
+          $ref: "#/components/schemas/SignUpOptions"
+      required:
+        - email
+
+    SignUpEmailPasswordRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          description: A valid email
+          example: john.smith@nhost.io
+          format: email
+          type: string
+        password:
+          description: A password of minimum 3 characters
+          example: Str0ngPassw#ord-94|%
+          minLength: 3
+          type: string
+        options:
+          $ref: "#/components/schemas/SignUpOptions"
+      required:
+        - email
+        - password
+
+    SignUpOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        allowedRoles:
+          example:
+            - me
+            - user
+          type: array
+          items:
+            type: string
+        defaultRole:
+          example: user
+          type: string
+        displayName:
+          example: John Smith
+          type: string
+        locale:
+          description: A two-characters locale
+          example: en
+          maxLength: 2
+          minLength: 2
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+          example:
+            firstName: John
+            lastName: Smith
+          properties: {}
+        redirectTo:
+          example: https://my-app.com/catch-redirection
+          type: string
+
+    SignUpWebauthnRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          description: A valid email
+          example: john.smith@nhost.io
+          format: email
+          type: string
+        options:
+          $ref: "#/components/schemas/SignUpOptions"
+      required:
+        - email
+
+    SignUpWebauthnResponse:
+      type: object
+      x-go-type-import:
+        name: protocol
+        path: github.com/go-webauthn/webauthn/protocol
+      x-go-type: protocol.PublicKeyCredentialCreationOptions
+
+    SignUpWebauthnVerifyRequest:
+      type: object
+      additionalProperties: true
+      properties:
+        credential:
+          type: object
+          additionalProperties: true
+          x-go-type-import:
+            name: protocol
+            path: github.com/go-webauthn/webauthn/protocol
+          x-go-type: protocol.CredentialCreationResponse
+        options:
+          type: object
+          additionalProperties: false
+          allOf:
+            - $ref: "#/components/schemas/SignUpOptions"
+            - type: object
+              additionalProperties: false
+              properties:
+                nickname:
+                  example: https://my-app.com/catch-redirection
+                  type: string

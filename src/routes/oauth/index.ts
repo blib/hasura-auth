@@ -3,7 +3,9 @@ import { logger } from '@/logger';
 import {
   ENV,
   generateRedirectUrl,
+  getClaims,
   getNewRefreshToken,
+  getUserById,
   getUserByEmail,
   gqlSdk,
   insertUser,
@@ -148,11 +150,15 @@ export const oauthProviders = Router()
    * @see {@link file://./config/index.ts}
    */
   .use((req, res, next) => {
-    res.locals.grant = {
-      dynamic: {
-        origin: `${req.protocol}://${req.hostname}`,
-      },
-    };
+    if (!res.locals.grant) {
+        res.locals.grant = {};
+    }
+
+    if (!res.locals.grant.dynamic) {
+        res.locals.grant.dynamic = {};
+    }
+    res.locals.grant.dynamic['origin'] = `${req.protocol}://${req.hostname}`;
+
     next();
   })
   .use(grant.express(grantConfig))
@@ -178,7 +184,6 @@ export const oauthProviders = Router()
         // do nothing, we leave as is
       }
     }
-
 
     // * Destroy the session as it is only needed for the oauth flow
     await new Promise((resolve) => {
@@ -255,7 +260,40 @@ export const oauthProviders = Router()
       providerUserId,
     });
 
-    if (authUserProvider) {
+    if (typeof options?.connect === 'string') {
+      if (authUserProvider) {
+        logger.error('social user already exists');
+        return sendErrorFromQuery('bad-request', 'social user already exists');
+      }
+
+      let claims;
+      try {
+        claims = await getClaims(options.connect);
+      } catch (err) {
+        logger.error(`Could not get claims: ${err}`);
+        return sendErrorFromQuery('forbidden', 'JWT is invalid');
+      }
+
+      user = await getUserById(claims['x-hasura-user-id']);
+      if (!user) {
+        return sendErrorFromQuery('user-not-found','User not found');
+      }
+
+      const { insertAuthUserProvider } =
+        await gqlSdk.insertUserProviderToUser({
+          userProvider: {
+            userId: user.id,
+            providerId: provider,
+            providerUserId,
+            accessToken,
+            refreshToken,
+          },
+        });
+
+      if (!insertAuthUserProvider) {
+          return sendErrorFromQuery('internal-error', 'Could not add a provider to user');
+      }
+    } else if (authUserProvider) {
       // * The userProvider already exists. Update it with the new tokens
       user = authUserProvider.user;
       await gqlSdk.updateAuthUserprovider({

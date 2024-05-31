@@ -55,7 +55,12 @@
             ./go/api/openapi.yaml
             ./go/api/server.cfg.yaml
             ./go/api/types.cfg.yaml
+            ./go/sql/schema.sh
+            ./go/sql/sqlc.yaml
+            ./go/sql/query.sql
+            ./go/sql/auth_schema_dump.sql
             isDirectory
+            (inDirectory "email-templates")
             (inDirectory "vendor")
           ];
         };
@@ -110,7 +115,7 @@
         module = "github.com/nhost/hasura-auth/go";
         submodule = ".";
 
-        tags = [ "integration" ];
+        tags = [ ];
 
         ldflags = [
           "-X main.Version=${version}"
@@ -126,6 +131,8 @@
           nhost-cli
           mockgen
           oapi-codegen
+          sqlc
+          postgresql_16_2-client
         ];
 
 
@@ -159,6 +166,7 @@
                 ];
             }
             ''
+              echo ${src} > /dev/null # force rebuild if src changes
               mkdir -p $TMPDIR/auth
               cd $TMPDIR/auth
               cp -r ${node-src}/* .
@@ -183,7 +191,6 @@
           default = nixops-lib.go.devShell {
             buildInputs = with pkgs; [
               go-migrate
-              sqlc
               nodejs
               nodePackages.pnpm
             ] ++ checkDeps ++ buildInputs ++ nativeBuildInputs;
@@ -230,7 +237,7 @@
             postInstall = ''
               wrapProgram $out/bin/hasura-auth \
                   --suffix PATH : ${pkgs.nodejs-slim_18}/bin \
-                  --prefix NODE_SERVER_PATH : ${node-auth}
+                  --prefix AUTH_NODE_SERVER_PATH : ${node-auth}
             '';
           };
 
