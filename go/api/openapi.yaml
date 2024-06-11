@@ -519,7 +519,6 @@ components:
         email:
           description: A valid email
           example: john.smith@nhost.io
-          format: email
           type: string
         emailVerified:
           type: boolean
