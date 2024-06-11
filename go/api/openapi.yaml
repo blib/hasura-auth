@@ -559,13 +559,11 @@ components:
         - createdAt
         - defaultRole
         - displayName
-        - email
         - emailVerified
         - id
         - isAnonymous
         - locale
         - metadata
-        - phoneNumber
         - phoneNumberVerified
         - roles
 
