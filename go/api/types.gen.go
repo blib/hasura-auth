@@ -204,8 +204,8 @@ type User struct {
 	DisplayName string    `json:"displayName"`
 
 	// Email A valid email
-	Email         *openapi_types.Email `json:"email,omitempty"`
-	EmailVerified bool                 `json:"emailVerified"`
+	Email         openapi_types.Email `json:"email"`
+	EmailVerified bool                `json:"emailVerified"`
 
 	// Id Id of the user
 	Id          string `json:"id"`
@@ -214,7 +214,7 @@ type User struct {
 	// Locale A two-characters locale
 	Locale              string                 `json:"locale"`
 	Metadata            map[string]interface{} `json:"metadata"`
-	PhoneNumber         *string                `json:"phoneNumber,omitempty"`
+	PhoneNumber         string                 `json:"phoneNumber"`
 	PhoneNumberVerified bool                   `json:"phoneNumberVerified"`
 	Roles               []string               `json:"roles"`
 	TelegramId          string                 `json:"telegramId"`
