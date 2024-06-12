@@ -45,13 +45,13 @@ func sendMail( //nolint:funlen,cyclop
 	var err error
 	if useTLSConnection {
 		tlsconfig := &tls.Config{ //nolint:gosec,exhaustruct
-			InsecureSkipVerify: false,
+			InsecureSkipVerify: true,
 			ServerName:         host,
 		}
 
 		conn, err = tls.Dial("tcp", addr, tlsconfig)
 		if err != nil {
-			return err //nolint:wrapcheck
+			return fmt.Errorf("-%s - %v", addr, err) //nolint:wrapcheck
 		}
 	} else {
 		conn, err = net.Dial("tcp", addr)
