@@ -31,6 +31,7 @@ func NewTemplatesFromFilesystem(
 	logger *slog.Logger,
 ) (*Templates, error) {
 	templates := make(map[string]*fasttemplate.Template)
+	fmt.Printf("base path: %s\n", basePath)
 	if err := filepath.Walk(basePath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -47,6 +48,7 @@ func NewTemplatesFromFilesystem(
 				if err != nil {
 					return fmt.Errorf("error reading file: %w", err)
 				}
+				fmt.Printf("path: %s\n", relativePath)
 				templates[relativePath] = fasttemplate.New(string(f), "${", "}")
 			}
 		}
